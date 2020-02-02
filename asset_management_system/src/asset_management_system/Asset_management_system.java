@@ -19,7 +19,7 @@ public class Asset_management_system extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/asset_management_system/login/login.fxml"));
         
         Scene scene = new Scene(root);
         

@@ -11,7 +11,9 @@
   </resources>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="asset_management_system.jar" size="2764" download="eager" />
+    <jar href="asset_management_system.jar" size="3032" download="eager" />
+    <jar href="lib/jfoenix-8.0.1.jar" size="2405715" download="eager" />
+    <jar href="lib/jfoenix-9.0.1.jar" size="2143605" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="asset_management_system" >
     <param name="requiredFXVersion" value="8.0+"/>
