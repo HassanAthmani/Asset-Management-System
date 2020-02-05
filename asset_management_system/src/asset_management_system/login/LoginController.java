@@ -18,6 +18,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.concurrent.TimeUnit;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -61,7 +62,7 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    void login(ActionEvent event) {
+    void login(ActionEvent event) throws SQLException {
         String usrname = username.getText();
         String pass = password.getText();
         
@@ -69,8 +70,10 @@ public class LoginController implements Initializable {
             Class.forName("com.mysql.jdbc.Driver");
 
             String dbName = "inventory_project";
+            String user="root";
+            String passw="";
 
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName1, password); 
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, user, passw); 
            
             
             try{
@@ -82,10 +85,11 @@ public class LoginController implements Initializable {
             resultSet = preparedStatement.executeQuery();
             if(!resultSet.next()){
                 
+                //TimeUnit.SECONDS.sleep(2);  
                 int response = JOptionPane.showConfirmDialog(
                     null, "Please enter correct username and Password", "Login Failed!", JOptionPane.DEFAULT_OPTION);
             }else{
-                
+                //TimeUnit.SECONDS.sleep(2);  
                 //infoBox("Login Successful",null,"Success" );
                 int response = JOptionPane.showConfirmDialog(
                     null, "Login Successful", "Success", JOptionPane.DEFAULT_OPTION);
@@ -124,6 +128,10 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+       vbox.setStyle("-fx-background-color: #28d474;\n"
+                + "-fx-padding: 10;\n"
+                + "-fx-spacing:8;\n"
+                );
         // TODO
     }    
     
