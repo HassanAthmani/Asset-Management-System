@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
@@ -10,26 +12,41 @@
 <AnchorPane id="AnchorPane" prefHeight="900.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="worker.WorkerController">
    <children>
       <VBox prefHeight="907.0" prefWidth="246.0" style="-fx-background-color: #28d474; -fx-padding: 10; -fx-spacing: 8;" />
-      <AnchorPane layoutX="302.0" layoutY="333.0" prefHeight="270.0" prefWidth="1086.0" style="-fx-background-color: #c9f5f5;">
+      <AnchorPane layoutX="303.0" layoutY="318.0" prefHeight="270.0" prefWidth="1086.0" style="-fx-background-color: #d6fbff;">
          <children>
-            <JFXTextField layoutX="256.0" layoutY="82.0" prefHeight="26.0" prefWidth="150.0" />
-            <JFXTextField layoutX="256.0" layoutY="133.0" prefHeight="26.0" prefWidth="150.0" />
-            <JFXTextField layoutX="256.0" layoutY="175.0" prefHeight="26.0" prefWidth="150.0" />
-            <JFXTextField layoutX="769.0" layoutY="86.0" prefHeight="26.0" prefWidth="150.0" />
-            <JFXTextField layoutX="769.0" layoutY="137.0" prefHeight="26.0" prefWidth="150.0" />
-            <JFXTextField layoutX="769.0" layoutY="179.0" prefHeight="26.0" prefWidth="150.0" />
+            <JFXTextField fx:id="phoneNo_txtfield" layoutX="258.0" layoutY="38.0" prefHeight="26.0" prefWidth="150.0" />
+            <JFXTextField fx:id="email_txtfield" layoutX="258.0" layoutY="89.0" prefHeight="26.0" prefWidth="150.0" />
+            <JFXTextField fx:id="nationaID_txtfield" layoutX="258.0" layoutY="131.0" prefHeight="26.0" prefWidth="150.0" />
+            <JFXTextField fx:id="workerID_txtfield" layoutX="771.0" layoutY="42.0" prefHeight="26.0" prefWidth="150.0" />
+            <Label layoutX="60.0" layoutY="38.0" prefHeight="34.0" prefWidth="175.0" text="PHONE NUMBER" />
+            <Label layoutX="60.0" layoutY="98.0" prefHeight="34.0" prefWidth="175.0" text="EMAIL ADDRESS" />
+            <Label layoutX="60.0" layoutY="144.0" prefHeight="34.0" prefWidth="175.0" text="NATIONAL  ID" />
+            <Label layoutX="595.0" layoutY="47.0" prefHeight="34.0" prefWidth="175.0" text="WORKER ID" />
+            <JFXPasswordField fx:id="current_pass" layoutX="772.0" layoutY="103.0" prefHeight="26.0" prefWidth="150.0" promptText="CURRENT PASSWORD" />
+            <JFXPasswordField fx:id="new_pass" layoutX="772.0" layoutY="148.0" prefHeight="26.0" prefWidth="150.0" promptText="NEW PASSWORD" />
+            <JFXPasswordField fx:id="confirm_pass" layoutX="772.0" layoutY="195.0" prefHeight="26.0" prefWidth="150.0" promptText="CONFIRM PASSWORD" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="302.0" layoutY="629.0" prefHeight="254.0" prefWidth="1086.0" style="-fx-background-color: #c9f5f5;">
+      <AnchorPane layoutX="302.0" layoutY="629.0" prefHeight="254.0" prefWidth="1086.0" style="-fx-background-color: transparent; -fx-border-style: none; -fx-border-color: none;">
          <children>
-            <JFXTreeTableView layoutX="1.0" prefHeight="254.0" prefWidth="1086.0" />
+            <TableView fx:id="tble_view" layoutX="1.0" layoutY="1.0" prefHeight="254.0" prefWidth="1086.0" style="-fx-background-color: #d6fbff;">
+              <columns>
+                <TableColumn fx:id="id_column" prefWidth="48.800048828125" style="-fx-table-cell-border-color: transparent;" text="ID" />
+                <TableColumn fx:id="name_column" prefWidth="143.199951171875" text="NAME" />
+                  <TableColumn fx:id="phoneNo_column" prefWidth="110.39999389648438" text="PHONE NO" />
+                  <TableColumn fx:id="email_column" prefWidth="269.5999755859375" text="EMAIL" />
+                  <TableColumn fx:id="assetID_column" prefWidth="73.5999755859375" text="ASSET ID" />
+                  <TableColumn fx:id="assetName_column" prefWidth="196.00006103515625" text="ASSET NAME" />
+                  <TableColumn fx:id="assetCode_column" prefWidth="98.4000244140625" text="ASSET CODE" />
+                  <TableColumn fx:id="assignedDate_column" prefWidth="141.5999511718751" text="ASSIGNED DATE" />
+              </columns>
+            </TableView>
          </children></AnchorPane>
-      <AnchorPane layoutX="302.0" layoutY="98.0" prefHeight="200.0" prefWidth="1086.0" style="-fx-background-color: #c9f5f5;">
+      <AnchorPane layoutX="302.0" layoutY="98.0" prefHeight="200.0" prefWidth="1086.0" style="-fx-background-color: #d6fbff;">
          <children>
-            <ImageView fitHeight="144.0" fitWidth="193.0" layoutX="22.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true" />
-            <Label layoutX="272.0" layoutY="36.0" prefHeight="34.0" prefWidth="230.0" text="FirstName" />
-            <Label layoutX="543.0" layoutY="36.0" prefHeight="34.0" prefWidth="230.0" text="LastName" />
-            <Label layoutX="272.0" layoutY="107.0" prefHeight="34.0" prefWidth="230.0" text="department" />
+            <ImageView fx:id="imageviewer" fitHeight="144.0" fitWidth="193.0" layoutX="22.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="firstName_lbl" layoutX="272.0" layoutY="36.0" prefHeight="34.0" prefWidth="230.0" text="FirstName" />
+            <Label fx:id="lastName_lbl" layoutX="543.0" layoutY="36.0" prefHeight="34.0" prefWidth="230.0" text="LastName" />
          </children>
       </AnchorPane>
    </children>

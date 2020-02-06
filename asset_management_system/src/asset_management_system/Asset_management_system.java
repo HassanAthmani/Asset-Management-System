@@ -28,11 +28,13 @@ public class Asset_management_system extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/asset_management_system/worker/worker.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/asset_management_system/dashboard/dashboard.fxml"));
         
         Scene scene = new Scene(root);
         //scene.getStylesheets().add("http://fonts.googleapis.com/css?family=New+Rocker");
         scene.getStylesheets().add("https://fonts.googleapis.com/css?family=Bebas+Neue&display=swap");
+        scene.getStylesheets().add("https://fonts.googleapis.com/css?family=Lobster&display=swap");
+        scene.getStylesheets().add("https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz&display=swap");
         
         stage.setScene(scene);
          stage.setResizable(false);
