@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="900.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="worker.WorkerController">
+<AnchorPane id="AnchorPane" prefHeight="900.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="profile.ProfileController">
    <children>
       <VBox prefHeight="907.0" prefWidth="246.0" style="-fx-background-color: #28d474; -fx-padding: 10; -fx-spacing: 8;" />
       <AnchorPane layoutX="303.0" layoutY="318.0" prefHeight="270.0" prefWidth="1086.0" style="-fx-background-color: #d6fbff;">

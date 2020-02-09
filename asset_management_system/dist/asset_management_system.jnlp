@@ -11,7 +11,7 @@
   </resources>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="asset_management_system.jar" size="11773" download="eager" />
+    <jar href="asset_management_system.jar" size="31879" download="eager" />
     <jar href="lib/jfoenix-8.0.1.jar" size="2405715" download="eager" />
     <jar href="lib/jfoenix-9.0.1.jar" size="2143605" download="eager" />
     <jar href="lib/mysql-connector-java-5.1.47-bin.jar" size="1007505" download="eager" />

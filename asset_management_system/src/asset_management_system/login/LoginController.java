@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package asset_management_system.login;
 
 import java.net.URL;
@@ -11,6 +7,8 @@ import javafx.fxml.Initializable;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import java.awt.HeadlessException;
+import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -29,11 +27,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
-/**
- * FXML Controller class
- *
- * @author User
- */
+
 public class LoginController implements Initializable {
      public Connection connection;
      PreparedStatement preparedStatement = null;
@@ -55,6 +49,9 @@ public class LoginController implements Initializable {
 
     @FXML
     private JFXPasswordField password;
+    @FXML
+    private JFXButton registerBtn;
+
 
     @FXML
     void forgotPass(ActionEvent event) {
@@ -95,7 +92,7 @@ public class LoginController implements Initializable {
                     null, "Login Successful", "Success", JOptionPane.DEFAULT_OPTION);
                 
              //setting scene variable
-                
+             connection.close();   
             Parent sceneFxml = FXMLLoader.load(getClass().getResource("/inventory_system/dashboard.fxml"));
            Scene newScene = new Scene(sceneFxml);
 
@@ -108,11 +105,9 @@ public class LoginController implements Initializable {
             
             }
         }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-
-            
+        catch(HeadlessException | IOException | SQLException e){
+            System.out.println("Error:"+e);
+        }            
 
         } catch (ClassNotFoundException ex) {
 
@@ -121,8 +116,11 @@ public class LoginController implements Initializable {
         
 
     }
+    
+   @FXML
+    void register(ActionEvent event) {
 
-
+    }
 
     
 
