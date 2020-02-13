@@ -1,24 +1,36 @@
 
 package asset_management_system.login.forgottenPass;
 
+import asset_management_system.usedAlot.sendingPass;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 import java.util.Properties;
+import java.util.concurrent.ThreadLocalRandom;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
-/*import javax.mail.Message;
+import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;*/
+import javax.mail.internet.MimeMessage;
+import javax.swing.JOptionPane;
 
 
 
@@ -32,65 +44,51 @@ public class ForgottenPassController implements Initializable {
     
     @FXML
     private VBox vbox;
+    
+    @FXML
+    private ImageView backToDashboard;
+    
+     @FXML
+    private ImageView closeApp;
+     
+     @FXML
+     public void closeAppWindow(MouseEvent event){
+         //getting stage
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            
+            window.close();
+         
+     }
 
     @FXML
-    void sendNewPass(ActionEvent event) {
-      /*   // Recipient's email ID needs to be mentioned.
-        String to = "fromaddress@gmail.com";
+    void sendNewPass(ActionEvent event) throws SQLException {
+        if( email.getText().isEmpty() ){
+            int response = JOptionPane.showConfirmDialog(
+        null,"no field should be empty","Required Input",JOptionPane.DEFAULT_OPTION);
+            
+        }else
+        {
+            sendingPass nw=new sendingPass();
+           nw.recoverAcc(email.getText());
+        }       
+       
 
-        // Sender's email ID needs to be mentioned
-        String from = "toaddress@gmail.com";
+    }
+    
+    
+     @FXML
+    public void imageClicked(MouseEvent event) throws IOException{
+        //you can use #onMousePressed or #orMouseClicked
+         Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/login/login.fxml"));
+           Scene newScene = new Scene(sceneFxml);
 
-        // Assuming you are sending email from through gmails smtp
-        String host = "smtp.gmail.com";
+            //getting stage
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        // Get system properties
-        Properties properties = System.getProperties();
-
-        // Setup mail server
-        properties.put("mail.smtp.host", host);
-        properties.put("mail.smtp.port", "465");
-        properties.put("mail.smtp.ssl.enable", "true");
-        properties.put("mail.smtp.auth", "true");
-
-        // Get the Session object.// and pass username and password
-        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
-
-            protected PasswordAuthentication getPasswordAuthentication() {
-
-                return new PasswordAuthentication("fromaddress@gmail.com", "*******");
-
-            }
-
-        });
-
-        // Used to debug SMTP issues
-        session.setDebug(true);
-
-        try {
-            // Create a default MimeMessage object.
-            MimeMessage message = new MimeMessage(session);
-
-            // Set From: header field of the header.
-            message.setFrom(new InternetAddress(from));
-
-            // Set To: header field of the header.
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-
-            // Set Subject: header field
-            message.setSubject("This is the Subject Line!");
-
-            // Now set the actual message
-            message.setText("This is actual message");
-
-            System.out.println("sending...");
-            // Send message
-            Transport.send(message);
-            System.out.println("Sent message successfully....");
-        } catch (MessagingException mex) {
-            mex.printStackTrace();
-        }*/
-
+            //setting scene on stage
+            window.setScene(newScene);
+            window.show();
+        
     }
 
     @Override

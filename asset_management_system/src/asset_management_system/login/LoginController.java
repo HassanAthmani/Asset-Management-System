@@ -1,6 +1,7 @@
 
 package asset_management_system.login;
 
+import asset_management_system.usedAlot.escapeChar;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
@@ -54,7 +55,17 @@ public class LoginController implements Initializable {
 
 
     @FXML
-    void forgotPass(ActionEvent event) {
+    void forgotPass(ActionEvent event) throws IOException {
+         Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/login/forgottenPass/forgottenPass.fxml"));
+           Scene newScene = new Scene(sceneFxml);
+
+            //getting stage
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            //setting scene on stage
+            window.setScene(newScene);
+            window.show();
+        
 
     }
 
@@ -62,6 +73,8 @@ public class LoginController implements Initializable {
     void login(ActionEvent event) throws SQLException {
         String usrname = username.getText();
         String pass = password.getText();
+        escapeChar nw=new escapeChar();
+        String emailEscape=nw.escapeChar1(usrname);
         
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -74,11 +87,12 @@ public class LoginController implements Initializable {
            
             
             try{
-            String sql = "SELECT * FROM login WHERE username = ? and password = ?";
+            //String sql = "SELECT * FROM login WHERE username = ? and password = ?";
+            String sql="SELECT * FROM `asset_management_system`.`worker_details` WHERE (workerEmail LIKE '%"+emailEscape+"%') AND (pass_word LIKE '%"+pass+"%')";
             
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, usrname );
-            preparedStatement.setString(2, pass);
+           // preparedStatement.setString(1, usrname );
+            //preparedStatement.setString(2, pass);
             resultSet = preparedStatement.executeQuery();
             if(!resultSet.next()){
                 
@@ -93,7 +107,7 @@ public class LoginController implements Initializable {
                 
              //setting scene variable
              connection.close();   
-            Parent sceneFxml = FXMLLoader.load(getClass().getResource("/inventory_system/dashboard.fxml"));
+            Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/dashboard/dashboard.fxml"));
            Scene newScene = new Scene(sceneFxml);
 
             //getting stage
@@ -102,6 +116,7 @@ public class LoginController implements Initializable {
             //setting scene on stage
             window.setScene(newScene);
             window.show();
+             window.centerOnScreen();
             
             }
         }
@@ -118,7 +133,16 @@ public class LoginController implements Initializable {
     }
     
    @FXML
-    void register(ActionEvent event) {
+    void register(ActionEvent event) throws IOException {
+        Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/login/register/register.fxml"));
+           Scene newScene = new Scene(sceneFxml);
+
+            //getting stage
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            //setting scene on stage
+            window.setScene(newScene);
+            window.show();
 
     }
 

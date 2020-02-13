@@ -1,6 +1,7 @@
 package asset_management_system.dashboard;
 
 import com.jfoenix.controls.JFXButton;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,13 +16,20 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 
 public class DashboardController implements Initializable {
@@ -36,25 +44,25 @@ public class DashboardController implements Initializable {
     private VBox vbox;
 
     @FXML
-    private AnchorPane assets_pane;
+    private VBox assets_pane;
 
     @FXML
     private Label assetsLbl;
     
     @FXML
-    private AnchorPane totalCost_pane;
+    private VBox totalCost_pane;
 
     @FXML
     private Label totalCostLbl;
     
     @FXML
-    private AnchorPane workers_pane;
+    private VBox workers_pane;
 
     @FXML
     private Label workersLbl;
     
     @FXML
-    private AnchorPane withUsers_pane;
+    private VBox withUsers_pane;
 
     @FXML
     private Label withWorkersLbl;
@@ -112,6 +120,26 @@ public class DashboardController implements Initializable {
       
       @FXML
     private Label withWorkers_rst;
+      
+    @FXML
+    private ImageView backToDashboard;
+
+    @FXML
+    void imageClicked(MouseEvent event) throws IOException {
+         //you can use #onMousePressed or #orMouseClicked
+         Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/login/login.fxml"));
+           Scene newScene = new Scene(sceneFxml);
+
+            //getting stage
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            //setting scene on stage
+            window.setScene(newScene);
+            window.show();
+            window.centerOnScreen();
+
+    }
+
       
      public void LoadDataFrmDB() throws SQLException {
         //DB connection details

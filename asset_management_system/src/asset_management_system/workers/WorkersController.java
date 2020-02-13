@@ -28,6 +28,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -76,6 +77,20 @@ public class WorkersController implements Initializable {
      
      private double xOffset = 0;
     private double yOffset = 0;
+    
+     @FXML
+    private ImageView closeApp;
+
+    
+
+    @FXML
+    void closeAppWindow(MouseEvent event) {
+        //getting stage
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.close();
+
+    }
+
 
     @FXML
     void add(ActionEvent event) throws IOException {

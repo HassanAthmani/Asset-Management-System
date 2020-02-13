@@ -2,9 +2,11 @@
 package asset_management_system.workers.addWorker;
 
 
+import asset_management_system.usedAlot.sendingPass;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,9 +19,16 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
 public class RegisterController implements Initializable {
@@ -55,11 +64,44 @@ public class RegisterController implements Initializable {
 
     @FXML
     private VBox vbox;
+    
+    @FXML
+    private ImageView backToWorkers;
+    
+    @FXML
+    private ImageView closeApp;
 
     @FXML
-    void register(ActionEvent event) {
+    void closeAppWindow(MouseEvent event) {
+        //getting stage
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();            
+            window.close();
 
     }
+
+    @FXML
+    void imageClicked(MouseEvent event) throws IOException {
+        //you can use #onMousePressed or #orMouseClicked
+         Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/workers/workers.fxml"));
+           Scene newScene = new Scene(sceneFxml);
+
+            //getting stage
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            //setting scene on stage
+            window.setScene(newScene);
+            window.show();
+
+    }
+
+    @FXML
+    void register(ActionEvent event) throws SQLException, ClassNotFoundException {
+         sendingPass nw=new sendingPass();      
+        nw.NewAcc(email.getText());
+
+    }
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         vbox.setStyle("-fx-background-color: #28d474;\n"
