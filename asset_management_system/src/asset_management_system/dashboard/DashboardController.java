@@ -123,6 +123,17 @@ public class DashboardController implements Initializable {
       
     @FXML
     private ImageView backToDashboard;
+    
+    @FXML
+    private ImageView closeApp;
+     
+     @FXML
+     public void closeAppWindow(MouseEvent event){
+         //getting stage
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            
+            window.close();
+     }
 
     @FXML
     void imageClicked(MouseEvent event) throws IOException {
@@ -244,6 +255,22 @@ public class DashboardController implements Initializable {
       assetWorkers_btn.setStyle(btn);
       asset_btn.setStyle(btn);
      }
+     
+     @FXML
+    void goToWorkers(ActionEvent event) throws IOException {
+          //you can use #onMousePressed or #orMouseClicked
+         Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/workers/workers.fxml"));
+           Scene newScene = new Scene(sceneFxml);
+
+            //getting stage
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            //setting scene on stage
+            window.setScene(newScene);
+            window.show();
+            window.centerOnScreen();
+
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

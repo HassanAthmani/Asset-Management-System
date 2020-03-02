@@ -5,6 +5,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -25,5 +27,10 @@
       <TextField fx:id="searchBox" layoutX="309.0" layoutY="149.0" prefHeight="26.0" prefWidth="283.0" promptText="SEARCH" />
       <ChoiceBox fx:id="checkBox" layoutX="612.0" layoutY="149.0" prefHeight="26.0" prefWidth="184.0" />
       <JFXButton fx:id="addWorker" layoutX="1311.0" layoutY="149.0" onAction="#add" text="ADD WORKER" />
+      <ImageView fx:id="closeApp" fitHeight="38.0" fitWidth="44.0" layoutX="1424.0" layoutY="23.0" onMousePressed="#closeAppWindow" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/ic_close.imageset/ic_close_2x.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

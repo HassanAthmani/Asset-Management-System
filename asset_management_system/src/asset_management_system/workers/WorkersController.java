@@ -35,6 +35,10 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class WorkersController implements Initializable {
      public Connection connection;
@@ -218,6 +222,46 @@ public class WorkersController implements Initializable {
        
          
      }
+     
+     
+    public void reloader(){
+        java.util.TimerTask task = new java.util.TimerTask() {
+        int prevCount = 0; // you can declare it static
+        @Override
+        public void run() {
+            String dbName = "asset_management_system";
+            String userName="root";
+            String password="";
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
+            }            
+
+            try {
+                connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, password);
+            } catch (SQLException ex) {
+                Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                ResultSet rs = connection.prepareStatement("Select Count(*) FROM worker_details").executeQuery();
+                int count = rs.getInt(1);
+                System.out.println("Count diff:"+ (prevCount-count));
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    };
+    java.util.Timer timer = new java.util.Timer(true);// true to run timer as daemon thread
+    timer.schedule(task, 0, 1000);// Run task every 5 second
+    try {
+        Thread.sleep(5000); // Cancel task after 1 minute.
+    } catch (InterruptedException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
+    }
     
      
 
@@ -289,6 +333,8 @@ public class WorkersController implements Initializable {
            
            
        });
+         
+         reloader();
         
     }    
     

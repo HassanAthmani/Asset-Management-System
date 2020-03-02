@@ -49,7 +49,8 @@ public class sendingPass {
          int min=100001;
         int max=9999999;
         int randomNum = ThreadLocalRandom.current().nextInt(min, max+1);
-         String Rmail = toUpperCase( nw.escapeChar1(recipientMail)) ;
+        escapeChar escapee=new escapeChar();
+         String Rmail =escapee.escapeChar1(recipientMail);
                  
          DBfunction(Rmail,randomNum);
                          

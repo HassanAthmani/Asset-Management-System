@@ -1,6 +1,7 @@
 
 package asset_management_system.login;
 
+import asset_management_system.usedAlot.emailValidation;
 import asset_management_system.usedAlot.escapeChar;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -24,6 +25,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
@@ -50,8 +53,20 @@ public class LoginController implements Initializable {
 
     @FXML
     private JFXPasswordField password;
+    
     @FXML
     private JFXButton registerBtn;
+    
+    @FXML
+    private ImageView closeApp;
+     
+     @FXML
+     public void closeAppWindow(MouseEvent event){
+         //getting stage
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            
+            window.close();
+     }
 
 
     @FXML
@@ -64,19 +79,25 @@ public class LoginController implements Initializable {
 
             //setting scene on stage
             window.setScene(newScene);
-            window.show();
-        
+            window.show();        
 
     }
 
     @FXML
     void login(ActionEvent event) throws SQLException {
-        String usrname = username.getText();
+        String email = username.getText();
         String pass = password.getText();
         escapeChar nw=new escapeChar();
-        String emailEscape=nw.escapeChar1(usrname);
+        String emailEscape=nw.escapeChar1(email);
+       // String emailEscape=email;
         
-        try {
+        if (username.getText().isEmpty() || password.getText().isEmpty()){
+            int response = JOptionPane.showConfirmDialog(
+                    null, "Please enter information in the fields provided", "Login Failed!", JOptionPane.DEFAULT_OPTION);
+            
+        }else
+        {
+            try {
             Class.forName("com.mysql.jdbc.Driver");
 
             String dbName = "inventory_project";
@@ -89,6 +110,7 @@ public class LoginController implements Initializable {
             try{
             //String sql = "SELECT * FROM login WHERE username = ? and password = ?";
             String sql="SELECT * FROM `asset_management_system`.`worker_details` WHERE (workerEmail LIKE '%"+emailEscape+"%') AND (pass_word LIKE '%"+pass+"%')";
+           // String sql="SELECT * FROM `asset_management_system`.`worker_details` WHERE (workerEmail LIKE '%"+emailEscape+"%') AND (pass_word ='"+pass+"')";
             
             preparedStatement = connection.prepareStatement(sql);
            // preparedStatement.setString(1, usrname );
@@ -129,6 +151,7 @@ public class LoginController implements Initializable {
             System.err.println("Error: " + ex);
         }
         
+        }
 
     }
     
@@ -154,7 +177,9 @@ public class LoginController implements Initializable {
                 + "-fx-padding: 10;\n"
                 + "-fx-spacing:8;\n"
                 );
-        // TODO
+      
+       emailValidation valid=new emailValidation();
+       valid.loginVal(username,"workerEmail",loginbtn);
     }    
     
 }

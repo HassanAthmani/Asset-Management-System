@@ -17,19 +17,24 @@
       <Label layoutX="211.0" layoutY="236.0" prefHeight="18.0" prefWidth="96.0" />
       <Label layoutX="629.0" layoutY="135.0" prefHeight="27.0" prefWidth="108.0" text="SECOND NAME" />
       <JFXButton fx:id="register_btn" layoutX="477.0" layoutY="471.0" onAction="#register" text="REGISTER" />
-      <JFXTextField fx:id="fristName" layoutX="432.0" layoutY="136.0" promptText="first name" />
+      <JFXTextField fx:id="firstName" layoutX="432.0" layoutY="136.0" promptText="first name" />
       <JFXTextField fx:id="secondName" layoutX="736.0" layoutY="136.0" promptText="second name" />
       <JFXTextField fx:id="phoneNo" layoutX="433.0" layoutY="200.0" promptText="phone number" />
       <JFXTextField fx:id="natID" layoutX="432.0" layoutY="259.0" promptText="national ID" />
       <JFXTextField fx:id="email" layoutX="429.0" layoutY="327.0" prefHeight="27.0" prefWidth="253.0" promptText="email address" />
       <VBox fx:id="vbox" layoutX="-2.0" layoutY="-1.0" prefHeight="562.0" prefWidth="279.0" />
       <Label layoutX="628.0" layoutY="199.0" prefHeight="27.0" prefWidth="108.0" text="DEPARTMENT" />
-      <JFXTextField fx:id="secondName1" layoutX="735.0" layoutY="200.0" promptText="department" />
+      <JFXTextField fx:id="department" layoutX="735.0" layoutY="200.0" promptText="department" />
       <Label layoutX="629.0" layoutY="258.0" prefHeight="27.0" prefWidth="96.0" text="LOCATION" />
-      <JFXTextField fx:id="secondName2" layoutX="736.0" layoutY="259.0" promptText="location" />
-      <ImageView fitHeight="38.0" fitWidth="44.0" layoutX="326.0" layoutY="43.0" onMousePressed="#imageClicked" pickOnBounds="true" preserveRatio="true">
+      <JFXTextField fx:id="location" layoutX="736.0" layoutY="259.0" promptText="location" />
+      <ImageView fitHeight="38.0" fitWidth="44.0" layoutX="321.0" layoutY="24.0" onMousePressed="#imageClicked" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../img/ic_arrow_back.imageset/ic_arrow_back_2x.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="closeApp" fitHeight="38.0" fitWidth="44.0" layoutX="832.0" layoutY="24.0" onMousePressed="#closeAppWindow" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../img/ic_close.imageset/ic_close_2x.png" />
          </image>
       </ImageView>
    </children>

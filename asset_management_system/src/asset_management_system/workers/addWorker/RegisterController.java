@@ -2,21 +2,18 @@
 package asset_management_system.workers.addWorker;
 
 
+import asset_management_system.usedAlot.DBOps;
 import asset_management_system.usedAlot.sendingPass;
+import asset_management_system.usedAlot.checkDetails;
+import asset_management_system.usedAlot.emailValidation;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
+import java.util.concurrent.TimeUnit;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,31 +21,22 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
+import static jdk.nashorn.internal.objects.NativeString.toUpperCase;
 
-public class RegisterController implements Initializable {
-     public static String userName = "root";
-    public static String pass = "";
-
-    public Connection connection;
+public class RegisterController implements Initializable {   
 
    
-    @FXML
-    private JFXPasswordField password;
-
-    @FXML
-    private JFXPasswordField confirmPass;
-
+  
     @FXML
     private JFXButton register_btn;
 
     @FXML
-    private JFXTextField fristName;
+    private JFXTextField firstName;
 
     @FXML
     private JFXTextField secondName;
@@ -61,12 +49,18 @@ public class RegisterController implements Initializable {
 
     @FXML
     private JFXTextField email;
+    
+    @FXML
+    private JFXTextField department;
+
+    @FXML
+    private JFXTextField location;
 
     @FXML
     private VBox vbox;
     
-    @FXML
-    private ImageView backToWorkers;
+    /*@FXML
+    private ImageView backToWorkers;*/
     
     @FXML
     private ImageView closeApp;
@@ -76,30 +70,47 @@ public class RegisterController implements Initializable {
         //getting stage
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();            
             window.close();
-
     }
 
+   
     @FXML
-    void imageClicked(MouseEvent event) throws IOException {
-        //you can use #onMousePressed or #orMouseClicked
-         Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/workers/workers.fxml"));
-           Scene newScene = new Scene(sceneFxml);
-
-            //getting stage
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            //setting scene on stage
-            window.setScene(newScene);
-            window.show();
-
-    }
-
-    @FXML
-    void register(ActionEvent event) throws SQLException, ClassNotFoundException {
-         sendingPass nw=new sendingPass();      
-        nw.NewAcc(email.getText());
-
-    }
+    void register(ActionEvent event) throws SQLException, ClassNotFoundException, InterruptedException {
+         sendingPass nwAcc=new sendingPass();      
+        
+        
+         if(email.getText().isEmpty() || firstName.getText().isEmpty() || secondName.getText().isEmpty() || phoneNo.getText().isEmpty() || natID.getText().isEmpty() || department.getText().isEmpty() || location.getText().isEmpty()){
+              
+             int response = JOptionPane.showConfirmDialog(
+        null,"Make sure the text fields should not be empty","Required Input",JOptionPane.DEFAULT_OPTION); 
+               
+                  
+         
+         } else 
+         {
+             DBOps ops=new DBOps();
+          String first= toUpperCase(firstName.getText());
+          String second= toUpperCase(secondName.getText());
+          String phone= phoneNo.getText();
+          String nat= natID.getText();
+          String mail=email.getText();
+          String dep=toUpperCase( department.getText());
+          String loc=toUpperCase( location.getText());          
+          ops.addData(first, second, phone, nat, mail, dep, loc);
+          TimeUnit.SECONDS.sleep(1);  
+          nwAcc.NewAcc(email.getText());
+          
+          email.clear();
+          firstName.clear();
+          secondName.clear();
+          phoneNo.clear();
+          natID.clear();
+          department.clear();
+          location.clear();
+          
+         }        
+         
+           
+       } 
     
     
     @Override
@@ -108,57 +119,14 @@ public class RegisterController implements Initializable {
                 + "-fx-padding: 10;\n"
                 + "-fx-spacing:8;\n"
                 );
-       phoneNo.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue,String newValue) -> {
-           
-           if(oldValue != newValue){
-               //DB connection details
-               if(!phoneNo.getText().isEmpty()){
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-
-            String dbName = "asset_management_system";
-
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, pass);
-            //Execute query and store result in a resultset
-            String srch=phoneNo.getText();
-            ResultSet rs = connection.createStatement().executeQuery("SELECT COUNT(*) FROM `asset_management_system`.`worker_details` WHERE workerTell = '"+srch+"'");
-            int quan;
-            int a=1;
-               while(rs.next())
-              {
-
-             String str = rs.getString(1);
-             quan = Integer.parseInt(str);
-             System.out.println(quan);
-             if(quan>=a){
-                 int response = JOptionPane.showConfirmDialog(
-        null,"data is in DB","Required Input",JOptionPane.DEFAULT_OPTION); 
-                   
-               }
-              }
-               
-               
-           } catch(ClassNotFoundException e){
-               
-           }     
-               catch (SQLException ex) {     
-                       Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
-                   }     
-               }
-           }
+        checkDetails nw=new checkDetails();
+        emailValidation valid=new emailValidation();
+        valid.emailVal(email,"workerEmail",register_btn);
+        nw.checker(phoneNo,"workerTell",register_btn);
+        //nw.checker(email,"workerEmail",register_btn);
+         nw.checker(natID,"workerNationalID",register_btn);
+         //nw.checker(department,"department",register_btn);
+         //nw.checker(location,"location",register_btn);
          
-               if ( phoneNo.getText().isEmpty() ){
-                   //DB connection details
-                  
-        
-               }
-           
-           
-           
-                     });
-                  
-
-    
-
                }
                }

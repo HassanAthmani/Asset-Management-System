@@ -62,7 +62,7 @@
                </font>
             </Label>
             <Label fx:id="workers_rst" prefHeight="30.0" prefWidth="54.0" text="Label" />
-            <JFXButton fx:id="workers_btn" buttonType="RAISED" prefHeight="30.0" prefWidth="110.0" text="more" textAlignment="CENTER" />
+            <JFXButton fx:id="workers_btn" buttonType="RAISED" onAction="#goToWorkers" prefHeight="30.0" prefWidth="110.0" text="more" textAlignment="CENTER" />
          </children>
       </VBox>
       <VBox fx:id="withUsers_pane" alignment="CENTER" layoutX="1202.0" layoutY="173.0" prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: #c9f5f5;">
@@ -79,6 +79,11 @@
       <ImageView fx:id="backToDashboard" fitHeight="38.0" fitWidth="44.0" layoutX="274.0" layoutY="100.0" onMousePressed="#imageClicked" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/ic_exit_to_app.imageset/ic_exit_to_app_2x.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="closeApp" fitHeight="38.0" fitWidth="44.0" layoutX="1414.0" layoutY="14.0" onMousePressed="#closeAppWindow" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/ic_close.imageset/ic_close_2x.png" />
          </image>
       </ImageView>
    </children>
