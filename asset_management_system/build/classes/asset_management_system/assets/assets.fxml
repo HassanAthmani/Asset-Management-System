@@ -1,11 +1,120 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="asset_management_system.assets.AssetsController">
-    
+<AnchorPane id="AnchorPane" prefHeight="900.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="asset_management_system.assets.AssetsController">
+   <children>
+      <VBox fx:id="vbox" prefHeight="900.0" prefWidth="240.0" style="-fx-background-color: #28d474; -fx-padding: 10; -fx-spacing: 8;" />
+      <TabPane layoutX="268.0" layoutY="93.0" prefHeight="786.0" prefWidth="1192.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+            <Tab text="ALL ASSETS">
+               <content>
+                  <AnchorPane fx:id="cost" minHeight="0.0" minWidth="0.0" prefHeight="733.0" prefWidth="1192.0">
+                     <children>
+                        <TableView fx:id="all_assets_tbl" layoutX="-1.0" layoutY="94.0" prefHeight="662.0" prefWidth="1218.0">
+                           <columns>
+                              <TableColumn fx:id="asset_id" prefWidth="119.19998168945312" text="ASSET ID" />
+                              <TableColumn fx:id="asset_name" prefWidth="124.79995727539062" text="ASSET NAME" />
+                              <TableColumn fx:id="asset_code" prefWidth="136.80007934570312" text="ASSET CODE" />
+                              <TableColumn fx:id="asset_details" prefWidth="141.5999755859375" text="ASSET DETAILS" />
+                              <TableColumn fx:id="worker_name" prefWidth="143.199951171875" text="WORKER NAME" />
+                              <TableColumn fx:id="worker_id" prefWidth="129.60009765625" text="WORKER ID" />
+                              <TableColumn fx:id="category_id" prefWidth="162.4000244140625" text="CATEGORY ID" />
+                              <TableColumn fx:id="addition_date" prefWidth="132.0" text="ADDITION DATE" />
+                              <TableColumn prefWidth="116.0" text="COST" />
+                           </columns>
+                        </TableView>
+                        <TextField fx:id="search" layoutX="346.0" layoutY="38.0" prefHeight="26.0" prefWidth="217.0" />
+                        <ChoiceBox fx:id="choice" layoutX="594.0" layoutY="39.0" prefWidth="150.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="ASSETS">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="733.0" prefWidth="1192.0">
+                     <children>
+                        <TableView fx:id="assets_tbl" layoutX="-1.0" layoutY="94.0" prefHeight="662.0" prefWidth="1218.0">
+                           <columns>
+                              <TableColumn fx:id="asset1_id" prefWidth="75.0" text="ASSET ID " />
+                              <TableColumn fx:id="asset1_name" prefWidth="166.39999389648438" text="ASSET NAME" />
+                              <TableColumn fx:id="asset1_code" prefWidth="102.4000244140625" text="ASSET CODE" />
+                              <TableColumn fx:id="asset1_details" prefWidth="177.60003662109375" text="ASSET DETAILS" />
+                              <TableColumn fx:id="worker1_name" prefWidth="140.0" text="WORKER NAME" />
+                              <TableColumn fx:id="worker1_id" prefWidth="143.99993896484375" text="WORKER ID" />
+                              <TableColumn fx:id="category1_id" prefWidth="130.4000244140625" text="CATEGORY ID" />
+                              <TableColumn fx:id="addition1_date" prefWidth="163.99993896484375" text="ADDITION DATE" />
+                              <TableColumn fx:id="cost1" prefWidth="95.199951171875" text="COST" />
+                           </columns>
+                        </TableView>
+                        <ChoiceBox fx:id="choice1" layoutX="302.0" layoutY="42.0" prefWidth="150.0" />
+                        <TextField fx:id="search1" layoutX="44.0" layoutY="42.0" prefHeight="26.0" prefWidth="200.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="ASSETS IN MAINTENANCE">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="733.0" prefWidth="1192.0">
+                     <children>
+                        <TableView fx:id="maintenance_tbl" layoutX="-1.0" layoutY="94.0" prefHeight="662.0" prefWidth="1218.0">
+                           <columns>
+                              <TableColumn fx:id="asset2_id" prefWidth="75.0" text="ASSET ID " />
+                              <TableColumn fx:id="asset2_name" prefWidth="119.99996948242188" text="ASSET NAME" />
+                              <TableColumn fx:id="asset2_code" prefWidth="96.00006103515625" text="ASSET CODE" />
+                              <TableColumn fx:id="asset2_details" prefWidth="136.00006103515625" text="ASSET DETAILS" />
+                              <TableColumn fx:id="worker2_name" prefWidth="132.0" text="WORKER NAME" />
+                              <TableColumn fx:id="worker2_id" prefWidth="126.39996337890625" text="WORKER ID" />
+                              <TableColumn fx:id="category2_id" prefWidth="154.4000244140625" text="CATEGORY ID" />
+                              <TableColumn fx:id="addition2_date" prefWidth="191.199951171875" text="ADDITION DATE" />
+                              <TableColumn fx:id="maintenance2_date" prefWidth="164.0" text="MAINTENANCE DATE" />
+                           </columns>
+                        </TableView>
+                        <TextField fx:id="search2" layoutX="14.0" layoutY="34.0" prefHeight="26.0" prefWidth="216.0" />
+                        <ChoiceBox fx:id="choice2" layoutX="274.0" layoutY="34.0" prefWidth="150.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="DEFERRED ASSET">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="733.0" prefWidth="1192.0">
+                     <children>
+                        <TableView fx:id="deferred_tbl" layoutX="-1.0" layoutY="94.0" prefHeight="662.0" prefWidth="1218.0">
+                           <columns>
+                              <TableColumn prefWidth="63.199951171875" text="ASSET ID" />
+                              <TableColumn prefWidth="107.20001220703125" text="ASSET NAME" />
+                              <TableColumn prefWidth="77.60009765625" text="ASSET CODE" />
+                              <TableColumn prefWidth="166.39990234375" text="ASSET DETAILS" />
+                              <TableColumn prefWidth="124.79998779296875" text="WORKER NAME" />
+                              <TableColumn prefWidth="128.7999267578125" text="WORKER ID" />
+                              <TableColumn prefWidth="129.5999755859375" text="CATEGORY ID" />
+                              <TableColumn prefWidth="117.60003662109375" text="ADDITION DATE" />
+                              <TableColumn prefWidth="113.599853515625" text="DEFERRED DATE" />
+                              <TableColumn prefWidth="177.59991455078125" text="REASON" />
+                           </columns>
+                        </TableView>
+                        <ChoiceBox fx:id="choice3" layoutX="283.0" layoutY="38.0" prefWidth="150.0" />
+                        <TextField fx:id="search3" layoutX="22.0" layoutY="38.0" prefHeight="26.0" prefWidth="214.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+      <ImageView fx:id="backToDashboard" fitHeight="38.0" fitWidth="44.0" layoutX="262.0" layoutY="14.0" onMousePressed="#imageClicked" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/ic_arrow_back.imageset/ic_arrow_back_2x.png" />
+         </image>
+      </ImageView>
+   </children>
 </AnchorPane>

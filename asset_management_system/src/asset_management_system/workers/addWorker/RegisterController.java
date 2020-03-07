@@ -7,20 +7,15 @@ import asset_management_system.usedAlot.sendingPass;
 import asset_management_system.usedAlot.checkDetails;
 import asset_management_system.usedAlot.emailValidation;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -106,6 +101,7 @@ public class RegisterController implements Initializable {
           natID.clear();
           department.clear();
           location.clear();
+          
           
          }        
          

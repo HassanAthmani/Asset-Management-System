@@ -14,13 +14,13 @@ import javafx.beans.property.StringProperty;
  */
 public class workers {
     
-    private final StringProperty workerName;
-    private final StringProperty workerLastName ;
-    private final StringProperty workerTell;
-    private final StringProperty workerEmail;
-    private final StringProperty workerNationalID;
-    private final StringProperty department;
-    private final StringProperty location;
+    public final StringProperty workerName;
+    public final StringProperty workerLastName ;
+    public final StringProperty workerTell;
+    public final StringProperty workerEmail;
+    public final StringProperty workerNationalID;
+    public final StringProperty department;
+    public final StringProperty location;
 
     //Constructor
     public workers(String workerName, String workerLastName, String workerTell, String workerEmail, String workerNationalID, String department,String location) {

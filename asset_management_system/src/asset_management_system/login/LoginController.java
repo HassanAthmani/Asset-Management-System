@@ -3,6 +3,7 @@ package asset_management_system.login;
 
 import asset_management_system.usedAlot.emailValidation;
 import asset_management_system.usedAlot.escapeChar;
+import asset_management_system.usedAlot.json_code;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
@@ -117,13 +118,25 @@ public class LoginController implements Initializable {
             //preparedStatement.setString(2, pass);
             resultSet = preparedStatement.executeQuery();
             if(!resultSet.next()){
-                
+            
                 //TimeUnit.SECONDS.sleep(2);  
+                //ACCESS NOT GRANTED
                 int response = JOptionPane.showConfirmDialog(
                     null, "Please enter correct username and Password", "Login Failed!", JOptionPane.DEFAULT_OPTION);
+                
             }else{
+                
                 //TimeUnit.SECONDS.sleep(2);  
-                //infoBox("Login Successful",null,"Success" );
+                //ACCESS GRANTED 
+                 String json_id="SELECT * FROM `asset_management_system`.`worker_details` WHERE (workerEmail LIKE '%"+emailEscape+"%')";
+                ResultSet rs = connection.createStatement().executeQuery(json_id);
+                
+                while (rs.next()) {  
+                    
+                json_code cod=new json_code();
+                cod.json_id(rs.getString(1));
+                }
+                
                 int response = JOptionPane.showConfirmDialog(
                     null, "Login Successful", "Success", JOptionPane.DEFAULT_OPTION);
                 

@@ -40,18 +40,18 @@
                </font>
             </Label>
             <Label fx:id="assets_rst" prefHeight="30.0" prefWidth="54.0" text="Label" />
-            <JFXButton fx:id="asset_btn" buttonType="RAISED" prefHeight="30.0" prefWidth="64.0" text="more " />
+            <JFXButton fx:id="asset_btn" buttonType="RAISED" onAction="#goToAssets" prefHeight="30.0" prefWidth="64.0" text="more " />
          </children>
       </VBox>
       <VBox fx:id="totalCost_pane" alignment="CENTER" layoutX="564.0" layoutY="173.0" prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: #c9f5f5;">
          <children>
-            <Label fx:id="totalCostLbl" prefHeight="30.0" prefWidth="102.0" text="TOTAL COST">
+            <Label fx:id="totalCostLbl" prefHeight="30.0" prefWidth="102.0" text="MY PROFILE">
                <font>
                   <Font name="Aparajita" size="20.0" />
                </font>
             </Label>
-            <Label fx:id="cost_rst" prefHeight="30.0" prefWidth="54.0" text="Label" />
-            <JFXButton fx:id="totalCost_btn" buttonType="RAISED" prefHeight="30.0" prefWidth="78.0" text="more" textAlignment="CENTER" />
+            <Label fx:id="my_profile" prefHeight="30.0" prefWidth="54.0" text="Label" />
+            <JFXButton fx:id="profile_btn" buttonType="RAISED" onAction="#ToProfile" prefHeight="30.0" prefWidth="78.0" text="more" textAlignment="CENTER" />
          </children>
       </VBox>
       <VBox fx:id="workers_pane" alignment="CENTER" layoutX="874.0" layoutY="173.0" prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: #c9f5f5;">

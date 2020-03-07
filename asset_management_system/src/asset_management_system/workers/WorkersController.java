@@ -1,6 +1,7 @@
 
 package asset_management_system.workers;
 
+import asset_management_system.usedAlot.loop;
 import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
 import java.net.URL;
@@ -38,37 +39,38 @@ import javafx.stage.StageStyle;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 
 public class WorkersController implements Initializable {
      public Connection connection;
      PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
-    private ObservableList<workers> data;
+    public ObservableList<workers> data;
     
     @FXML
-    private TableColumn<workers, String> firstname_clmn;
+    public TableColumn<workers, String> firstname_clmn;
 
     @FXML
-    private TableColumn<workers, String> secondName_clmn;
+    public TableColumn<workers, String> secondName_clmn;
 
     @FXML
-    private TableColumn<workers, String> phoneNumber_clmn;
+    public TableColumn<workers, String> phoneNumber_clmn;
 
     @FXML
-    private TableColumn<workers, String> emailAddress_clmn;
+    public TableColumn<workers, String> emailAddress_clmn;
 
     @FXML
-    private TableColumn<workers, String> natID_clmn;
+    public TableColumn<workers, String> natID_clmn;
 
     @FXML
-    private TableColumn<workers, String> department_clmn;
+    public TableColumn<workers, String> department_clmn;
 
     @FXML
-    private TableColumn<workers, String> location_clmn;
+    public TableColumn<workers, String> location_clmn;
     
     @FXML
-    private TableView<workers> tbleView;
+    public TableView<workers> tbleView;
 
     @FXML
     private TextField searchBox;
@@ -84,6 +86,28 @@ public class WorkersController implements Initializable {
     
      @FXML
     private ImageView closeApp;
+     
+      @FXML
+    private ImageView backToDashboard;
+      
+      
+      
+      
+    @FXML
+    void imageClicked(MouseEvent event) throws IOException {
+         //you can use #onMousePressed or #orMouseClicked
+         Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/dashboard/dashboard.fxml"));
+           Scene newScene = new Scene(sceneFxml);
+
+            //getting stage
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            //setting scene on stage
+            window.setScene(newScene);
+            window.show();
+
+    }
+
 
     
 
@@ -134,6 +158,7 @@ public class WorkersController implements Initializable {
      public void LoadDataFrmDB() throws SQLException {
         //DB connection details
         try {
+            
             String dbName = "asset_management_system";
             String userName="root";
             String password="";
@@ -168,6 +193,8 @@ public class WorkersController implements Initializable {
 
         tbleView.setItems(null);
         tbleView.setItems(data);
+        
+        connection.close();
 
     }
      
@@ -224,56 +251,39 @@ public class WorkersController implements Initializable {
      }
      
      
-    public void reloader(){
-        java.util.TimerTask task = new java.util.TimerTask() {
-        int prevCount = 0; // you can declare it static
-        @Override
-        public void run() {
-            String dbName = "asset_management_system";
-            String userName="root";
-            String password="";
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
-            }            
+     
+      @FXML
+    void loadAll(MouseEvent event) {
+         try {
+             LoadDataFrmDB();
+         } catch (SQLException ex) {
+             Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
+         }
 
-            try {
-                connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, password);
-            } catch (SQLException ex) {
-                Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try {
-                ResultSet rs = connection.prepareStatement("Select Count(*) FROM worker_details").executeQuery();
-                int count = rs.getInt(1);
-                System.out.println("Count diff:"+ (prevCount-count));
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-    };
-    java.util.Timer timer = new java.util.Timer(true);// true to run timer as daemon thread
-    timer.schedule(task, 0, 1000);// Run task every 5 second
-    try {
-        Thread.sleep(5000); // Cancel task after 1 minute.
-    } catch (InterruptedException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
     }
+    
+     @FXML
+    void loadAll2(MouseEvent event) {
+         try {
+             LoadDataFrmDB();
+         } catch (SQLException ex) {
+             Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
+         }
+
+
     }
+
+     
+     
+   
     
      
 
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {    
-         try {
-             LoadDataFrmDB();
-             
-         } catch (SQLException ex) {
-             Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
-         }
+    public void initialize(URL url, ResourceBundle rb) { 
+        
+        
          
         checkBox.getItems().addAll("first name","second name","phone number","email","national ID","location","department");
         checkBox.setValue("first name");
@@ -334,7 +344,9 @@ public class WorkersController implements Initializable {
            
        });
          
-         reloader();
+         
+         
+        
         
     }    
     

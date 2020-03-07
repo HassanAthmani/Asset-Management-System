@@ -1,6 +1,8 @@
 package asset_management_system.dashboard;
 
+import asset_management_system.usedAlot.json_read;
 import com.jfoenix.controls.JFXButton;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -30,6 +32,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.json.simple.parser.ParseException;
 
 
 public class DashboardController implements Initializable {
@@ -77,7 +80,7 @@ public class DashboardController implements Initializable {
     private AnchorPane tableView_pane;
     
     @FXML
-    private JFXButton totalCost_btn;
+    private JFXButton profile_btn;
     
      @FXML
     private JFXButton workers_btn;
@@ -113,7 +116,7 @@ public class DashboardController implements Initializable {
     private Label assets_rst;
     
       @FXML
-    private Label cost_rst;
+    private Label my_profile;
       
       @FXML
     private Label workers_rst;
@@ -126,6 +129,24 @@ public class DashboardController implements Initializable {
     
     @FXML
     private ImageView closeApp;
+    
+    @FXML
+    void ToProfile(ActionEvent event) throws IOException {
+        //you can use #onMousePressed or #orMouseClicked
+         Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/profile/profile.fxml"));
+           Scene newScene = new Scene(sceneFxml);
+           
+           newScene.getStylesheets().add("/asset_management_system/css/tabpane.css"); 
+
+            //getting stage
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            //setting scene on stage
+            window.setScene(newScene);
+            window.show();
+            window.centerOnScreen();
+
+    }
      
      @FXML
      public void closeAppWindow(MouseEvent event){
@@ -192,7 +213,7 @@ public class DashboardController implements Initializable {
     }
      
   ////////  https://www.mysqltutorial.org/mysql-count/
-     public void countData() throws SQLException{
+     public void countData() throws SQLException, IOException, FileNotFoundException, ParseException{
           //DB connection details
         try {
             String dbName = "asset_management_system";
@@ -202,10 +223,13 @@ public class DashboardController implements Initializable {
             
 
             connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, password);
+            json_read jsonReader=new json_read();
+            String id=jsonReader.profile_id();
+            
       
             //Execute query and store result in a resultset
             ResultSet rs = connection.createStatement().executeQuery("SELECT COUNT(*) FROM assets");
-            ResultSet rs1 = connection.createStatement().executeQuery("SELECT SUM(cost) FROM assets");
+            ResultSet rs1 = connection.createStatement().executeQuery("SELECT workerName FROM worker_details WHERE workerID= "+id);
             ResultSet rs2 = connection.createStatement().executeQuery("SELECT COUNT(*) FROM worker_details");
             ResultSet rs3 = connection.createStatement().executeQuery("SELECT COUNT(*) FROM assigned_asset");
             
@@ -213,7 +237,7 @@ public class DashboardController implements Initializable {
                 assets_rst.setText(rs.getString(1));
             }
              while (rs1.next()) {                               
-                cost_rst.setText(rs1.getString(1));
+                my_profile.setText(rs1.getString(1));
             }
              while (rs2.next()) {                               
                 workers_rst.setText(rs2.getString(1));
@@ -244,13 +268,13 @@ public class DashboardController implements Initializable {
        //LBLS WITH DB RESULTS
        String rst="-fx-font-family: 'Lobster', cursive; -fx-font-size: 16;";
        assets_rst.setStyle(rst);
-       cost_rst.setStyle(rst);
+       my_profile.setStyle(rst);
        workers_rst.setStyle(rst);
        withWorkers_rst.setStyle(rst);
        
        //BUTTON FONTS 
        String btn="-fx-font-family: 'Yanone Kaffeesatz', sans-serif; -fx-font-size: 16;";
-       totalCost_btn.setStyle(btn);
+       profile_btn.setStyle(btn);
        workers_btn.setStyle(btn);
       assetWorkers_btn.setStyle(btn);
       asset_btn.setStyle(btn);
@@ -261,6 +285,25 @@ public class DashboardController implements Initializable {
           //you can use #onMousePressed or #orMouseClicked
          Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/workers/workers.fxml"));
            Scene newScene = new Scene(sceneFxml);
+           
+
+            //getting stage
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            //setting scene on stage
+            window.setScene(newScene);
+            window.show();
+            window.centerOnScreen();
+
+    }
+    
+     @FXML
+    void goToAssets(ActionEvent event) throws IOException {
+         //you can use #onMousePressed or #orMouseClicked
+         Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/assets/assets.fxml"));
+           Scene newScene = new Scene(sceneFxml);
+           
+           newScene.getStylesheets().add("/asset_management_system/css/tabpane.css"); 
 
             //getting stage
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -279,6 +322,10 @@ public class DashboardController implements Initializable {
             LoadDataFrmDB();
             countData();
         } catch (SQLException ex) {
+            Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
             Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
         }
        
