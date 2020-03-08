@@ -254,22 +254,32 @@ public class WorkersController implements Initializable {
      
       @FXML
     void loadAll(MouseEvent event) {
-         try {
+        /* try {
              LoadDataFrmDB();
          } catch (SQLException ex) {
              Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
-         }
+         }*/
 
     }
     
      @FXML
     void loadAll2(MouseEvent event) {
-         try {
+         /*try {
+             LoadDataFrmDB();
+         } catch (SQLException ex) {
+             Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
+         }*/
+
+
+    }
+    
+       @FXML
+    void sample(MouseEvent event) {
+        try {
              LoadDataFrmDB();
          } catch (SQLException ex) {
              Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
          }
-
 
     }
 
@@ -282,7 +292,11 @@ public class WorkersController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) { 
-        
+         try {
+             LoadDataFrmDB();
+         } catch (SQLException ex) {
+             Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
+         }
         
          
         checkBox.getItems().addAll("first name","second name","phone number","email","national ID","location","department");

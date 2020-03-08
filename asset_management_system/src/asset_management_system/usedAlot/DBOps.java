@@ -36,6 +36,51 @@ public class DBOps {
         
     }
     
+    public  void ProfileaddData(String id,String firstname,String secondname,String phoneno,String natid,String email,String department,String location,String pas) throws SQLException{
+         try {
+
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/mysql?zeroDateTimeBehavior=convertToNull";
+            connection = DriverManager.getConnection(url, userName, password);
+            Statement statement = connection.createStatement();
+
+            
+
+            String sql = "INSERT INTO `asset_management_system`.`worker_details` (`workerID`, `workerName`, `workerLastName`, `workerTell`, `workerEmail`, `workerNationalID`,`department`,`location`,`pass_word`) VALUES ('" + id + "','" + firstname + "','" + secondname + "','" + phoneno + "','" + email + "','"+natid+"','"+department+"','"+location+"','" + pas + " ' );";
+
+            statement.executeUpdate(sql);     
+            
+            connection.close();
+          
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Error: " + ex);
+        }
+        
+    }
+    
+    public void deleteRecord(String id) throws SQLException{
+        try {
+
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/mysql?zeroDateTimeBehavior=convertToNull";
+            connection = DriverManager.getConnection(url, userName, password);
+            Statement statement = connection.createStatement();
+
+            
+
+            String sql = "DELETE FROM `asset_management_system`.`worker_details` WHERE workerID= "+id;
+
+            statement.executeUpdate(sql);     
+            
+            connection.close();
+          
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Error: " + ex);
+        }
+        
+        
+    }
+    
 }
 
 /*String email= email1.getText();

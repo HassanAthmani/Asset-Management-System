@@ -17,7 +17,7 @@ public class special_char {
          String password="12345";
        Pattern letter = Pattern.compile("[a-zA-z]");
         Pattern digit = Pattern.compile("[0-9]");
-        Pattern special = Pattern.compile ("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
+        Pattern special = Pattern.compile ("[//!@#$%&*()_+=|<>?{}\\[\\]~-]");
         //Pattern eight = Pattern.compile (".{8}");
 
 
@@ -37,13 +37,13 @@ public class special_char {
     public static boolean hasSpecialAndDigits(String characters ){
          
         Pattern digit = Pattern.compile("[0-9]");
-        Pattern special = Pattern.compile ("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
+        Pattern special = Pattern.compile ("[//!@#$%&*()_+=|<>?{}\\[\\]~-]");
        
            Matcher hasDigit = digit.matcher(characters);
            Matcher hasSpecial = special.matcher(characters);
                    
            
-               return (hasDigit.find()==true && hasSpecial.find()==true);                 
+               return (hasDigit.find()==true || hasSpecial.find()==true);                 
         
     }
     
@@ -51,13 +51,13 @@ public class special_char {
     public static boolean hasSpecialAndLetters(String characters ){
         
         Pattern letter = Pattern.compile("[a-zA-z]");        
-        Pattern special = Pattern.compile ("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
+        Pattern special = Pattern.compile ("[//!@#$%&*()_+=|<>?{}\\[\\]~-]");
        
            Matcher hasLetter = letter.matcher(characters);          
            Matcher hasSpecial = special.matcher(characters);
 
           // return hasLetter.find() && hasDigit.find() && hasSpecial.find();
-          return (hasSpecial.find()==true && hasLetter.find()==true); 
+          return (hasSpecial.find()==true || hasLetter.find()==true); 
         
     }
     

@@ -15,6 +15,8 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javax.swing.JOptionPane;
 
 /**
@@ -29,6 +31,7 @@ public class checkDetails {
     String invalid="-jfx-focus-color: #fc1212;";
     String valid="-jfx-focus-color: #4059a9;";
     
+    //FOR PHONE NUMBERS AND ID
     public  void checker(JFXTextField example,String column,JFXButton button){
         
          example.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue,String newValue) -> {
@@ -36,7 +39,16 @@ public class checkDetails {
            if(oldValue != newValue){
                //DB connection details
                if(!example.getText().isEmpty()){
-        try {
+                   special_char specialChar=new special_char();
+                   if(specialChar.hasSpecialAndLetters(example.getText())==true){
+                       int response = JOptionPane.showConfirmDialog(
+                    null, "No special characters and letters are to be used in this field", "error", JOptionPane.DEFAULT_OPTION);
+                       example.setStyle(invalid);
+                        button.setDisable(true);  
+                       
+                   }
+                   else{
+                       try {
             Class.forName("com.mysql.jdbc.Driver");
 
             String dbName = "asset_management_system";
@@ -47,9 +59,9 @@ public class checkDetails {
             ResultSet rs = connection.createStatement().executeQuery("SELECT COUNT(*) FROM `asset_management_system`.`worker_details` WHERE "+column+" = '"+srch+"'");
             int quan;
             int a=1;
-               while(rs.next())
-              {
+               while(rs.next()){
 
+              
              String str = rs.getString(1);
              quan = Integer.parseInt(str);
              System.out.println(quan);
@@ -74,6 +86,9 @@ public class checkDetails {
                catch (SQLException ex) {     
                        Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
                    }     
+                   }
+                   
+        
                }
            }
          
@@ -88,5 +103,43 @@ public class checkDetails {
                      });
         
     }
+    
+    
+    //FOR   NAME LOCATION AND DEPT  
+    public void checker2(JFXTextField example,JFXButton button){
+        example.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue,String newValue) -> {
+           
+           if(oldValue != newValue){
+               //DB connection details
+               if(!example.getText().isEmpty()){
+                   special_char specialChar=new special_char();
+                   if(specialChar.hasSpecialAndDigits(example.getText())==true){
+                        int response = JOptionPane.showConfirmDialog(
+                    null, "No special characters and numbers are to be used in this field", "error", JOptionPane.DEFAULT_OPTION);
+                       example.setStyle(invalid);
+                        button.setDisable(true); 
+                       
+                   }
+                   else{
+                       example.setStyle(valid);
+                        button.setDisable(false); 
+                       
+                   }
+       
+               
+           }
+         
+               if ( example.getText().isEmpty() ){
+                   //DB connection details
+                   
+        
+               }
+           }
+           
+           
+       });
+    }
+    
+    
     
 }

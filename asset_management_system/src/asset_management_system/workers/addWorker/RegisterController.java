@@ -119,10 +119,12 @@ public class RegisterController implements Initializable {
         emailValidation valid=new emailValidation();
         valid.emailVal(email,"workerEmail",register_btn);
         nw.checker(phoneNo,"workerTell",register_btn);
-        //nw.checker(email,"workerEmail",register_btn);
-         nw.checker(natID,"workerNationalID",register_btn);
-         //nw.checker(department,"department",register_btn);
-         //nw.checker(location,"location",register_btn);
+        nw.checker(natID,"workerNationalID",register_btn);
+        
+        nw.checker2(firstName,register_btn);
+        nw.checker2(secondName,register_btn);         
+         nw.checker2(department,register_btn);
+         nw.checker2(location,register_btn);
          
                }
                }
