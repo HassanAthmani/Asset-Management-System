@@ -81,6 +81,37 @@ public class DBOps {
         
     }
     
+    public void addAsset(String assetName,String assetCode,String assetDetails,String workerName,String workerID,String category,String cost) throws SQLException{
+         try {
+
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/mysql?zeroDateTimeBehavior=convertToNull";
+            connection = DriverManager.getConnection(url, userName, password);
+            Statement statement = connection.createStatement();
+
+            
+
+            String sql = "INSERT INTO `asset_management_system`.`assets` (`assetID`, `assetName`, `assetCode`, `assetDetails`, `workerName`, `workerID`,`categorryID`,`additionDate`,`cost`) VALUES (NULL,'" + assetName + "','" + assetCode + "','" + assetDetails + "','" + workerName + "','"+ workerID +"','"+category+"',"+" CURDATE()"+",'" + cost+ " ' );";
+
+            statement.executeUpdate(sql);   
+            
+            String getAssetData="SELECT * FROM `asset_management_system`.`assets` WHERE assetCode="+assetCode;
+            
+             ResultSet rs = connection.createStatement().executeQuery(getAssetData); 
+             
+             while (rs.next()) {  
+                    
+                json_code cod=new json_code();
+                cod.json_assetID(rs.getString(1));
+                }
+            
+            connection.close();
+          
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Error: " + ex);
+        }
+    }
+    
 }
 
 /*String email= email1.getText();

@@ -21,11 +21,10 @@ public class json_code {
      //Add worker id
         JSONObject id_info = new JSONObject();
         id_info.put("worker_id", id);
-                 
-             
-         
+        
+       
         //Write JSON file
-        try (FileWriter file = new FileWriter(new File("worker_id.json"))) {
+        try (FileWriter file = new FileWriter(new File(".//json//worker_id.json"))) {
             
  
             file.write(id_info.toJSONString());
@@ -52,7 +51,7 @@ public class json_code {
              
          
         //Write JSON file
-        try (FileWriter file = new FileWriter(new File("worker_profile.json"))) {
+        try (FileWriter file = new FileWriter(new File(".//json//worker_profile.json"))) {
             
  
             file.write(id_info.toJSONString());
@@ -63,5 +62,22 @@ public class json_code {
         }
     }
     
+    public void json_assetID(String id){
+     //Add worker id
+        JSONObject id_info = new JSONObject();
+        id_info.put("asset_id", id);
+        
+       
+        //Write JSON file
+        try (FileWriter file = new FileWriter(new File(".//json//addedAssetID.json"))) {
+            
+ 
+            file.write(id_info.toJSONString());
+            file.flush();
+ 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     
 }

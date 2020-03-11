@@ -70,6 +70,11 @@
             <ImageView fx:id="imageviewer" fitHeight="144.0" fitWidth="193.0" layoutX="22.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true" />
             <Label fx:id="firstName_lbl" layoutX="272.0" layoutY="36.0" prefHeight="34.0" prefWidth="230.0" text="FirstName" />
             <Label fx:id="lastName_lbl" layoutX="543.0" layoutY="36.0" prefHeight="34.0" prefWidth="230.0" text="LastName" />
+            <ImageView fx:id="editInfo1" fitHeight="26.0" fitWidth="26.0" layoutX="221.0" layoutY="138.0" onMousePressed="#editStuff" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/ic_edit.imageset/ic_edit_2x.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
       <ImageView fx:id="closeApp" fitHeight="38.0" fitWidth="44.0" layoutX="1435.0" layoutY="14.0" onMousePressed="#closeAppWindow" pickOnBounds="true" preserveRatio="true">
@@ -80,6 +85,11 @@
       <ImageView fx:id="backToDashboard" fitHeight="38.0" fitWidth="44.0" layoutX="283.0" layoutY="14.0" onMousePressed="#imageClicked" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/ic_arrow_back.imageset/ic_arrow_back_2x.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="minimizer" fitHeight="38.0" fitWidth="44.0" layoutX="1379.0" layoutY="14.0" onMousePressed="#minimizeIt" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/minimize/minimize.png" />
          </image>
       </ImageView>
    </children>

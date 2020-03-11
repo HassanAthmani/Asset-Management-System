@@ -61,5 +61,21 @@ public class special_char {
         
     }
     
+    ///FOR ASSET CODE NO SPECIAL CHAR NEEDED
+    public static boolean hasSpecial(String characters ){
+        
+       // Pattern letter = Pattern.compile("[a-zA-z]");        
+        Pattern special = Pattern.compile ("[//!@#$%&*()_+=|<>?{}\\[\\]~-]");
+       
+          // Matcher hasLetter = letter.matcher(characters);          
+           Matcher hasSpecial = special.matcher(characters);
+
+          // return hasLetter.find() && hasDigit.find() && hasSpecial.find();
+          return (hasSpecial.find()); 
+        
+    }
+    
+   
+    
     
 }

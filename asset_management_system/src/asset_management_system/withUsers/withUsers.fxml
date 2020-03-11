@@ -1,19 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="900.0" prefWidth="1500.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1" fx:controller="asset_management_system.withUsers.WithUsersController">
+<AnchorPane id="AnchorPane" onMouseEntered="#loadFromDB" prefHeight="900.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="asset_management_system.withUsers.WithUsersController">
    <children>
       <VBox fx:id="vbox" prefHeight="900.0" prefWidth="240.0" style="-fx-background-color: #28d474; -fx-padding: 10; -fx-spacing: 8;" />
-      <TableView layoutX="284.0" layoutY="153.0" prefHeight="677.0" prefWidth="1159.0">
+      <TableView fx:id="withUsers_tbl" layoutX="284.0" layoutY="153.0" prefHeight="677.0" prefWidth="1159.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
+          <TableColumn fx:id="id" prefWidth="84.79998779296875" text="ID" />
+          <TableColumn fx:id="worker_id" prefWidth="84.0" text="WORKER ID" />
+            <TableColumn fx:id="worker_name" prefWidth="141.59994506835938" text="WORKER NAME" />
+            <TableColumn fx:id="worker_phoneNo" prefWidth="129.60003662109375" text="WORKER PHONE NO" />
+            <TableColumn fx:id="worker_email" prefWidth="182.40008544921875" text="WORKER EMAIL" />
+            <TableColumn fx:id="asset_id" prefWidth="81.5999755859375" text="ASSET ID" />
+            <TableColumn fx:id="asset_name" prefWidth="131.9998779296875" text="ASSET NAME" />
+            <TableColumn fx:id="asset_code" prefWidth="92.800048828125" text="ASSET CODE" />
+            <TableColumn fx:id="assigned_date" prefWidth="161.5999755859375" text="ASSIGNED DATE" />
+            <TableColumn fx:id="columnEdit" prefWidth="73.599853515625" />
         </columns>
       </TableView>
+      <TextField fx:id="search" layoutX="284.0" layoutY="101.0" prefHeight="26.0" prefWidth="209.0" />
+      <ChoiceBox fx:id="choice" layoutX="533.0" layoutY="101.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

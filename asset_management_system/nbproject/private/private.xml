@@ -3,10 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/User/Documents/GitHub/Asset-Management-System/asset_management_system/src/asset_management_system/login/forgottenPass/ForgottenPassController.java</file>
             <file>file:/C:/Users/User/Documents/GitHub/Asset-Management-System/asset_management_system/src/asset_management_system/workers/WorkersController.java</file>
-            <file>file:/C:/Users/User/Documents/GitHub/Asset-Management-System/asset_management_system/src/asset_management_system/profile/ProfileController.java</file>
+            <file>file:/C:/Users/User/Documents/GitHub/Asset-Management-System/asset_management_system/src/asset_management_system/withUsers/withUsers.java</file>
+            <file>file:/C:/Users/User/Documents/GitHub/Asset-Management-System/asset_management_system/src/asset_management_system/withUsers/WithUsersController.java</file>
             <file>file:/C:/Users/User/Documents/GitHub/Asset-Management-System/asset_management_system/src/asset_management_system/assets/AssetsController.java</file>
+            <file>file:/C:/Users/User/Documents/GitHub/Asset-Management-System/asset_management_system/src/asset_management_system/assets/all_assets.java</file>
         </group>
     </open-files>
 </project-private>

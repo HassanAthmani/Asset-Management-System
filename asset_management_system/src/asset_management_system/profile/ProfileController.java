@@ -6,6 +6,7 @@
 package asset_management_system.profile;
 
 import asset_management_system.usedAlot.DBOps;
+import asset_management_system.usedAlot.checkDetails;
 import asset_management_system.usedAlot.json_code;
 import asset_management_system.usedAlot.json_read;
 import com.jfoenix.controls.JFXPasswordField;
@@ -150,6 +151,14 @@ public class ProfileController implements Initializable {
      
      @FXML
     private Label name1_lbl;
+     
+      @FXML
+    void  minimizeIt(MouseEvent event){
+        Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+            // is stage minimizable into task bar. (true | false)
+            stage.setIconified(true);
+        
+    }
      
      @FXML
     void cancelAll(MouseEvent event){
@@ -365,6 +374,14 @@ public class ProfileController implements Initializable {
                 name2_lbl.setVisible(false);
              // changePass.setVisible(false);
              cancelChanges.setVisible(false);
+             
+             ///NOT EDITABLE
+               current_pass.setEditable(false);
+                phoneNo_txtfield.setEditable(false);
+                email_txtfield.setEditable(false);
+                nationalID_txtfield.setEditable(false);
+                department_txtfield.setEditable(false);
+                location_txtfield.setEditable(false);
               
             }else if((!new_pass.getText().isEmpty() && !confirm_pass.getText().isEmpty()) && (Objects.equals(new_pass.getText(), confirm_pass.getText()) && (!firstName_txtfield.getText().isEmpty() && !secondName_txtfield.getText().isEmpty() &&  !phoneNo_txtfield.getText().isEmpty() && !email_txtfield.getText().isEmpty() && !nationalID_txtfield.getText().isEmpty() && !department_txtfield.getText().isEmpty() && !location_txtfield.getText().isEmpty()) )){
                
@@ -382,6 +399,14 @@ public class ProfileController implements Initializable {
                 name2_lbl.setVisible(false);
              // changePass.setVisible(false);
              cancelChanges.setVisible(false);
+             
+             //NOT EDITABLE
+               current_pass.setEditable(false);
+                phoneNo_txtfield.setEditable(false);
+                email_txtfield.setEditable(false);
+                nationalID_txtfield.setEditable(false);
+                department_txtfield.setEditable(false);
+                location_txtfield.setEditable(false);
             }    
    
     }
@@ -405,7 +430,15 @@ public class ProfileController implements Initializable {
         //changePass.setVisible(false);
         pas_text.setVisible(false);
         cancelChanges.setVisible(false);
-                
+        
+        checkDetails nw=new checkDetails();
+        nw.profile_checker(phoneNo_txtfield,"workerTell", saveInfo);
+        nw.profile_checker(nationalID_txtfield,"workerNationalID", saveInfo);
+        
+        nw.profile_checker2(firstName_txtfield,saveInfo);
+        nw.profile_checker2(secondName_txtfield,saveInfo);
+        nw.profile_checker2(department_txtfield,saveInfo);
+        nw.profile_checker2(location_txtfield,saveInfo);
         
     }    
     

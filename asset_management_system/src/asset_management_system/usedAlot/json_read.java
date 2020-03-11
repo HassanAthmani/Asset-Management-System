@@ -16,7 +16,7 @@ public class json_read {
         JSONParser parser = new JSONParser();
         String name;
       
-         Object obj = parser.parse(new FileReader("worker_id.json"));
+         Object obj = parser.parse(new FileReader(".//json//worker_id.json"));
          JSONObject jsonObject = (JSONObject)obj;
          name = (String)jsonObject.get("worker_id");
           
@@ -62,7 +62,7 @@ public class json_read {
         JSONParser parser = new JSONParser();
         String pas;
       
-         Object obj = parser.parse(new FileReader("worker_profile.json"));
+         Object obj = parser.parse(new FileReader(".//json//worker_profile.json"));
          JSONObject jsonObject = (JSONObject)obj;
          pas = (String)jsonObject.get("pass_word");
           

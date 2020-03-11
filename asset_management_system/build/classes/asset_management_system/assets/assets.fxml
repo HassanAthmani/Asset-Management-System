@@ -18,19 +18,20 @@
         <tabs>
             <Tab text="ALL ASSETS">
                <content>
-                  <AnchorPane fx:id="cost" minHeight="0.0" minWidth="0.0" prefHeight="733.0" prefWidth="1192.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" onMouseEntered="#loadFromDB" prefHeight="733.0" prefWidth="1192.0">
                      <children>
                         <TableView fx:id="all_assets_tbl" layoutX="-1.0" layoutY="94.0" prefHeight="662.0" prefWidth="1218.0">
                            <columns>
-                              <TableColumn fx:id="asset_id" prefWidth="119.19998168945312" text="ASSET ID" />
-                              <TableColumn fx:id="asset_name" prefWidth="124.79995727539062" text="ASSET NAME" />
-                              <TableColumn fx:id="asset_code" prefWidth="136.80007934570312" text="ASSET CODE" />
-                              <TableColumn fx:id="asset_details" prefWidth="141.5999755859375" text="ASSET DETAILS" />
-                              <TableColumn fx:id="worker_name" prefWidth="143.199951171875" text="WORKER NAME" />
-                              <TableColumn fx:id="worker_id" prefWidth="129.60009765625" text="WORKER ID" />
-                              <TableColumn fx:id="category_id" prefWidth="162.4000244140625" text="CATEGORY ID" />
-                              <TableColumn fx:id="addition_date" prefWidth="132.0" text="ADDITION DATE" />
-                              <TableColumn prefWidth="116.0" text="COST" />
+                              <TableColumn fx:id="asset_id" prefWidth="94.39999389648438" text="ASSET ID" />
+                              <TableColumn fx:id="asset_name" prefWidth="150.4000244140625" text="ASSET NAME" />
+                              <TableColumn fx:id="asset_code" prefWidth="98.39996337890625" text="ASSET CODE" />
+                              <TableColumn fx:id="asset_details101" prefWidth="127.20001220703125" text="ASSET DETAILS" />
+                              <TableColumn fx:id="worker_name" prefWidth="154.39996337890625" text="WORKER NAME" />
+                              <TableColumn fx:id="worker_id" prefWidth="120.79998779296875" text="WORKER ID" />
+                              <TableColumn fx:id="category_id" prefWidth="135.199951171875" text="CATEGORY ID" />
+                              <TableColumn fx:id="addition_date" minWidth="0.0" prefWidth="165.5999755859375" text="ADDITION DATE" />
+                              <TableColumn fx:id="cost" prefWidth="93.5999755859375" text="COST" />
+                              <TableColumn fx:id="columnEdit" prefWidth="56.800048828125" />
                            </columns>
                         </TableView>
                         <TextField fx:id="search" layoutX="346.0" layoutY="38.0" prefHeight="26.0" prefWidth="217.0" />
@@ -41,9 +42,9 @@
             </Tab>
             <Tab text="ASSETS">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="733.0" prefWidth="1192.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" onMouseEntered="#loadFromDB1" prefHeight="733.0" prefWidth="1192.0">
                      <children>
-                        <TableView fx:id="assets_tbl" layoutX="-1.0" layoutY="94.0" prefHeight="662.0" prefWidth="1218.0">
+                        <TableView fx:id="assets_tbl" layoutY="93.0" prefHeight="662.0" prefWidth="1218.0">
                            <columns>
                               <TableColumn fx:id="asset1_id" prefWidth="75.0" text="ASSET ID " />
                               <TableColumn fx:id="asset1_name" prefWidth="166.39999389648438" text="ASSET NAME" />
@@ -51,9 +52,10 @@
                               <TableColumn fx:id="asset1_details" prefWidth="177.60003662109375" text="ASSET DETAILS" />
                               <TableColumn fx:id="worker1_name" prefWidth="140.0" text="WORKER NAME" />
                               <TableColumn fx:id="worker1_id" prefWidth="143.99993896484375" text="WORKER ID" />
-                              <TableColumn fx:id="category1_id" prefWidth="130.4000244140625" text="CATEGORY ID" />
-                              <TableColumn fx:id="addition1_date" prefWidth="163.99993896484375" text="ADDITION DATE" />
-                              <TableColumn fx:id="cost1" prefWidth="95.199951171875" text="COST" />
+                              <TableColumn fx:id="category1_id" prefWidth="100.800048828125" text="CATEGORY ID" />
+                              <TableColumn fx:id="addition1_date" prefWidth="116.7998046875" text="ADDITION DATE" />
+                              <TableColumn fx:id="cost1" prefWidth="95.999755859375" text="COST" />
+                              <TableColumn fx:id="columnEdit1" prefWidth="70.39990234375" />
                            </columns>
                         </TableView>
                         <ChoiceBox fx:id="choice1" layoutX="302.0" layoutY="42.0" prefWidth="150.0" />
@@ -64,7 +66,7 @@
             </Tab>
             <Tab text="ASSETS IN MAINTENANCE">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="733.0" prefWidth="1192.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" onMouseEntered="#loadFromDB2" prefHeight="733.0" prefWidth="1192.0">
                      <children>
                         <TableView fx:id="maintenance_tbl" layoutX="-1.0" layoutY="94.0" prefHeight="662.0" prefWidth="1218.0">
                            <columns>
@@ -73,10 +75,11 @@
                               <TableColumn fx:id="asset2_code" prefWidth="96.00006103515625" text="ASSET CODE" />
                               <TableColumn fx:id="asset2_details" prefWidth="136.00006103515625" text="ASSET DETAILS" />
                               <TableColumn fx:id="worker2_name" prefWidth="132.0" text="WORKER NAME" />
-                              <TableColumn fx:id="worker2_id" prefWidth="126.39996337890625" text="WORKER ID" />
-                              <TableColumn fx:id="category2_id" prefWidth="154.4000244140625" text="CATEGORY ID" />
-                              <TableColumn fx:id="addition2_date" prefWidth="191.199951171875" text="ADDITION DATE" />
-                              <TableColumn fx:id="maintenance2_date" prefWidth="164.0" text="MAINTENANCE DATE" />
+                              <TableColumn fx:id="worker2_id" prefWidth="108.800048828125" text="WORKER ID" />
+                              <TableColumn fx:id="category2_id" prefWidth="96.800048828125" text="CATEGORY ID" />
+                              <TableColumn fx:id="addition2_date" prefWidth="148.0001220703125" text="ADDITION DATE" />
+                              <TableColumn fx:id="maintenance2_date" prefWidth="167.1998291015625" text="MAINTENANCE DATE" />
+                              <TableColumn fx:id="columnEdit2" prefWidth="112.0" />
                            </columns>
                         </TableView>
                         <TextField fx:id="search2" layoutX="14.0" layoutY="34.0" prefHeight="26.0" prefWidth="216.0" />
@@ -87,20 +90,21 @@
             </Tab>
             <Tab text="DEFERRED ASSET">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="733.0" prefWidth="1192.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" onMouseEntered="#loadFromDB3" prefHeight="733.0" prefWidth="1192.0">
                      <children>
                         <TableView fx:id="deferred_tbl" layoutX="-1.0" layoutY="94.0" prefHeight="662.0" prefWidth="1218.0">
                            <columns>
-                              <TableColumn prefWidth="63.199951171875" text="ASSET ID" />
-                              <TableColumn prefWidth="107.20001220703125" text="ASSET NAME" />
-                              <TableColumn prefWidth="77.60009765625" text="ASSET CODE" />
-                              <TableColumn prefWidth="166.39990234375" text="ASSET DETAILS" />
-                              <TableColumn prefWidth="124.79998779296875" text="WORKER NAME" />
-                              <TableColumn prefWidth="128.7999267578125" text="WORKER ID" />
-                              <TableColumn prefWidth="129.5999755859375" text="CATEGORY ID" />
-                              <TableColumn prefWidth="117.60003662109375" text="ADDITION DATE" />
-                              <TableColumn prefWidth="113.599853515625" text="DEFERRED DATE" />
-                              <TableColumn prefWidth="177.59991455078125" text="REASON" />
+                              <TableColumn fx:id="asset3_id" prefWidth="63.199951171875" text="ASSET ID" />
+                              <TableColumn fx:id="asset3_name" prefWidth="107.20001220703125" text="ASSET NAME" />
+                              <TableColumn fx:id="asset3_code" prefWidth="77.60009765625" text="ASSET CODE" />
+                              <TableColumn fx:id="asset3_details" prefWidth="166.39990234375" text="ASSET DETAILS" />
+                              <TableColumn fx:id="worker3_name" prefWidth="124.79998779296875" text="WORKER NAME" />
+                              <TableColumn fx:id="worker3_id" prefWidth="73.5999755859375" text="WORKER ID" />
+                              <TableColumn fx:id="category3_id" prefWidth="88.800048828125" text="CATEGORY ID" />
+                              <TableColumn fx:id="addition3_date" prefWidth="108.79998779296875" text="ADDITION DATE" />
+                              <TableColumn fx:id="deferred3_date" prefWidth="111.199951171875" text="DEFERRED DATE" />
+                              <TableColumn fx:id="reason3" prefWidth="190.39990234375" text="REASON" />
+                              <TableColumn fx:id="columnEdit3" prefWidth="80.800048828125" />
                            </columns>
                         </TableView>
                         <ChoiceBox fx:id="choice3" layoutX="283.0" layoutY="38.0" prefWidth="150.0" />
@@ -114,6 +118,16 @@
       <ImageView fx:id="backToDashboard" fitHeight="38.0" fitWidth="44.0" layoutX="262.0" layoutY="14.0" onMousePressed="#imageClicked" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/ic_arrow_back.imageset/ic_arrow_back_2x.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="minimizer" fitHeight="38.0" fitWidth="44.0" layoutX="1368.0" layoutY="14.0" onMousePressed="#minimizeIt" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/minimize/minimize.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="closeApp" fitHeight="38.0" fitWidth="44.0" layoutX="1422.0" layoutY="14.0" onMousePressed="#closeAppWindow" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/ic_close.imageset/ic_close_2x.png" />
          </image>
       </ImageView>
    </children>
