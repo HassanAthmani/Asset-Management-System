@@ -144,6 +144,9 @@ public class ProfileController implements Initializable {
     @FXML
     private ImageView saveInfo;
     
+    @FXML
+    private ImageView min;
+    
      
      
      @FXML
@@ -151,13 +154,13 @@ public class ProfileController implements Initializable {
      
      @FXML
     private Label name1_lbl;
-     
+    
       @FXML
-    void  minimizeIt(MouseEvent event){
-        Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-            // is stage minimizable into task bar. (true | false)
-            stage.setIconified(true);
-        
+    void minimize(MouseEvent event) {
+        //getting stage
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setIconified(true);
+
     }
      
      @FXML
@@ -178,6 +181,14 @@ public class ProfileController implements Initializable {
        // changePass.setVisible(false);
         pas_text.setVisible(false);
         cancelChanges.setVisible(false);
+        editInfo.setVisible(true);
+        
+        current_pass.setEditable(false);
+         phoneNo_txtfield.setEditable(false);
+         email_txtfield.setEditable(false);
+         nationalID_txtfield.setEditable(false);
+         department_txtfield.setEditable(false);
+         location_txtfield.setEditable(false);
             
         } catch (IOException ex) {
             Logger.getLogger(ProfileController.class.getName()).log(Level.SEVERE, null, ex);
@@ -240,6 +251,12 @@ public class ProfileController implements Initializable {
         name2_lbl.setVisible(true);
         cancelChanges.setVisible(true);
        // changePass.setVisible(true);
+       current_pass.setEditable(true);
+        phoneNo_txtfield.setEditable(true);
+        email_txtfield.setEditable(true);
+        nationalID_txtfield.setEditable(true);
+        department_txtfield.setEditable(true);
+        location_txtfield.setEditable(true);
        
         
     }
@@ -256,7 +273,7 @@ public class ProfileController implements Initializable {
             
             connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, password);
             //Execute query and store result in a resultset
-            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM worker_details WHERE workerID= "+id);
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM current_workers WHERE workerID= "+id);
             
              while (rs.next()) {    
                  
@@ -298,9 +315,12 @@ public class ProfileController implements Initializable {
         }
     }
     
-    public void loadFromDB() throws SQLException{
+    public void loadFromDB() throws SQLException, IOException, FileNotFoundException, ParseException{
          //DB connection details
         try {
+            json_read jsonReader=new json_read();
+        
+            String id=jsonReader.profile_id();
             String dbName = "asset_management_system";
             String userName="root";
             String password="";
@@ -310,7 +330,7 @@ public class ProfileController implements Initializable {
             connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, password);
             data = FXCollections.observableArrayList();
             //Execute query and store result in a resultset
-            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM assets");
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM assigned_assets WHERE workerID="+id);
 
             while (rs.next()) {
                 //get string from db

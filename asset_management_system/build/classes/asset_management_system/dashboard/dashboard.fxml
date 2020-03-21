@@ -73,7 +73,7 @@
                </font>
             </Label>
             <Label fx:id="withWorkers_rst" prefHeight="30.0" prefWidth="54.0" text="Label" />
-            <JFXButton fx:id="assetWorkers_btn" buttonType="RAISED" prefHeight="30.0" prefWidth="78.0" text="more" textAlignment="CENTER" />
+            <JFXButton fx:id="assetWorkers_btn" buttonType="RAISED" onAction="#openWithWorkers" prefHeight="30.0" prefWidth="78.0" text="more" textAlignment="CENTER" />
          </children>
       </VBox>
       <ImageView fx:id="backToDashboard" fitHeight="38.0" fitWidth="44.0" layoutX="274.0" layoutY="100.0" onMousePressed="#imageClicked" pickOnBounds="true" preserveRatio="true">

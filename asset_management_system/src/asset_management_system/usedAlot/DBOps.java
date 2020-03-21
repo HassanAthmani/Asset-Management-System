@@ -14,7 +14,7 @@ public class DBOps {
     String password="";
     public Connection connection;
     
-    public  void addData(String firstname,String secondname,String phoneno,String natid,String email,String department,String location) throws SQLException{
+    public  void addData(String firstname,String secondname,String phoneno,String natid,String email,String department,String location) throws SQLException, InterruptedException{
          try {
 
             Class.forName("com.mysql.jdbc.Driver");
@@ -25,8 +25,12 @@ public class DBOps {
             
 
             String sql = "INSERT INTO `asset_management_system`.`worker_details` (`workerID`, `workerName`, `workerLastName`, `workerTell`, `workerEmail`, `workerNationalID`,`department`,`location`,`pass_word`) VALUES (NULL,'" + firstname + "','" + secondname + "','" + phoneno + "','" + email + "','"+natid+"','"+department+"','"+location+"',' ' );";
+            
+            TimeUnit.SECONDS.sleep(1);  
+            String mover="INSERT INTO `asset_management_system`.`current_workers` SELECT * FROM `asset_management_system`.`worker_details` WHERE assetCode='"+phoneno+"'";
 
-            statement.executeUpdate(sql);     
+            statement.executeUpdate(sql);   
+            statement.executeUpdate(mover); 
             
             connection.close();
           
@@ -36,7 +40,7 @@ public class DBOps {
         
     }
     
-    public  void ProfileaddData(String id,String firstname,String secondname,String phoneno,String natid,String email,String department,String location,String pas) throws SQLException{
+    public  void ProfileaddData(String id,String firstname,String secondname,String phoneno,String email,String natid,String department,String location,String pas) throws SQLException{
          try {
 
             Class.forName("com.mysql.jdbc.Driver");
@@ -46,10 +50,13 @@ public class DBOps {
 
             
 
-            String sql = "INSERT INTO `asset_management_system`.`worker_details` (`workerID`, `workerName`, `workerLastName`, `workerTell`, `workerEmail`, `workerNationalID`,`department`,`location`,`pass_word`) VALUES ('" + id + "','" + firstname + "','" + secondname + "','" + phoneno + "','" + email + "','"+natid+"','"+department+"','"+location+"','" + pas + " ' );";
+            String sql = "INSERT INTO `asset_management_system`.`current_workers` (`workerID`, `workerName`, `workerLastName`, `workerTell`, `workerEmail`, `workerNationalID`,`department`,`location`,`pass_word`) VALUES ('" + id + "','" + firstname + "','" + secondname + "','" + phoneno + "','" + email + "','"+natid+"','"+department+"','"+location+"','" + pas + " ' );";
 
-            statement.executeUpdate(sql);     
+            statement.executeUpdate(sql);    
             
+            String updater="UPDATE `asset_management_system`.`worker_details` SET workerName='"+firstname+"' ,workerLastName='"+secondname+"', workerTell= '"+phoneno+"', workerEmail='"+email+"', workerNationalID='"+natid+"', department='"+department+"', location='"+location+"', pass_word='"+pas+"' WHERE workerID="+id;
+            
+            statement.executeUpdate(updater); 
             connection.close();
           
         } catch (ClassNotFoundException ex) {
@@ -57,6 +64,8 @@ public class DBOps {
         }
         
     }
+    
+  
     
     public void deleteRecord(String id) throws SQLException{
         try {
@@ -68,7 +77,7 @@ public class DBOps {
 
             
 
-            String sql = "DELETE FROM `asset_management_system`.`worker_details` WHERE workerID= "+id;
+            String sql = "DELETE FROM `asset_management_system`.`current_workers` WHERE workerID= "+id;
 
             statement.executeUpdate(sql);     
             
@@ -91,13 +100,16 @@ public class DBOps {
 
             
 
-            String sql = "INSERT INTO `asset_management_system`.`assets` (`assetID`, `assetName`, `assetCode`, `assetDetails`, `workerName`, `workerID`,`categorryID`,`additionDate`,`cost`) VALUES (NULL,'" + assetName + "','" + assetCode + "','" + assetDetails + "','" + workerName + "','"+ workerID +"','"+category+"',"+" CURDATE()"+",'" + cost+ " ' );";
+            String sql = "INSERT INTO `asset_management_system`.`assets` (`assetID`, `assetName`, `assetCode`, `assetDetails`, `workerName`, `workerID`,`categoryID`,`additionDate`,`cost`) VALUES (NULL,'" + assetName + "'," + assetCode + ",'" + assetDetails + "','" + workerName + "','"+ workerID +"','"+category+"',"+" CURDATE()"+",'" + cost+ " ' );";
 
             statement.executeUpdate(sql);   
             
-            String getAssetData="SELECT * FROM `asset_management_system`.`assets` WHERE assetCode="+assetCode;
+            String getAssetData="SELECT * FROM `asset_management_system`.`assets` WHERE assetCode='"+assetCode+"'";
             
-             ResultSet rs = connection.createStatement().executeQuery(getAssetData); 
+            String mover="INSERT INTO `asset_management_system`.`available_assets` SELECT * FROM `asset_management_system`.`assets` WHERE assetCode='"+assetCode+"'";
+            
+            statement.executeUpdate(mover);  
+            ResultSet rs = connection.createStatement().executeQuery(getAssetData); 
              
              while (rs.next()) {  
                     

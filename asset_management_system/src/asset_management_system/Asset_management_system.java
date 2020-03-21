@@ -28,7 +28,7 @@ public class Asset_management_system extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/asset_management_system/assets/addAsset/addAsset.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/asset_management_system/assets/assets.fxml"));
         
         Scene scene = new Scene(root);
         //scene.getStylesheets().add("http://fonts.googleapis.com/css?family=New+Rocker");

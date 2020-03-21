@@ -1,12 +1,16 @@
 
 package asset_management_system.assets.addAsset;
 
-import asset_management_system.profile.ProfileController;
 import asset_management_system.usedAlot.DBOps;
+import asset_management_system.usedAlot.QR_Creator;
 import asset_management_system.usedAlot.checkDetails;
 import asset_management_system.usedAlot.json_read;
+import com.google.zxing.WriterException;
 import com.jfoenix.controls.JFXTextField;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -21,6 +25,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javax.swing.JOptionPane;
 import org.json.simple.parser.ParseException;
@@ -54,15 +59,35 @@ public class AddAssetController implements Initializable {
     private ImageView qr_code;
     
       @FXML
-    private Button addAsset;
+    public Button addAsset;
+      
+      
+    @FXML
+    private Button clear;
+
 
     @FXML
     private ChoiceBox category;
     
+    
+    @FXML
+    void clearFields(ActionEvent event) {
+        
+        assetName.clear();
+        assetCode.clear();
+        assetDetails.clear();
+        cost.clear();
+        qr_code.setImage(null);
+        addAsset.setVisible(true);
+       clear.setVisible(false);
+        
+
+    }
+    
     //nw.addAsset(assetName.getText(), assetCode.getText(), assetDetails.getText(), workerName.getText(), workerID.getText(), category.getValue().toString(), cost.getText());
 
     @FXML
-    void add(ActionEvent event) throws SQLException {
+    void add(ActionEvent event) throws SQLException, IOException, FileNotFoundException, ParseException, WriterException {
         DBOps nw=new DBOps();
         if(assetName.getText().isEmpty() || assetCode.getText().isEmpty() || assetDetails.getText().isEmpty() ||  workerName.getText().isEmpty()|| workerID.getText().isEmpty()|| category.getValue().toString().isEmpty() || cost.getText().isEmpty()){
             
@@ -72,6 +97,27 @@ public class AddAssetController implements Initializable {
         }else if(!assetName.getText().isEmpty() || !assetCode.getText().isEmpty() || !assetDetails.getText().isEmpty() ||  !workerName.getText().isEmpty()|| !workerID.getText().isEmpty()|| !category.getValue().toString().isEmpty() || !cost.getText().isEmpty()){
             
             nw.addAsset(assetName.getText(), assetCode.getText(), assetDetails.getText(), workerName.getText(), workerID.getText(), category.getValue().toString(), cost.getText());
+          
+            json_read jsonReader=new json_read();
+            String id=jsonReader.asset_id();
+            
+            QR_Creator maker=new QR_Creator();
+            maker.QRGen(id, assetCode.getText(), assetName.getText());
+            
+           // Image image=new Image(getClass().getResource("C:/Users/User/Documents/GitHub/Asset-Management-System/asset_management_system/qr_images/Asset"+id+".png"));
+            //C:\Users\User\Documents\GitHub\Asset-Management-System\asset_management_system\qr_images
+           /* InputStream inStream = getClass().getResourceAsStream("Asset"+id+".png");*/
+           String path="Asset"+id+".png";
+             Image imageObject = new Image(new FileInputStream(path));
+             
+            // ImageView image = new ImageView(imageObject);  
+            qr_code.setImage(imageObject);
+            clear.setVisible(true);
+            addAsset.setVisible(false);
+            
+            
+            
+            
         }
         
         
@@ -132,6 +178,10 @@ public class AddAssetController implements Initializable {
         checkDetails nw=new checkDetails();
         nw.AssetCodechecker(assetCode, "assetCode", addAsset);
         nw.assetCost(cost, addAsset);
+        
+        clear.setVisible(false);
+        workerName.setEditable(false);
+        workerID.setEditable(false);
     }    
     
 }

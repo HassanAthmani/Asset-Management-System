@@ -38,6 +38,9 @@ public class sendingPass {
              
              String account = "UPDATE `asset_management_system`.`worker_details` SET pass_word='"+pass+"' WHERE  (workerEmail LIKE '%"+ReMail+"%')";
             statement.executeUpdate(account);
+            
+            String workingAccount = "UPDATE `asset_management_system`.`current_workers` SET pass_word='"+pass+"' WHERE  (workerEmail LIKE '%"+ReMail+"%')";
+             statement.executeUpdate(workingAccount);
          }
          catch (ClassNotFoundException ex) {
 

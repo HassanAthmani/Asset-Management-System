@@ -87,7 +87,7 @@ public class WithUsersController implements Initializable {
     private ChoiceBox choice;
      
       @FXML
-    void loadFromDB2(MouseEvent event) throws SQLException {
+    void loadFromDB(MouseEvent event) throws SQLException {
          //DB connection details
         
         try {
@@ -99,7 +99,7 @@ public class WithUsersController implements Initializable {
             connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, password);
             data = FXCollections.observableArrayList();
             //Execute query and store result in a resultset
-            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM asset_maintenance");
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM assigned_asset");
 
             while (rs.next()) {
                 //get string from db

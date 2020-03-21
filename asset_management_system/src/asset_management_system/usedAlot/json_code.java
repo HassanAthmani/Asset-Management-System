@@ -80,4 +80,72 @@ public class json_code {
         }
     }
     
+      public void deferredItem_json(String assetID, String assetName, String assetCode, String assetDetails, String workerName, String workerID, String category, String additionDate, String deferredDate, String reason ){
+     //Add worker id
+        JSONObject id_info = new JSONObject();
+        id_info.put("assetID", assetID);
+         id_info.put("assetName",  assetName);
+          id_info.put("assetCode", assetCode);
+           id_info.put("assetDetails", assetDetails);
+            id_info.put("workerName", workerName);
+             id_info.put("workerID", workerID);
+              id_info.put("category", category);
+               id_info.put("additionDate", additionDate);
+                id_info.put("deferredDate", deferredDate);
+                id_info.put("reason", reason);
+                 
+             
+         
+        //Write JSON file
+        try (FileWriter file = new FileWriter(new File(".//json//deferredItem.json"))) {
+            
+ 
+            file.write(id_info.toJSONString());
+            file.flush();
+ 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+      public void AllItem_json(String assetID, String assetName, String assetCode, String assetDetails, String workerName, String workerID, String category, String additionDate, String cost ){
+     //Add worker id
+    /* File file1 = new File(".//json//AllItem.json"); 
+     
+     if(file1.delete()) 
+        { */
+            System.out.println("File deleted successfully"); 
+            JSONObject id_info = new JSONObject();
+        id_info.put("assetID", assetID);
+         id_info.put("assetName",  assetName);
+          id_info.put("assetCode", assetCode);
+           id_info.put("assetDetails", assetDetails);
+            id_info.put("workerName", workerName);
+             id_info.put("workerID", workerID);
+              id_info.put("category", category);
+               id_info.put("additionDate", additionDate);
+                id_info.put("cost", cost);
+                 //Write JSON file
+        try (FileWriter file = new FileWriter(new File(".//json//AllItem.json"))) {
+            
+ 
+            file.write(id_info.toJSONString());
+            file.flush();
+ 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+       /* } 
+     else
+     {
+         System.out.println("Failed to delete the file"); 
+     }*/
+        
+                
+                 
+             
+         
+       
+    }
+    
 }

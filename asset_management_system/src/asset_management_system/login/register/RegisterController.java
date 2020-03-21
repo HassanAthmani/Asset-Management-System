@@ -81,7 +81,7 @@ public class RegisterController implements Initializable {
 
 
     @FXML
-    void register(ActionEvent event) throws SQLException, ClassNotFoundException {
+    void register(ActionEvent event) throws SQLException, ClassNotFoundException, InterruptedException {
        sendingPass nwAcc=new sendingPass();      
         
         

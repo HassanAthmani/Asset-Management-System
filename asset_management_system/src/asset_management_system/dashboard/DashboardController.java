@@ -314,6 +314,24 @@ public class DashboardController implements Initializable {
             window.centerOnScreen();
 
     }
+    
+    @FXML
+    void openWithWorkers(ActionEvent event) throws IOException {
+         //you can use #onMousePressed or #orMouseClicked
+         Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/withUsers/withUsers.fxml"));
+           Scene newScene = new Scene(sceneFxml);
+           
+           newScene.getStylesheets().add("/asset_management_system/css/tabpane.css"); 
+
+            //getting stage
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            //setting scene on stage
+            window.setScene(newScene);
+            window.show();
+            window.centerOnScreen();
+
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
