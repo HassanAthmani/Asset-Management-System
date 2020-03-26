@@ -67,6 +67,15 @@ public class AssetPopController implements Initializable {
 
     @FXML
     private Button defer;
+    
+    @FXML
+    private Button edit;
+    
+    @FXML
+    private Button save;
+    
+    @FXML
+    private Button cancel;
 
     @FXML
     private CheckBox deferCheck;
@@ -77,8 +86,46 @@ public class AssetPopController implements Initializable {
     @FXML
     private ImageView qr_code;
     
+    @FXML
+    private JFXTextField assignTo;
+
+    @FXML
+    private CheckBox assignCheck;
+    
+    @FXML
+    private Button assign;
+    
+    
+    @FXML
+    void giveAsset(ActionEvent event) {
+
+    }
+
+
+      @FXML
+    void checkAssign(ActionEvent event) {
+        if(assignCheck.isSelected()){
+            deferCheck.setVisible(false);
+            defer.setVisible(false);
+            reason.setVisible(false); 
+            maintenance.setVisible(false);
+        }
+        else
+        {
+             defer.setVisible(false);
+             reason.setVisible(false);
+              maintenance.setVisible(true);
+        }
+
+    }
+    
       @FXML
     void cancelInfo(ActionEvent event) {
+        save.setVisible(false);
+        cancel.setVisible(false);
+        edit.setVisible(true);
+        deferCheck.setVisible(true);
+        maintenance.setVisible(true);
 
     }
     
@@ -94,18 +141,26 @@ public class AssetPopController implements Initializable {
          String cat= category.getText();
          String additiondate=additionDate.getText();
         String cosst= cost.getText();
+        
+        save.setVisible(true);
+        cancel.setVisible(true);
+        edit.setVisible(false);
+        deferCheck.setVisible(false);
+        maintenance.setVisible(false);
 
     }
 
     @FXML
     void saveInfo(ActionEvent event) {
+        save.setVisible(false);
+        cancel.setVisible(false);
+        edit.setVisible(true);
+        deferCheck.setVisible(true);
+        maintenance.setVisible(true);
 
     }
 
-    
-    
-
-
+   
     @FXML
     void toDeferred(ActionEvent event) throws SQLException, IOException, FileNotFoundException, ParseException {
         
@@ -266,6 +321,8 @@ public class AssetPopController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         defer.setVisible(false); 
         reason.setVisible(false);
+        save.setVisible(false);
+        cancel.setVisible(false);
         
         json_read nw= new json_read();
          try {

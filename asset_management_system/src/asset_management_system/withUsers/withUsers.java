@@ -13,10 +13,11 @@ public class withUsers {
     private final StringProperty workerEmail;
     private final StringProperty transID;
     private final StringProperty assignedDate;
+    private final StringProperty assignedBy;
    
 
     //Constructor
-    public withUsers(String transID,String workerID, String workerName, String workerTell,String workerEmail, String assetID, String assetName, String assetCode, String assignedDate) {
+    public withUsers(String transID,String workerID, String workerName, String workerTell,String workerEmail, String assetID, String assetName, String assetCode, String assignedDate,String assignedBy) {
 
         this.assetID= new SimpleStringProperty(assetID);
         this.assetName = new SimpleStringProperty(assetName);
@@ -27,6 +28,7 @@ public class withUsers {
         this.workerEmail = new SimpleStringProperty(workerEmail);
         this.transID = new SimpleStringProperty(transID);
         this.assignedDate = new SimpleStringProperty(assignedDate);
+        this.assignedBy = new SimpleStringProperty(assignedBy);
        
 
     }
@@ -68,6 +70,10 @@ public class withUsers {
         return assignedDate.get();
     }
     
+    public String getAssignedBy() {
+        return assignedBy.get();
+    }
+    
      
 
     //Setters
@@ -105,7 +111,11 @@ public class withUsers {
     
      public void setAssignedDate(String Value) {
         assignedDate.set(Value);
-    }     
+    }  
+     
+     public void setAssignedBy(String Value) {
+        assignedBy.set(Value);
+    }  
     
      
 
@@ -144,6 +154,10 @@ public class withUsers {
     
     public StringProperty assignedDateProperty() {
         return assignedDate;
+    }
+    
+    public StringProperty assignedByProperty() {
+        return assignedBy;
     }
     
     

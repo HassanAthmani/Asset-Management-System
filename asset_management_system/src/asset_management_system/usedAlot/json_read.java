@@ -169,7 +169,50 @@ public class json_read {
         
           
       } 
+      
+      
+      public void setToWithUser(JFXTextField id,JFXTextField workerID,JFXTextField workerName,JFXTextField workerTell,JFXTextField workerEmail,JFXTextField assetID,JFXTextField assetName,JFXTextField assetCode,JFXTextField assigned_date,JFXTextField assignedBy) throws FileNotFoundException, IOException, ParseException, SQLException{
+           JSONParser parser = new JSONParser();
+           
+         Object obj = parser.parse(new FileReader(".//json//WithUser.json"));
+         JSONObject jsonObject = (JSONObject)obj;
+         
+        
+        
+      
+        String transID = (String)jsonObject.get("transID");
+        String workerID1 = (String)jsonObject.get("workerID");
+        String workerName1 = (String)jsonObject.get("workerName");
+        String workerTell1 = (String)jsonObject.get("workerTell");
+        String workerEmail1 = (String)jsonObject.get("workerEmail");
+        String assetID1 = (String)jsonObject.get("assetID");
+        String assetName1 = (String)jsonObject.get("assetName");
+        String assetCode1 = (String)jsonObject.get("assetCode");
+        String assignedDate = (String)jsonObject.get("assignedDate");
+        String assignedBy1=(String)jsonObject.get("assignedBy");
        
+        
+         String path="Asset12.png";
+             Image imageObject = new Image(new FileInputStream(path));
+             
+            // ImageView image = new ImageView(imageObject);  
+          //  qr_code.setImage(imageObject);
+        
+        id.setText(transID);
+        workerID.setText(workerID1);
+        workerName.setText(workerName1);
+        workerTell.setText(workerTell1);
+        workerEmail.setText(workerEmail1);
+        assetID.setText(assetID1);
+        assetName.setText(assetName1);
+        assetCode.setText(assetCode1);
+        assigned_date.setText(assignedDate);
+        assignedBy.setText(assignedBy1);
+         
+        
+          
+      } 
+      
       /*
       id_info.put("worker_id", id);
          id_info.put("workerName", firstname);

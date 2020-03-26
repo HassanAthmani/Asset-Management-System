@@ -5,8 +5,11 @@
  */
 package asset_management_system.withUsers;
 
+import asset_management_system.assets.AssetsController;
 import asset_management_system.assets.all_assets;
 import asset_management_system.assets.asset_in_maintenance;
+import asset_management_system.usedAlot.json_code;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,10 +17,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableCell;
@@ -27,6 +37,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 /**
@@ -78,6 +91,9 @@ public class WithUsersController implements Initializable {
     private TableColumn<withUsers, String> assigned_date;
     
      @FXML
+    private TableColumn<withUsers, String> assignedBy;
+    
+     @FXML
     private TableColumn columnEdit;
      
      @FXML
@@ -85,6 +101,9 @@ public class WithUsersController implements Initializable {
 
     @FXML
     private ChoiceBox choice;
+    
+    private double xOffset = 0;
+    private double yOffset = 0;
      
       @FXML
     void loadFromDB(MouseEvent event) throws SQLException {
@@ -103,7 +122,7 @@ public class WithUsersController implements Initializable {
 
             while (rs.next()) {
                 //get string from db
-                data.add(new withUsers(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9)));
+                data.add(new withUsers(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10)));
             }
 
         } catch (ClassNotFoundException ex) {
@@ -122,6 +141,7 @@ public class WithUsersController implements Initializable {
         asset_name.setCellValueFactory(new PropertyValueFactory<>("assetName"));
         asset_code.setCellValueFactory(new PropertyValueFactory<>("assetCode"));                
         assigned_date.setCellValueFactory(new PropertyValueFactory<>("assignedDate"));
+        assignedBy.setCellValueFactory(new PropertyValueFactory<>("assignedBy"));
        
         
 
@@ -155,6 +175,59 @@ public class WithUsersController implements Initializable {
                                 
                                 //DATA 
                                 //System.out.println(p.getMac_address());  String.valueOf(p.getId())
+                                String id = String.valueOf(p.getTransID());
+                                String workerid = String.valueOf(p.getWorkerID());
+                                String worker = String.valueOf(p.getWorkerName());
+                                String workerTell= String.valueOf(p.getWorkerTell());
+                                String workeremail = String.valueOf(p.getWorkerEmail());
+                                String assetid = String.valueOf(p.getAssetID());
+                                String assetname = String.valueOf(p.getAssetName());
+                                String code = String.valueOf(p.getAssetCode());
+                                String assigned_date = String.valueOf(p.getAssignedDate());
+                                String assignedby=String.valueOf(p.getAssignedBy());
+                           
+
+                            json_code nw = new json_code();
+                            nw.WithUser_json(id, workerid, worker, workerTell, workeremail, assetid, assetname, code, assigned_date,assignedby);
+
+                            ///// POP UP ////
+                            Stage stage = new Stage();
+                            FXMLLoader fxmlLoader = new FXMLLoader();
+                            Parent root;
+                            try {
+                                root = fxmlLoader.load(getClass().getResource("/asset_management_system/withUsers/withUsers_pop/withUsers_pop.fxml").openStream());
+                                Scene scene = new Scene(root);
+
+                                stage.setScene(scene);
+
+                                stage.initModality(Modality.WINDOW_MODAL);
+                                stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+                                stage.setResizable(false);
+                                stage.resizableProperty();
+
+                                root.setOnMousePressed(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        xOffset = event.getSceneX();
+                                        yOffset = event.getSceneY();
+                                    }
+                                });
+                                root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        stage.setX(event.getScreenX() - xOffset);
+                                        stage.setY(event.getScreenY() - yOffset);
+                                    }
+                                });
+                                scene.setFill(Color.ALICEBLUE);
+                                //stage.initStyle(StageStyle.UNDECORATED);
+                                stage.showAndWait();
+
+                            } catch (IOException ex) {
+                                Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                            ///// POP UP ///////
                                
                                
                                

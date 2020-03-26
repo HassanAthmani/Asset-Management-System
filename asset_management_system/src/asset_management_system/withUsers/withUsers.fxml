@@ -12,16 +12,17 @@
       <VBox fx:id="vbox" prefHeight="900.0" prefWidth="240.0" style="-fx-background-color: #28d474; -fx-padding: 10; -fx-spacing: 8;" />
       <TableView fx:id="withUsers_tbl" layoutX="284.0" layoutY="153.0" prefHeight="677.0" prefWidth="1159.0">
         <columns>
-          <TableColumn fx:id="id" prefWidth="84.79998779296875" text="ID" />
-          <TableColumn fx:id="worker_id" prefWidth="84.0" text="WORKER ID" />
-            <TableColumn fx:id="worker_name" prefWidth="141.59994506835938" text="WORKER NAME" />
-            <TableColumn fx:id="worker_phoneNo" prefWidth="129.60003662109375" text="WORKER PHONE NO" />
-            <TableColumn fx:id="worker_email" prefWidth="182.40008544921875" text="WORKER EMAIL" />
-            <TableColumn fx:id="asset_id" prefWidth="81.5999755859375" text="ASSET ID" />
-            <TableColumn fx:id="asset_name" prefWidth="131.9998779296875" text="ASSET NAME" />
-            <TableColumn fx:id="asset_code" prefWidth="92.800048828125" text="ASSET CODE" />
-            <TableColumn fx:id="assigned_date" prefWidth="161.5999755859375" text="ASSIGNED DATE" />
-            <TableColumn fx:id="columnEdit" prefWidth="73.599853515625" />
+          <TableColumn fx:id="id" prefWidth="40.000030517578125" text="ID" />
+          <TableColumn fx:id="worker_id" prefWidth="81.5999755859375" text="WORKER ID" />
+            <TableColumn fx:id="worker_name" prefWidth="103.199951171875" text="WORKER NAME" />
+            <TableColumn fx:id="worker_phoneNo" prefWidth="124.00006103515625" text="WORKER PHONE NO" />
+            <TableColumn fx:id="worker_email" prefWidth="160.0" text="WORKER EMAIL" />
+            <TableColumn fx:id="asset_id" prefWidth="70.39996337890625" text="ASSET ID" />
+            <TableColumn fx:id="asset_name" prefWidth="97.60003662109375" text="ASSET NAME" />
+            <TableColumn fx:id="asset_code" prefWidth="111.199951171875" text="ASSET CODE" />
+            <TableColumn fx:id="assigned_date" prefWidth="155.2000732421875" text="ASSIGNED DATE" />
+            <TableColumn fx:id="assignedBy" minWidth="0.0" prefWidth="133.5999755859375" text="ASSIGNED BY" />
+            <TableColumn fx:id="columnEdit" prefWidth="82.4000244140625" />
         </columns>
       </TableView>
       <TextField fx:id="search" layoutX="284.0" layoutY="101.0" prefHeight="26.0" prefWidth="209.0" />

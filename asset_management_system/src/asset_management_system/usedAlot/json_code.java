@@ -8,13 +8,9 @@ package asset_management_system.usedAlot;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-/**
- *
- * @author User
- */
+
 public class json_code {
     
     public void json_id(String id){
@@ -146,6 +142,33 @@ public class json_code {
              
          
        
+    }
+    
+       public void WithUser_json(String transID, String workerID, String workerName, String workerTell, String workerEmail, String assetID, String assetName, String assetCode, String assignedDate,String assignedBy ){
+     //Add worker id
+        JSONObject id_info = new JSONObject();
+        id_info.put("transID", transID);
+         id_info.put("workerID",  workerID);
+          id_info.put("workerName", workerName);
+           id_info.put("workerTell", workerTell);
+            id_info.put("workerEmail", workerEmail);
+             id_info.put("assetID", assetID);
+              id_info.put("assetName", assetName);
+               id_info.put("assetCode", assetCode);
+                id_info.put("assignedDate",assignedDate);
+                id_info.put("assignedBy",assignedBy);
+             
+         
+        //Write JSON file
+        try (FileWriter file = new FileWriter(new File(".//json//WithUser.json"))) {
+            
+ 
+            file.write(id_info.toJSONString());
+            file.flush();
+ 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
 }

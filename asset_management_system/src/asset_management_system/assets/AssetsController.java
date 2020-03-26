@@ -1,7 +1,6 @@
 package asset_management_system.assets;
 
 import asset_management_system.usedAlot.json_code;
-import asset_management_system.workers.workers;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -31,7 +30,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
