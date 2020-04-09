@@ -1,12 +1,18 @@
 
 package asset_management_system.usedAlot;
 
+import asset_management_system.assets.assetPop.AssetPopController;
 import com.jfoenix.controls.JFXTextField;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.json.simple.JSONObject;
@@ -14,6 +20,10 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 public class json_read {
+    
+    String userName = "root";
+    String password = "";
+    public Connection connection;
     
     public String profile_id() throws FileNotFoundException, IOException, ParseException{
         
@@ -208,6 +218,87 @@ public class json_read {
         assetCode.setText(assetCode1);
         assigned_date.setText(assignedDate);
         assignedBy.setText(assignedBy1);
+         
+        
+          
+      } 
+      
+      public void AssetPopBackToDB() throws FileNotFoundException, IOException, ParseException, SQLException{
+           JSONParser parser = new JSONParser();
+        String assetid;
+        String assetname;
+        String assetcode;
+        String assetdetails;
+        String workername;
+        String workerid;
+        String cat;
+        String additiondate;
+        String cost;
+        
+      
+         Object obj = parser.parse(new FileReader(".//json//assetPop.json"));
+         JSONObject jsonObject = (JSONObject)obj;
+         assetid = (String)jsonObject.get("assetID");
+         assetname = (String)jsonObject.get("assetName");
+        assetcode = (String)jsonObject.get("assetCode");
+         assetdetails = (String)jsonObject.get("assetDetails");
+         workername = (String)jsonObject.get("workerName");
+         workerid = (String)jsonObject.get("workerID");
+         cat = (String)jsonObject.get("category");
+         additiondate= (String)jsonObject.get("additionDate");
+         cost = (String)jsonObject.get("cost");
+         try{
+             
+             Class.forName("com.mysql.jdbc.Driver");
+              String url = "jdbc:mysql://localhost:3306/mysql?zeroDateTimeBehavior=convertToNull";
+             connection = DriverManager.getConnection(url, userName, password);
+             Statement statement = connection.createStatement();
+             
+             String sql = "INSERT INTO `asset_management_system`.`available_assets` (`assetID`, `assetName`, `assetCode`, `assetDetails`, `workerName`, `workerID`,`categoryID`,`additionDate`,`cost`) VALUES (" + assetid + ",'" + assetname + "','" + assetcode + "','" + assetdetails + "','" + workername + "'," + workerid + ",'" + cat + "','"+additiondate+"','" + cost + "');";
+
+                statement.executeUpdate(sql);
+                 }  catch (ClassNotFoundException ex) {
+                Logger.getLogger(AssetPopController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+          
+      } 
+      
+       public void setTomaintenance(JFXTextField id,JFXTextField name,JFXTextField code,JFXTextField details,JFXTextField worker,JFXTextField workerid,JFXTextField category1,JFXTextField date1,JFXTextField maintenace) throws FileNotFoundException, IOException, ParseException, SQLException{
+           JSONParser parser = new JSONParser();
+           
+         Object obj = parser.parse(new FileReader(".//json//maintenance.json"));
+         JSONObject jsonObject = (JSONObject)obj;
+         
+        
+        
+      
+        String assetID = (String)jsonObject.get("assetID");
+        String assetName = (String)jsonObject.get("assetName");
+        String assetCode = (String)jsonObject.get("assetCode");
+        String assetDetails = (String)jsonObject.get("assetDetails");
+        String workerName = (String)jsonObject.get("workerName");
+        String workerID = (String)jsonObject.get("workerID");
+        String category = (String)jsonObject.get("category");
+        String additionDate = (String)jsonObject.get("additionDate");
+        String maintenanceDate = (String)jsonObject.get("maintenanceDate");
+        
+        
+         String path="Asset12.png";
+             Image imageObject = new Image(new FileInputStream(path));
+             
+            // ImageView image = new ImageView(imageObject);  
+           // qr_code.setImage(imageObject);
+        
+        id.setText(assetID);
+        name.setText(assetName);
+        code.setText(assetCode);
+        details.setText(assetDetails);
+        worker.setText(workerName);
+        workerid.setText(workerID);
+        category1.setText(category);
+        date1.setText(additionDate);
+        maintenace.setText(maintenanceDate);
+        
          
         
           

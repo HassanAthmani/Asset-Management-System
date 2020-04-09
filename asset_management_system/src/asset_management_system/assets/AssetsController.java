@@ -1,6 +1,8 @@
 package asset_management_system.assets;
 
+import asset_management_system.usedAlot.assetSearch;
 import asset_management_system.usedAlot.json_code;
+import asset_management_system.workers.WorkersController;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -11,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -293,9 +296,944 @@ public class AssetsController implements Initializable {
 
     }
 
+    ///////////////////////////   START  /////////////////////////////////////
+    //FOR ALL ASSETS
+   /* @FXML
+    void loadFromDB(MouseEvent event) throws SQLException {
+        //DB connection details
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+
+            String dbName = "asset_management_system";
+
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, password);
+            data = FXCollections.observableArrayList();
+            //Execute query and store result in a resultset
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM assets");
+
+            while (rs.next()) {
+                //get string from db
+                data.add(new all_assets(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9)));
+            }
+
+        } catch (ClassNotFoundException ex) {
+
+            System.err.println("Error: " + ex);
+        }
+
+        //set cell value factor to tableview.
+        //PropertyValue Factory must be set the same with the one set in model class.
+        asset_id.setCellValueFactory(new PropertyValueFactory<>("assetID"));
+        asset_name.setCellValueFactory(new PropertyValueFactory<>("assetName"));
+        asset_code.setCellValueFactory(new PropertyValueFactory<>("assetCode"));
+        asset_details101.setCellValueFactory(new PropertyValueFactory<>("assetDetails"));
+        worker_name.setCellValueFactory(new PropertyValueFactory<>("workerName"));
+        worker_id.setCellValueFactory(new PropertyValueFactory<>("workerID"));
+        category_id.setCellValueFactory(new PropertyValueFactory<>("categoryID"));
+        addition_date.setCellValueFactory(new PropertyValueFactory<>("additionDate"));
+        cost.setCellValueFactory(new PropertyValueFactory<>("cost"));
+
+        all_assets_tbl.setItems(null);
+        all_assets_tbl.setItems(data);
+
+        //Lets create a cell factory to insert a button in every row.
+        Callback<TableColumn<all_assets, String>, TableCell<all_assets, String>> cellFactory = (param) -> {
+
+            //make the tablecell containing button
+            final TableCell<all_assets, String> cell = new TableCell<all_assets, String>() {
+
+                //override updateItem method
+                @Override
+                public void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    //ensure that cell is created only on non-empty rows
+                    if (empty) {
+                        setGraphic(null);
+                        setText(null);
+                    } else {
+                        //Now we create the action button
+                        final Button editButton = new Button("+");
+                        //attach listener on button
+                        editButton.setOnAction(event -> {
+
+                            //Extract the clicked object
+                            all_assets p = getTableView().getItems().get(getIndex());
+
+                            String id = String.valueOf(p.getAssetID());
+                            String name = String.valueOf(p.getAssetName());
+                            String code = String.valueOf(p.getAssetCode());
+                            String details = String.valueOf(p.getAssetDetails());
+                            String worker = String.valueOf(p.getWorkerName());
+                            String workerid = String.valueOf(p.getWorkerID());
+                            String categoryid = String.valueOf(p.getCategoryID());
+                            String additiondate = String.valueOf(p.getAdditionDate());
+                            String cost = String.valueOf(p.getCost());
+
+                            json_code nw = new json_code();
+                            nw.AllItem_json(id, name, code, details, worker, workerid, categoryid, additiondate, cost);
+
+                            //// POP UP ///////
+                            Stage stage = new Stage();
+                            FXMLLoader fxmlLoader = new FXMLLoader();
+                            Parent root;
+                            try {
+                                root = fxmlLoader.load(getClass().getResource("/asset_management_system/assets/all_assetsPop/all_assetsPop.fxml").openStream());
+                                Scene scene = new Scene(root);
+
+                                stage.setScene(scene);
+
+                                stage.initModality(Modality.WINDOW_MODAL);
+                                stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+                                stage.setResizable(false);
+                                stage.resizableProperty();
+
+                                root.setOnMousePressed(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        xOffset = event.getSceneX();
+                                        yOffset = event.getSceneY();
+                                    }
+                                });
+                                root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        stage.setX(event.getScreenX() - xOffset);
+                                        stage.setY(event.getScreenY() - yOffset);
+                                    }
+                                });
+                                scene.setFill(Color.ALICEBLUE);
+                                //stage.initStyle(StageStyle.UNDECORATED);
+                                stage.showAndWait();
+
+                            } catch (IOException ex) {
+                                Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            ////// POP UP///////
+
+                        });
+                        //Setting created button
+                        setGraphic(editButton);
+                        setText(null);
+                    }
+
+                }
+            ;
+
+            };
+            
+            return cell;
+        };
+        //set the custom factory to action column
+        columnEdit.setCellFactory(cellFactory);
+
+    }*/
+
+    //FOR ASSETS
+    @FXML
+    void loadFromDB1(MouseEvent event) throws SQLException {
+        //DB connection details
+/*
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+
+            String dbName = "asset_management_system";
+
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, password);
+            data1 = FXCollections.observableArrayList();
+            //Execute query and store result in a resultset
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM available_assets");
+
+            while (rs.next()) {
+                //get string from db
+                data1.add(new assets(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9)));
+            }
+
+        } catch (ClassNotFoundException ex) {
+
+            System.err.println("Error: " + ex);
+        }
+
+        //set cell value factor to tableview.
+        //PropertyValue Factory must be set the same with the one set in model class.
+        asset1_id.setCellValueFactory(new PropertyValueFactory<>("assetID"));
+        asset1_name.setCellValueFactory(new PropertyValueFactory<>("assetName"));
+        asset1_code.setCellValueFactory(new PropertyValueFactory<>("assetCode"));
+        asset1_details.setCellValueFactory(new PropertyValueFactory<>("assetDetails"));
+        worker1_name.setCellValueFactory(new PropertyValueFactory<>("workerName"));
+        worker1_id.setCellValueFactory(new PropertyValueFactory<>("workerID"));
+        category1_id.setCellValueFactory(new PropertyValueFactory<>("categoryID"));
+        addition1_date.setCellValueFactory(new PropertyValueFactory<>("additionDate"));
+        cost1.setCellValueFactory(new PropertyValueFactory<>("cost"));
+
+        assets_tbl.setItems(null);
+        assets_tbl.setItems(data1);
+
+        //Lets create a cell factory to insert a button in every row.
+        Callback<TableColumn<assets, String>, TableCell<assets, String>> cellFactory = (param) -> {
+
+            //make the tablecell containing button
+            final TableCell<assets, String> cell = new TableCell<assets, String>() {
+
+                //override updateItem method
+                @Override
+                public void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    //ensure that cell is created only on non-empty rows
+                    if (empty) {
+                        setGraphic(null);
+                        setText(null);
+                    } else {
+                        //Now we create the action button
+                        final Button editButton = new Button("+");
+                        //attach listener on button
+                        editButton.setOnAction(event -> {
+
+                            //Extract the clicked object
+                            assets p = getTableView().getItems().get(getIndex());
+
+                            String id = String.valueOf(p.getAssetID());
+                            String name = String.valueOf(p.getAssetName());
+                            String code = String.valueOf(p.getAssetCode());
+                            String details = String.valueOf(p.getAssetDetails());
+                            String worker = String.valueOf(p.getWorkerName());
+                            String workerid = String.valueOf(p.getWorkerID());
+                            String categoryid = String.valueOf(p.getCategoryID());
+                            String additiondate = String.valueOf(p.getAdditionDate());
+                            String cost = String.valueOf(p.getCost());
+
+                            json_code nw = new json_code();
+                            nw.AllItem_json(id, name, code, details, worker, workerid, categoryid, additiondate, cost);
+
+                            //// POP UP ///////
+                            Stage stage = new Stage();
+                            FXMLLoader fxmlLoader = new FXMLLoader();
+                            Parent root;
+                            try {
+                                root = fxmlLoader.load(getClass().getResource("/asset_management_system/assets/assetPop/assetPop.fxml").openStream());
+                                Scene scene = new Scene(root);
+
+                                stage.setScene(scene);
+
+                                stage.initModality(Modality.WINDOW_MODAL);
+                                stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+                                stage.setResizable(false);
+                                stage.resizableProperty();
+
+                                root.setOnMousePressed(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        xOffset = event.getSceneX();
+                                        yOffset = event.getSceneY();
+                                    }
+                                });
+                                root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        stage.setX(event.getScreenX() - xOffset);
+                                        stage.setY(event.getScreenY() - yOffset);
+                                    }
+                                });
+                                scene.setFill(Color.ALICEBLUE);
+                                //stage.initStyle(StageStyle.UNDECORATED);
+                                stage.showAndWait();
+
+                            } catch (IOException ex) {
+                                Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            ////// POP UP///////
+
+                        });
+                        //Setting created button
+                        setGraphic(editButton);
+                        setText(null);
+                    }
+
+                }
+            ;
+
+            };
+            
+            return cell;
+        };
+        //set the custom factory to action column
+        columnEdit1.setCellFactory(cellFactory);
+*/
+    }
+
+
+    //FOR ASSETS IN MAINTENANCE
+    @FXML
+    void loadFromDB2(MouseEvent event) throws SQLException {
+        //DB connection details
+/*
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+
+            String dbName = "asset_management_system";
+
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, password);
+            data2 = FXCollections.observableArrayList();
+            //Execute query and store result in a resultset
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM asset_maintenance");
+
+            while (rs.next()) {
+                //get string from db
+                data2.add(new asset_in_maintenance(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9)));
+            }
+
+        } catch (ClassNotFoundException ex) {
+
+            System.err.println("Error: " + ex);
+        }
+
+        //set cell value factor to tableview.
+        //PropertyValue Factory must be set the same with the one set in model class.
+        asset2_id.setCellValueFactory(new PropertyValueFactory<>("assetID"));
+        asset2_name.setCellValueFactory(new PropertyValueFactory<>("assetName"));
+        asset2_code.setCellValueFactory(new PropertyValueFactory<>("assetCode"));
+        asset2_details.setCellValueFactory(new PropertyValueFactory<>("assetDetails"));
+        worker2_name.setCellValueFactory(new PropertyValueFactory<>("workerName"));
+        worker2_id.setCellValueFactory(new PropertyValueFactory<>("workerID"));
+        category2_id.setCellValueFactory(new PropertyValueFactory<>("categoryID"));
+        addition2_date.setCellValueFactory(new PropertyValueFactory<>("additionDate"));
+        maintenance2_date.setCellValueFactory(new PropertyValueFactory<>("maintenanceDate"));
+
+        maintenance_tbl.setItems(null);
+        maintenance_tbl.setItems(data2);
+
+        //Lets create a cell factory to insert a button in every row.
+        Callback<TableColumn<asset_in_maintenance, String>, TableCell<asset_in_maintenance, String>> cellFactory = (param) -> {
+
+            //make the tablecell containing button
+            final TableCell<asset_in_maintenance, String> cell = new TableCell<asset_in_maintenance, String>() {
+
+                //override updateItem method
+                @Override
+                public void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    //ensure that cell is created only on non-empty rows
+                    if (empty) {
+                        setGraphic(null);
+                        setText(null);
+                    } else {
+                        //Now we create the action button
+                        final Button editButton = new Button("+");
+                        //attach listener on button
+                        editButton.setOnAction(event -> {
+
+                            //Extract the clicked object
+                            asset_in_maintenance p = getTableView().getItems().get(getIndex());
+
+                            String id = String.valueOf(p.getAssetID());
+                            String name = String.valueOf(p.getAssetName());
+                            String code = String.valueOf(p.getAssetCode());
+                            String details = String.valueOf(p.getAssetDetails());
+                            String worker = String.valueOf(p.getWorkerName());
+                            String workerid = String.valueOf(p.getWorkerID());
+                            String categoryid = String.valueOf(p.getCategoryID());
+                            String additiondate = String.valueOf(p.getAdditionDate());
+                            String maintenancedate = String.valueOf(p.getMaintenanceDate());
+
+                            json_code nw = new json_code();
+                            nw.maintenanceItem_json(id, name, code, details, worker, workerid, categoryid, additiondate, maintenancedate);
+
+                            //// POP UP ///////
+                            Stage stage = new Stage();
+                            FXMLLoader fxmlLoader = new FXMLLoader();
+                            Parent root;
+                            try {
+                                root = fxmlLoader.load(getClass().getResource("/asset_management_system/assets/maintenancePop/maintenancePop.fxml").openStream());
+                                Scene scene = new Scene(root);
+
+                                stage.setScene(scene);
+
+                                stage.initModality(Modality.WINDOW_MODAL);
+                                stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+                                stage.setResizable(false);
+                                stage.resizableProperty();
+
+                                root.setOnMousePressed(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        xOffset = event.getSceneX();
+                                        yOffset = event.getSceneY();
+                                    }
+                                });
+                                root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        stage.setX(event.getScreenX() - xOffset);
+                                        stage.setY(event.getScreenY() - yOffset);
+                                    }
+                                });
+                                scene.setFill(Color.ALICEBLUE);
+                                //stage.initStyle(StageStyle.UNDECORATED);
+                                stage.showAndWait();
+
+                            } catch (IOException ex) {
+                                Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            ////// POP UP///////                          
+                        });
+                        //Setting created button
+                        setGraphic(editButton);
+                        setText(null);
+                    }
+
+                }
+            ;
+
+            };
+            
+            return cell;
+        };
+        //set the custom factory to action column
+        columnEdit2.setCellFactory(cellFactory);
+*/
+    }
+
     //FOR DEFERRED ASSETS
     @FXML
     void loadFromDB3(MouseEvent event) throws SQLException {
+        //DB connection details
+/*
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+
+            String dbName = "asset_management_system";
+
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, password);
+            data3 = FXCollections.observableArrayList();
+            //Execute query and store result in a resultset
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM deferred_asset");
+
+            while (rs.next()) {
+                //get string from db
+                data3.add(new deferred_assets(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10)));
+            }
+
+        } catch (ClassNotFoundException ex) {
+
+            System.err.println("Error: " + ex);
+        }
+
+        //set cell value factor to tableview.
+        //PropertyValue Factory must be set the same with the one set in model class.
+        asset3_id.setCellValueFactory(new PropertyValueFactory<>("assetID"));
+        asset3_name.setCellValueFactory(new PropertyValueFactory<>("assetName"));
+        asset3_code.setCellValueFactory(new PropertyValueFactory<>("assetCode"));
+        asset3_details.setCellValueFactory(new PropertyValueFactory<>("assetDetails"));
+        worker3_name.setCellValueFactory(new PropertyValueFactory<>("workerName"));
+        worker3_id.setCellValueFactory(new PropertyValueFactory<>("workerID"));
+        category3_id.setCellValueFactory(new PropertyValueFactory<>("categoryID"));
+        addition3_date.setCellValueFactory(new PropertyValueFactory<>("additionDate"));
+        deferred3_date.setCellValueFactory(new PropertyValueFactory<>("deferredDate"));
+        reason3.setCellValueFactory(new PropertyValueFactory<>("reason"));
+
+        deferred_tbl.setItems(null);
+        deferred_tbl.setItems(data3);
+
+        //Lets create a cell factory to insert a button in every row.
+        Callback<TableColumn<deferred_assets, String>, TableCell<deferred_assets, String>> cellFactory = (param) -> {
+
+            //make the tablecell containing button
+            final TableCell<deferred_assets, String> cell = new TableCell<deferred_assets, String>() {
+
+                //override updateItem method
+                @Override
+                public void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    //ensure that cell is created only on non-empty rows
+                    if (empty) {
+                        setGraphic(null);
+                        setText(null);
+                    } else {
+                        //Now we create the action button
+                        final Button editButton = new Button("+");
+                        //attach listener on button
+                        editButton.setOnAction(event -> {
+
+                            //Extract the clicked object
+                            deferred_assets p = getTableView().getItems().get(getIndex());
+
+                            //DATA 
+                            //System.out.println(p.getMac_address());  String.valueOf(p.getId())
+                            String id = String.valueOf(p.getAssetID());
+                            String name = String.valueOf(p.getAssetName());
+                            String code = String.valueOf(p.getAssetCode());
+                            String details = String.valueOf(p.getAssetDetails());
+                            String worker = String.valueOf(p.getWorkerName());
+                            String workerid = String.valueOf(p.getWorkerID());
+                            String categoryid = String.valueOf(p.getCategoryID());
+                            String additiondate = String.valueOf(p.getAdditionDate());
+                            String deferreddate = String.valueOf(p.getDeferredDate());
+                            String reason = String.valueOf(p.getReason());
+
+                            json_code nw = new json_code();
+                            nw.deferredItem_json(id, name, code, details, worker, workerid, categoryid, additiondate, deferreddate, reason);
+
+                            ///// POP UP ////
+                            Stage stage = new Stage();
+                            FXMLLoader fxmlLoader = new FXMLLoader();
+                            Parent root;
+                            try {
+                                root = fxmlLoader.load(getClass().getResource("/asset_management_system/assets/deferred_pop/deferred_pop.fxml").openStream());
+                                Scene scene = new Scene(root);
+
+                                stage.setScene(scene);
+
+                                stage.initModality(Modality.WINDOW_MODAL);
+                                stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+                                stage.setResizable(false);
+                                stage.resizableProperty();
+
+                                root.setOnMousePressed(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        xOffset = event.getSceneX();
+                                        yOffset = event.getSceneY();
+                                    }
+                                });
+                                root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        stage.setX(event.getScreenX() - xOffset);
+                                        stage.setY(event.getScreenY() - yOffset);
+                                    }
+                                });
+                                scene.setFill(Color.ALICEBLUE);
+                                //stage.initStyle(StageStyle.UNDECORATED);
+                                stage.showAndWait();
+
+                            } catch (IOException ex) {
+                                Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                            ///// POP UP ///////
+                        });
+                        //Setting created button
+                        setGraphic(editButton);
+                        setText(null);
+                    }
+
+                }
+            ;
+
+            };
+            
+            return cell;
+        };
+        //set the custom factory to action column
+        columnEdit3.setCellFactory(cellFactory);
+*/
+    }
+
+    ///////////////////////  END  /////////////////////////////////////////////
+    
+    
+    /////////////////////// START ////////////////////////////////////////////
+    //ALL ASSETS
+    public void load() throws SQLException {
+        //DB connection details
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+
+            String dbName = "asset_management_system";
+
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, password);
+            data = FXCollections.observableArrayList();
+            //Execute query and store result in a resultset
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM assets");
+
+            while (rs.next()) {
+                //get string from db
+                data.add(new all_assets(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9)));
+            }
+
+        } catch (ClassNotFoundException ex) {
+
+            System.err.println("Error: " + ex);
+        }
+
+        //set cell value factor to tableview.
+        //PropertyValue Factory must be set the same with the one set in model class.
+        asset_id.setCellValueFactory(new PropertyValueFactory<>("assetID"));
+        asset_name.setCellValueFactory(new PropertyValueFactory<>("assetName"));
+        asset_code.setCellValueFactory(new PropertyValueFactory<>("assetCode"));
+        asset_details101.setCellValueFactory(new PropertyValueFactory<>("assetDetails"));
+        worker_name.setCellValueFactory(new PropertyValueFactory<>("workerName"));
+        worker_id.setCellValueFactory(new PropertyValueFactory<>("workerID"));
+        category_id.setCellValueFactory(new PropertyValueFactory<>("categoryID"));
+        addition_date.setCellValueFactory(new PropertyValueFactory<>("additionDate"));
+        cost.setCellValueFactory(new PropertyValueFactory<>("cost"));
+
+        all_assets_tbl.setItems(null);
+        all_assets_tbl.setItems(data);
+
+        //Lets create a cell factory to insert a button in every row.
+        Callback<TableColumn<all_assets, String>, TableCell<all_assets, String>> cellFactory = (param) -> {
+
+            //make the tablecell containing button
+            final TableCell<all_assets, String> cell = new TableCell<all_assets, String>() {
+
+                //override updateItem method
+                @Override
+                public void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    //ensure that cell is created only on non-empty rows
+                    if (empty) {
+                        setGraphic(null);
+                        setText(null);
+                    } else {
+                        //Now we create the action button
+                        final Button editButton = new Button("+");
+                        //attach listener on button
+                        editButton.setOnAction(event -> {
+
+                            //Extract the clicked object
+                            all_assets p = getTableView().getItems().get(getIndex());
+
+                            String id = String.valueOf(p.getAssetID());
+                            String name = String.valueOf(p.getAssetName());
+                            String code = String.valueOf(p.getAssetCode());
+                            String details = String.valueOf(p.getAssetDetails());
+                            String worker = String.valueOf(p.getWorkerName());
+                            String workerid = String.valueOf(p.getWorkerID());
+                            String categoryid = String.valueOf(p.getCategoryID());
+                            String additiondate = String.valueOf(p.getAdditionDate());
+                            String cost = String.valueOf(p.getCost());
+
+                            json_code nw = new json_code();
+                            nw.AllItem_json(id, name, code, details, worker, workerid, categoryid, additiondate, cost);
+
+                            //// POP UP ///////
+                            Stage stage = new Stage();
+                            FXMLLoader fxmlLoader = new FXMLLoader();
+                            Parent root;
+                            try {
+                                root = fxmlLoader.load(getClass().getResource("/asset_management_system/assets/all_assetsPop/all_assetsPop.fxml").openStream());
+                                Scene scene = new Scene(root);
+
+                                stage.setScene(scene);
+
+                                stage.initModality(Modality.WINDOW_MODAL);
+                                stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+                                stage.setResizable(false);
+                                stage.resizableProperty();
+
+                                root.setOnMousePressed(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        xOffset = event.getSceneX();
+                                        yOffset = event.getSceneY();
+                                    }
+                                });
+                                root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        stage.setX(event.getScreenX() - xOffset);
+                                        stage.setY(event.getScreenY() - yOffset);
+                                    }
+                                });
+                                scene.setFill(Color.ALICEBLUE);
+                                //stage.initStyle(StageStyle.UNDECORATED);
+                                stage.showAndWait();
+
+                            } catch (IOException ex) {
+                                Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            ////// POP UP///////
+
+                        });
+                        //Setting created button
+                        setGraphic(editButton);
+                        setText(null);
+                    }
+
+                }
+            ;
+
+            };
+            
+            return cell;
+        };
+        //set the custom factory to action column
+        columnEdit.setCellFactory(cellFactory);
+
+    }
+
+    //FOR ASSETS
+    public void load1() throws SQLException {
+        //DB connection details
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+
+            String dbName = "asset_management_system";
+
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, password);
+            data1 = FXCollections.observableArrayList();
+            //Execute query and store result in a resultset
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM available_assets");
+
+            while (rs.next()) {
+                //get string from db
+                data1.add(new assets(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9)));
+            }
+
+        } catch (ClassNotFoundException ex) {
+
+            System.err.println("Error: " + ex);
+        }
+
+        //set cell value factor to tableview.
+        //PropertyValue Factory must be set the same with the one set in model class.
+        asset1_id.setCellValueFactory(new PropertyValueFactory<>("assetID"));
+        asset1_name.setCellValueFactory(new PropertyValueFactory<>("assetName"));
+        asset1_code.setCellValueFactory(new PropertyValueFactory<>("assetCode"));
+        asset1_details.setCellValueFactory(new PropertyValueFactory<>("assetDetails"));
+        worker1_name.setCellValueFactory(new PropertyValueFactory<>("workerName"));
+        worker1_id.setCellValueFactory(new PropertyValueFactory<>("workerID"));
+        category1_id.setCellValueFactory(new PropertyValueFactory<>("categoryID"));
+        addition1_date.setCellValueFactory(new PropertyValueFactory<>("additionDate"));
+        cost1.setCellValueFactory(new PropertyValueFactory<>("cost"));
+
+        assets_tbl.setItems(null);
+        assets_tbl.setItems(data1);
+
+        //Lets create a cell factory to insert a button in every row.
+        Callback<TableColumn<assets, String>, TableCell<assets, String>> cellFactory = (param) -> {
+
+            //make the tablecell containing button
+            final TableCell<assets, String> cell = new TableCell<assets, String>() {
+
+                //override updateItem method
+                @Override
+                public void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    //ensure that cell is created only on non-empty rows
+                    if (empty) {
+                        setGraphic(null);
+                        setText(null);
+                    } else {
+                        //Now we create the action button
+                        final Button editButton = new Button("+");
+                        //attach listener on button
+                        editButton.setOnAction(event -> {
+
+                            //Extract the clicked object
+                            assets p = getTableView().getItems().get(getIndex());
+
+                            String id = String.valueOf(p.getAssetID());
+                            String name = String.valueOf(p.getAssetName());
+                            String code = String.valueOf(p.getAssetCode());
+                            String details = String.valueOf(p.getAssetDetails());
+                            String worker = String.valueOf(p.getWorkerName());
+                            String workerid = String.valueOf(p.getWorkerID());
+                            String categoryid = String.valueOf(p.getCategoryID());
+                            String additiondate = String.valueOf(p.getAdditionDate());
+                            String cost = String.valueOf(p.getCost());
+
+                            json_code nw = new json_code();
+                            nw.AllItem_json(id, name, code, details, worker, workerid, categoryid, additiondate, cost);
+
+                            //// POP UP ///////
+                            Stage stage = new Stage();
+                            FXMLLoader fxmlLoader = new FXMLLoader();
+                            Parent root;
+                            try {
+                                root = fxmlLoader.load(getClass().getResource("/asset_management_system/assets/assetPop/assetPop.fxml").openStream());
+                                Scene scene = new Scene(root);
+
+                                stage.setScene(scene);
+
+                                stage.initModality(Modality.WINDOW_MODAL);
+                                stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+                                stage.setResizable(false);
+                                stage.resizableProperty();
+
+                                root.setOnMousePressed(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        xOffset = event.getSceneX();
+                                        yOffset = event.getSceneY();
+                                    }
+                                });
+                                root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        stage.setX(event.getScreenX() - xOffset);
+                                        stage.setY(event.getScreenY() - yOffset);
+                                    }
+                                });
+                                scene.setFill(Color.ALICEBLUE);
+                                //stage.initStyle(StageStyle.UNDECORATED);
+                                stage.showAndWait();
+
+                            } catch (IOException ex) {
+                                Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            ////// POP UP///////
+
+                        });
+                        //Setting created button
+                        setGraphic(editButton);
+                        setText(null);
+                    }
+
+                }
+            ;
+
+            };
+            
+            return cell;
+        };
+        //set the custom factory to action column
+        columnEdit1.setCellFactory(cellFactory);
+
+    }
+
+    // MAINTENANCE
+    public void load2() throws SQLException {
+        //DB connection details
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+
+            String dbName = "asset_management_system";
+
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, password);
+            data2 = FXCollections.observableArrayList();
+            //Execute query and store result in a resultset
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM asset_maintenance");
+
+            while (rs.next()) {
+                //get string from db
+                data2.add(new asset_in_maintenance(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9)));
+            }
+
+        } catch (ClassNotFoundException ex) {
+
+            System.err.println("Error: " + ex);
+        }
+
+        //set cell value factor to tableview.
+        //PropertyValue Factory must be set the same with the one set in model class.
+        asset2_id.setCellValueFactory(new PropertyValueFactory<>("assetID"));
+        asset2_name.setCellValueFactory(new PropertyValueFactory<>("assetName"));
+        asset2_code.setCellValueFactory(new PropertyValueFactory<>("assetCode"));
+        asset2_details.setCellValueFactory(new PropertyValueFactory<>("assetDetails"));
+        worker2_name.setCellValueFactory(new PropertyValueFactory<>("workerName"));
+        worker2_id.setCellValueFactory(new PropertyValueFactory<>("workerID"));
+        category2_id.setCellValueFactory(new PropertyValueFactory<>("categoryID"));
+        addition2_date.setCellValueFactory(new PropertyValueFactory<>("additionDate"));
+        maintenance2_date.setCellValueFactory(new PropertyValueFactory<>("maintenanceDate"));
+
+        maintenance_tbl.setItems(null);
+        maintenance_tbl.setItems(data2);
+
+        //Lets create a cell factory to insert a button in every row.
+        Callback<TableColumn<asset_in_maintenance, String>, TableCell<asset_in_maintenance, String>> cellFactory = (param) -> {
+
+            //make the tablecell containing button
+            final TableCell<asset_in_maintenance, String> cell = new TableCell<asset_in_maintenance, String>() {
+
+                //override updateItem method
+                @Override
+                public void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    //ensure that cell is created only on non-empty rows
+                    if (empty) {
+                        setGraphic(null);
+                        setText(null);
+                    } else {
+                        //Now we create the action button
+                        final Button editButton = new Button("+");
+                        //attach listener on button
+                        editButton.setOnAction(event -> {
+
+                            //Extract the clicked object
+                            asset_in_maintenance p = getTableView().getItems().get(getIndex());
+
+                            String id = String.valueOf(p.getAssetID());
+                            String name = String.valueOf(p.getAssetName());
+                            String code = String.valueOf(p.getAssetCode());
+                            String details = String.valueOf(p.getAssetDetails());
+                            String worker = String.valueOf(p.getWorkerName());
+                            String workerid = String.valueOf(p.getWorkerID());
+                            String categoryid = String.valueOf(p.getCategoryID());
+                            String additiondate = String.valueOf(p.getAdditionDate());
+                            String maintenancedate = String.valueOf(p.getMaintenanceDate());
+
+                            json_code nw = new json_code();
+                            nw.maintenanceItem_json(id, name, code, details, worker, workerid, categoryid, additiondate, maintenancedate);
+
+                            //// POP UP ///////
+                            Stage stage = new Stage();
+                            FXMLLoader fxmlLoader = new FXMLLoader();
+                            Parent root;
+                            try {
+                                root = fxmlLoader.load(getClass().getResource("/asset_management_system/assets/maintenancePop/maintenancePop.fxml").openStream());
+                                Scene scene = new Scene(root);
+
+                                stage.setScene(scene);
+
+                                stage.initModality(Modality.WINDOW_MODAL);
+                                stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+                                stage.setResizable(false);
+                                stage.resizableProperty();
+
+                                root.setOnMousePressed(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        xOffset = event.getSceneX();
+                                        yOffset = event.getSceneY();
+                                    }
+                                });
+                                root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        stage.setX(event.getScreenX() - xOffset);
+                                        stage.setY(event.getScreenY() - yOffset);
+                                    }
+                                });
+                                scene.setFill(Color.ALICEBLUE);
+                                //stage.initStyle(StageStyle.UNDECORATED);
+                                stage.showAndWait();
+
+                            } catch (IOException ex) {
+                                Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            ////// POP UP///////                          
+                        });
+                        //Setting created button
+                        setGraphic(editButton);
+                        setText(null);
+                    }
+
+                }
+            ;
+
+            };
+            
+            return cell;
+        };
+        //set the custom factory to action column
+        columnEdit2.setCellFactory(cellFactory);
+
+    }
+
+    //DEFERRED ASSETS
+    public void load3() throws SQLException {
         //DB connection details
 
         try {
@@ -430,11 +1368,10 @@ public class AssetsController implements Initializable {
 
     }
 
-    //FOR ALL ASSETS
-    @FXML
-    void loadFromDB(MouseEvent event) throws SQLException {
-        //DB connection details
-
+    //////////////////////// END /////////////////////////////////////////////
+    ////////////////////////   START  ////////////////////////////////////////
+    //ALL ASSETS
+    public void loada(String searchVal, String table, String colmnVal) throws SQLException {
         try {
             Class.forName("com.mysql.jdbc.Driver");
 
@@ -443,12 +1380,13 @@ public class AssetsController implements Initializable {
             connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, password);
             data = FXCollections.observableArrayList();
             //Execute query and store result in a resultset
-            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM assets");
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM `asset_management_system`.`" + table + "` WHERE (`" + colmnVal + "` LIKE '%" + searchVal + "%')");
 
             while (rs.next()) {
                 //get string from db
                 data.add(new all_assets(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9)));
             }
+            connection.close();
 
         } catch (ClassNotFoundException ex) {
 
@@ -493,8 +1431,8 @@ public class AssetsController implements Initializable {
 
                             //Extract the clicked object
                             all_assets p = getTableView().getItems().get(getIndex());
-                            
-                             String id = String.valueOf(p.getAssetID());
+
+                            String id = String.valueOf(p.getAssetID());
                             String name = String.valueOf(p.getAssetName());
                             String code = String.valueOf(p.getAssetCode());
                             String details = String.valueOf(p.getAssetDetails());
@@ -503,10 +1441,9 @@ public class AssetsController implements Initializable {
                             String categoryid = String.valueOf(p.getCategoryID());
                             String additiondate = String.valueOf(p.getAdditionDate());
                             String cost = String.valueOf(p.getCost());
-                            
-                            json_code nw=new json_code();
-                            nw.AllItem_json(id, name,code, details, worker, workerid, categoryid, additiondate, cost);
-                            
+
+                            json_code nw = new json_code();
+                            nw.AllItem_json(id, name, code, details, worker, workerid, categoryid, additiondate, cost);
 
                             //// POP UP ///////
                             Stage stage = new Stage();
@@ -561,24 +1498,21 @@ public class AssetsController implements Initializable {
         };
         //set the custom factory to action column
         columnEdit.setCellFactory(cellFactory);
-
     }
 
-    //FOR ASSETS
-    @FXML
-    void loadFromDB1(MouseEvent event) throws SQLException {
-        //DB connection details
-
+    //AVAILABLE ASSETS
+    public void loada1(String searchVal, String table, String colmnVal) throws ClassNotFoundException, SQLException {
         try {
             Class.forName("com.mysql.jdbc.Driver");
 
             String dbName = "asset_management_system";
+            String userName = "root";
+            String password = "";
 
             connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, password);
-            data1 = FXCollections.observableArrayList();
+            data = FXCollections.observableArrayList();
             //Execute query and store result in a resultset
-            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM available_assets");
-
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM `asset_management_system`.`" + table + "` WHERE (`" + colmnVal + "` LIKE '%" + searchVal + "%')");
             while (rs.next()) {
                 //get string from db
                 data1.add(new assets(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9)));
@@ -627,8 +1561,8 @@ public class AssetsController implements Initializable {
 
                             //Extract the clicked object
                             assets p = getTableView().getItems().get(getIndex());
-                            
-                             String id = String.valueOf(p.getAssetID());
+
+                            String id = String.valueOf(p.getAssetID());
                             String name = String.valueOf(p.getAssetName());
                             String code = String.valueOf(p.getAssetCode());
                             String details = String.valueOf(p.getAssetDetails());
@@ -637,10 +1571,9 @@ public class AssetsController implements Initializable {
                             String categoryid = String.valueOf(p.getCategoryID());
                             String additiondate = String.valueOf(p.getAdditionDate());
                             String cost = String.valueOf(p.getCost());
-                            
-                            json_code nw=new json_code();
-                            nw.AllItem_json(id, name,code, details, worker, workerid, categoryid, additiondate, cost);
-                            
+
+                            json_code nw = new json_code();
+                            nw.AllItem_json(id, name, code, details, worker, workerid, categoryid, additiondate, cost);
 
                             //// POP UP ///////
                             Stage stage = new Stage();
@@ -680,7 +1613,6 @@ public class AssetsController implements Initializable {
                             }
                             ////// POP UP///////
 
-                                                       
                         });
                         //Setting created button
                         setGraphic(editButton);
@@ -699,9 +1631,8 @@ public class AssetsController implements Initializable {
 
     }
 
-    //FOR ASSETS IN MAINTENANCE
-    @FXML
-    void loadFromDB2(MouseEvent event) throws SQLException {
+    //MAINTENANCE
+    public void loada2(String searchVal, String table, String colmnVal) throws SQLException {
         //DB connection details
 
         try {
@@ -712,7 +1643,7 @@ public class AssetsController implements Initializable {
             connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, password);
             data2 = FXCollections.observableArrayList();
             //Execute query and store result in a resultset
-            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM asset_maintenance");
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM `asset_management_system`.`" + table + "` WHERE (`" + colmnVal + "` LIKE '%" + searchVal + "%')");
 
             while (rs.next()) {
                 //get string from db
@@ -763,9 +1694,56 @@ public class AssetsController implements Initializable {
                             //Extract the clicked object
                             asset_in_maintenance p = getTableView().getItems().get(getIndex());
 
-                            //DATA 
-                            //System.out.println(p.getMac_address());  String.valueOf(p.getId())
-                            //PREVENT USER FROM EDITING TEXTFIELDS                               
+                            String id = String.valueOf(p.getAssetID());
+                            String name = String.valueOf(p.getAssetName());
+                            String code = String.valueOf(p.getAssetCode());
+                            String details = String.valueOf(p.getAssetDetails());
+                            String worker = String.valueOf(p.getWorkerName());
+                            String workerid = String.valueOf(p.getWorkerID());
+                            String categoryid = String.valueOf(p.getCategoryID());
+                            String additiondate = String.valueOf(p.getAdditionDate());
+                            String maintenancedate = String.valueOf(p.getMaintenanceDate());
+
+                            json_code nw = new json_code();
+                            nw.maintenanceItem_json(id, name, code, details, worker, workerid, categoryid, additiondate, maintenancedate);
+
+                            //// POP UP ///////
+                            Stage stage = new Stage();
+                            FXMLLoader fxmlLoader = new FXMLLoader();
+                            Parent root;
+                            try {
+                                root = fxmlLoader.load(getClass().getResource("/asset_management_system/assets/maintenancePop/maintenancePop.fxml").openStream());
+                                Scene scene = new Scene(root);
+
+                                stage.setScene(scene);
+
+                                stage.initModality(Modality.WINDOW_MODAL);
+                                stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+                                stage.setResizable(false);
+                                stage.resizableProperty();
+
+                                root.setOnMousePressed(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        xOffset = event.getSceneX();
+                                        yOffset = event.getSceneY();
+                                    }
+                                });
+                                root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        stage.setX(event.getScreenX() - xOffset);
+                                        stage.setY(event.getScreenY() - yOffset);
+                                    }
+                                });
+                                scene.setFill(Color.ALICEBLUE);
+                                //stage.initStyle(StageStyle.UNDECORATED);
+                                stage.showAndWait();
+
+                            } catch (IOException ex) {
+                                Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            ////// POP UP///////                          
                         });
                         //Setting created button
                         setGraphic(editButton);
@@ -784,8 +1762,492 @@ public class AssetsController implements Initializable {
 
     }
 
+    //DEFERRED ASSETS
+    public void loada3(String searchVal, String table, String colmnVal) throws SQLException {
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+
+            String dbName = "asset_management_system";
+
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, password);
+            data3 = FXCollections.observableArrayList();
+            //Execute query and store result in a resultset
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM `asset_management_system`.`" + table + "` WHERE (`" + colmnVal + "` LIKE '%" + searchVal + "%')");
+
+            while (rs.next()) {
+                //get string from db
+                data3.add(new deferred_assets(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10)));
+            }
+
+        } catch (ClassNotFoundException ex) {
+
+            System.err.println("Error: " + ex);
+        }
+
+        //set cell value factor to tableview.
+        //PropertyValue Factory must be set the same with the one set in model class.
+        asset3_id.setCellValueFactory(new PropertyValueFactory<>("assetID"));
+        asset3_name.setCellValueFactory(new PropertyValueFactory<>("assetName"));
+        asset3_code.setCellValueFactory(new PropertyValueFactory<>("assetCode"));
+        asset3_details.setCellValueFactory(new PropertyValueFactory<>("assetDetails"));
+        worker3_name.setCellValueFactory(new PropertyValueFactory<>("workerName"));
+        worker3_id.setCellValueFactory(new PropertyValueFactory<>("workerID"));
+        category3_id.setCellValueFactory(new PropertyValueFactory<>("categoryID"));
+        addition3_date.setCellValueFactory(new PropertyValueFactory<>("additionDate"));
+        deferred3_date.setCellValueFactory(new PropertyValueFactory<>("deferredDate"));
+        reason3.setCellValueFactory(new PropertyValueFactory<>("reason"));
+
+        deferred_tbl.setItems(null);
+        deferred_tbl.setItems(data3);
+
+        //Lets create a cell factory to insert a button in every row.
+        Callback<TableColumn<deferred_assets, String>, TableCell<deferred_assets, String>> cellFactory = (param) -> {
+
+            //make the tablecell containing button
+            final TableCell<deferred_assets, String> cell = new TableCell<deferred_assets, String>() {
+
+                //override updateItem method
+                @Override
+                public void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    //ensure that cell is created only on non-empty rows
+                    if (empty) {
+                        setGraphic(null);
+                        setText(null);
+                    } else {
+                        //Now we create the action button
+                        final Button editButton = new Button("+");
+                        //attach listener on button
+                        editButton.setOnAction(event -> {
+
+                            //Extract the clicked object
+                            deferred_assets p = getTableView().getItems().get(getIndex());
+
+                            //DATA 
+                            //System.out.println(p.getMac_address());  String.valueOf(p.getId())
+                            String id = String.valueOf(p.getAssetID());
+                            String name = String.valueOf(p.getAssetName());
+                            String code = String.valueOf(p.getAssetCode());
+                            String details = String.valueOf(p.getAssetDetails());
+                            String worker = String.valueOf(p.getWorkerName());
+                            String workerid = String.valueOf(p.getWorkerID());
+                            String categoryid = String.valueOf(p.getCategoryID());
+                            String additiondate = String.valueOf(p.getAdditionDate());
+                            String deferreddate = String.valueOf(p.getDeferredDate());
+                            String reason = String.valueOf(p.getReason());
+
+                            json_code nw = new json_code();
+                            nw.deferredItem_json(id, name, code, details, worker, workerid, categoryid, additiondate, deferreddate, reason);
+
+                            ///// POP UP ////
+                            Stage stage = new Stage();
+                            FXMLLoader fxmlLoader = new FXMLLoader();
+                            Parent root;
+                            try {
+                                root = fxmlLoader.load(getClass().getResource("/asset_management_system/assets/deferred_pop/deferred_pop.fxml").openStream());
+                                Scene scene = new Scene(root);
+
+                                stage.setScene(scene);
+
+                                stage.initModality(Modality.WINDOW_MODAL);
+                                stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+                                stage.setResizable(false);
+                                stage.resizableProperty();
+
+                                root.setOnMousePressed(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        xOffset = event.getSceneX();
+                                        yOffset = event.getSceneY();
+                                    }
+                                });
+                                root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        stage.setX(event.getScreenX() - xOffset);
+                                        stage.setY(event.getScreenY() - yOffset);
+                                    }
+                                });
+                                scene.setFill(Color.ALICEBLUE);
+                                //stage.initStyle(StageStyle.UNDECORATED);
+                                stage.showAndWait();
+
+                            } catch (IOException ex) {
+                                Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                            ///// POP UP ///////
+                        });
+                        //Setting created button
+                        setGraphic(editButton);
+                        setText(null);
+                    }
+
+                }
+            ;
+
+            };
+            
+            return cell;
+        };
+        //set the custom factory to action column
+        columnEdit3.setCellFactory(cellFactory);
+    }
+
+    ///////////////////////////////  END  ///////////////////////////////////
+    public void refresh(String name) throws SQLException {
+
+        if ("all assets".equals(name)) {
+            load();
+
+        } else if ("available assets".equals(name)) {
+            load1();
+
+        } else if ("maintenance".equals(name)) {
+            load2();
+
+        } else if ("deferred assets".equals(name)) {
+            load3();
+
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        //ALL ASSETS
+        choice.getItems().addAll(" ", "ASSET ID", "ASSET NAME", "ASSET CODE", "ASSET DETAILS", "WORKER NAME", "WORKER ID", "CATEGORY", "ADDITION DATE", "COST");
+        choice.setValue(" ");
+
+        //AVAILABLE ASSETS
+        choice1.getItems().addAll(" ", "ASSET ID", "ASSET NAME", "ASSET CODE", "ASSET DETAILS", "WORKER NAME", "WORKER ID", "CATEGORY", "ADDITION DATE", "COST");
+        choice1.setValue(" ");
+
+        //MAINTENANCE
+        choice2.getItems().addAll(" ", "ASSET ID", "ASSET NAME", "ASSET CODE", "ASSET DETAILS", "WORKER NAME", "WORKER ID", "CATEGORY", "ADDITION DATE", "MAINTENANCE DATE");
+        choice2.setValue(" ");
+
+        //DEFERRED ASSETS
+        choice3.getItems().addAll(" ", "ASSET ID", "ASSET NAME", "ASSET CODE", "ASSET DETAILS", "WORKER NAME", "WORKER ID", "CATEGORY", "ADDITION DATE", "DEFERRED DATE", "REASON");
+        choice3.setValue(" ");
+        
+        
+        if (search.getText().isEmpty()){
+            
+            try {
+                load();
+            } catch (SQLException ex) {
+                Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+        else if(search1.getText().isEmpty()){
+            try {
+                load1();
+            } catch (SQLException ex) {
+                Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+        else if(search2.getText().isEmpty()){
+            try {
+                load2();
+            } catch (SQLException ex) {
+                Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+        else if(search3.getText().isEmpty()){
+            try {
+                load3();
+            } catch (SQLException ex) {
+                Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+        
+
+        ///// SEARCH
+        
+        /////ALL ASSETS
+        search.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            //choice.getItems().addAll("ASSET ID", "ASSET NAME", "ASSET CODE", "ASSET DETAILS", "WORKER NAME", "WORKER ID", "CATEGORY", "ADDITION DATE", "COST");
+
+            String tbl = "assets";
+            if (oldValue != newValue) {
+                try {
+
+                    if (!search.getText().isEmpty()) {
+
+                        String BoxValue = choice.getValue().toString();
+
+                        if ("ASSET ID".equals(BoxValue)) {
+                            String clmn = "assetID";
+                            loada(search.getText(), tbl, clmn);
+
+                        } else if ("ASSET NAME".equals(BoxValue)) {
+                            String clmn = "assetName";
+                            loada(search.getText(), tbl, clmn);
+                        } else if ("ASSET CODE".equals(BoxValue)) {
+                            String clmn = "assetCode";
+                            loada(search.getText(), tbl, clmn);
+                        } else if ("ASSET DETAILS".equals(BoxValue)) {
+                            String clmn = "assetDetails";
+                            loada(search.getText(), tbl, clmn);
+                        } else if ("WORKER NAME".equals(BoxValue)) {
+                            String clmn = "workerName";
+                            loada(search.getText(), tbl, clmn);
+                        } else if ("WORKER ID".equals(BoxValue)) {
+                            String clmn = "workerID";
+                            loada(search.getText(), tbl, clmn);
+                        } else if ("CATEGORY".equals(BoxValue)) {
+                            String clmn = "categoryID";
+                            loada(search.getText(), tbl, clmn);
+                        } else if ("ADDITION DATE".equals(BoxValue)) {
+                            String clmn = "additionDate";
+                            loada(search.getText(), tbl, clmn);
+                        } else if ("COST".equals(BoxValue)) {
+                            String clmn = "cost";
+                            loada(search.getText(), tbl, clmn);
+                        } else if (" ".equals(BoxValue)) {
+
+                            try {
+                                refresh("all assets");
+                                // System.out.print("no empty search");
+                            } catch (SQLException ex) {
+                                Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    } else {
+                        if (search.getText().isEmpty()) {
+                            try {
+                                refresh("all assets");
+                                // System.out.print("no empty search");
+                            } catch (SQLException ex) {
+                                Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(assetSearch.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+
+        });
+        ////////////
+        
+        /////AVAILABLE ASSETS
+        search1.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            //choice.getItems().addAll("ASSET ID", "ASSET NAME", "ASSET CODE", "ASSET DETAILS", "WORKER NAME", "WORKER ID", "CATEGORY", "ADDITION DATE", "COST");
+
+            String tbl = "available_assets";
+            if (oldValue != newValue) {
+                try {
+
+                    if (!search1.getText().isEmpty()) {
+
+                        String BoxValue = choice1.getValue().toString();
+
+                        if ("ASSET ID".equals(BoxValue)) {
+                            String clmn = "assetID";
+                            loada1(search1.getText(), tbl, clmn);
+
+                        } else if ("ASSET NAME".equals(BoxValue)) {
+                            String clmn = "assetName";
+                            loada1(search1.getText(), tbl, clmn);
+                        } else if ("ASSET CODE".equals(BoxValue)) {
+                            String clmn = "assetCode";
+                            loada1(search1.getText(), tbl, clmn);
+                        } else if ("ASSET DETAILS".equals(BoxValue)) {
+                            String clmn = "assetDetails";
+                            loada1(search1.getText(), tbl, clmn);
+                        } else if ("WORKER NAME".equals(BoxValue)) {
+                            String clmn = "workerName";
+                            loada1(search1.getText(), tbl, clmn);
+                        } else if ("WORKER ID".equals(BoxValue)) {
+                            String clmn = "workerID";
+                            loada1(search1.getText(), tbl, clmn);
+                        } else if ("CATEGORY".equals(BoxValue)) {
+                            String clmn = "categoryID";
+                            loada1(search1.getText(), tbl, clmn);
+                        } else if ("ADDITION DATE".equals(BoxValue)) {
+                            String clmn = "additionDate";
+                            loada1(search1.getText(), tbl, clmn);
+                        } else if ("COST".equals(BoxValue)) {
+                            String clmn = "cost";
+                            loada1(search1.getText(), tbl, clmn);
+                        } else if (" ".equals(BoxValue)) {
+
+                            try {
+                                refresh("available assets");
+                                // System.out.print("no empty search");
+                            } catch (SQLException ex) {
+                                Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    } else {
+                        if (search1.getText().isEmpty()) {
+                            try {
+                                refresh("available assets");
+                                // System.out.print("no empty search");
+                            } catch (SQLException ex) {
+                                Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(assetSearch.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+
+        });
+        /////////////
+        
+        /////MAINTENANCE
+        search2.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            //choice.getItems().addAll("ASSET ID", "ASSET NAME", "ASSET CODE", "ASSET DETAILS", "WORKER NAME", "WORKER ID", "CATEGORY", "ADDITION DATE", "COST");
+
+            String tbl = "asset_maintenance";
+            if (oldValue != newValue) {
+                try {
+
+                    if (!search2.getText().isEmpty()) {
+
+                        String BoxValue = choice2.getValue().toString();
+
+                        if ("ASSET ID".equals(BoxValue)) {
+                            String clmn = "assetID";
+                            loada2(search2.getText(), tbl, clmn);
+
+                        } else if ("ASSET NAME".equals(BoxValue)) {
+                            String clmn = "assetName";
+                            loada2(search2.getText(), tbl, clmn);
+                        } else if ("ASSET CODE".equals(BoxValue)) {
+                            String clmn = "assetCode";
+                            loada2(search2.getText(), tbl, clmn);
+                        } else if ("ASSET DETAILS".equals(BoxValue)) {
+                            String clmn = "assetDetails";
+                            loada2(search2.getText(), tbl, clmn);
+                        } else if ("WORKER NAME".equals(BoxValue)) {
+                            String clmn = "workerName";
+                            loada2(search2.getText(), tbl, clmn);
+                        } else if ("WORKER ID".equals(BoxValue)) {
+                            String clmn = "workerID";
+                            loada2(search2.getText(), tbl, clmn);
+                        } else if ("CATEGORY".equals(BoxValue)) {
+                            String clmn = "categoryID";
+                            loada2(search2.getText(), tbl, clmn);
+                        } else if ("ADDITION DATE".equals(BoxValue)) {
+                            String clmn = "additionDate";
+                            loada2(search2.getText(), tbl, clmn);
+                        } else if ("MAINTENANCE DATE".equals(BoxValue)) {
+                            String clmn = "maintenanceDate";
+                            loada2(search2.getText(), tbl, clmn);
+                        } else if (" ".equals(BoxValue)) {
+
+                            try {
+                                refresh("maintenance");
+                                // System.out.print("no empty search");
+                            } catch (SQLException ex) {
+                                Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    } else {
+                        if (search2.getText().isEmpty()) {
+                            try {
+                                refresh("maintenance");
+                                // System.out.print("no empty search");
+                            } catch (SQLException ex) {
+                                Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(assetSearch.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+
+        });
+        //////////
+        
+         /////DEFERRED
+        search3.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            //choice.getItems().addAll("ASSET ID", "ASSET NAME", "ASSET CODE", "ASSET DETAILS", "WORKER NAME", "WORKER ID", "CATEGORY", "ADDITION DATE", "COST");
+
+            String tbl = "deferred_asset";
+            if (oldValue != newValue) {
+                try {
+
+                    if (!search3.getText().isEmpty()) {
+
+                        String BoxValue = choice3.getValue().toString();
+
+                        if ("ASSET ID".equals(BoxValue)) {
+                            String clmn = "assetID";
+                            loada3(search3.getText(), tbl, clmn);
+
+                        } else if ("ASSET NAME".equals(BoxValue)) {
+                            String clmn = "assetName";
+                            loada3(search3.getText(), tbl, clmn);
+                        } else if ("ASSET CODE".equals(BoxValue)) {
+                            String clmn = "assetCode";
+                            loada3(search3.getText(), tbl, clmn);
+                        } else if ("ASSET DETAILS".equals(BoxValue)) {
+                            String clmn = "assetDetails";
+                            loada3(search3.getText(), tbl, clmn);
+                        } else if ("WORKER NAME".equals(BoxValue)) {
+                            String clmn = "workerName";
+                            loada3(search3.getText(), tbl, clmn);
+                        } else if ("WORKER ID".equals(BoxValue)) {
+                            String clmn = "workerID";
+                            loada3(search3.getText(), tbl, clmn);
+                        } else if ("CATEGORY".equals(BoxValue)) {
+                            String clmn = "categoryID";
+                            loada3(search3.getText(), tbl, clmn);
+                        } else if ("ADDITION DATE".equals(BoxValue)) {
+                            String clmn = "additionDate";
+                            loada3(search3.getText(), tbl, clmn);
+                        } else if ("DEFERRED DATE".equals(BoxValue)) {
+                            String clmn = "deferredDate";
+                            loada3(search3.getText(), tbl, clmn);
+                        }
+                        else if ("REASON".equals(BoxValue)) {
+                            String clmn = "reason";
+                            loada3(search3.getText(), tbl, clmn);
+                        }else if (" ".equals(BoxValue)) {
+
+                            try {
+                                refresh("deferred assets");
+                                // System.out.print("no empty search");
+                            } catch (SQLException ex) {
+                                Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    } else {
+                        if (search3.getText().isEmpty()) {
+                            try {
+                                refresh("deferred assets");
+                                // System.out.print("no empty search");
+                            } catch (SQLException ex) {
+                                Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(assetSearch.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+
+        });
+        
 
     }
 

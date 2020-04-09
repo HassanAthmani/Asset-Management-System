@@ -19,7 +19,7 @@
         <tabs>
             <Tab text="ALL ASSETS">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" onMouseEntered="#loadFromDB" prefHeight="733.0" prefWidth="1192.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="733.0" prefWidth="1192.0">
                      <children>
                         <TableView fx:id="all_assets_tbl" layoutX="3.0" layoutY="94.0" prefHeight="695.0" prefWidth="1214.0">
                            <columns>
