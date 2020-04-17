@@ -35,6 +35,7 @@ public class Asset_management_system extends Application {
         scene.getStylesheets().add("https://fonts.googleapis.com/css?family=Bebas+Neue&display=swap");
         scene.getStylesheets().add("https://fonts.googleapis.com/css?family=Lobster&display=swap");
         scene.getStylesheets().add("https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz&display=swap");
+        
         scene.getStylesheets().add("/asset_management_system/css/tabpane.css"); 
         stage.setScene(scene);
          stage.setResizable(false);

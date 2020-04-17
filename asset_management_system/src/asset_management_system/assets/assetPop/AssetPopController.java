@@ -355,7 +355,7 @@ public class AssetPopController implements Initializable {
                 String assetname = assetName.getText();
                 String assetcode = assetCode.getText();
                 String assetdetails = assetDetails.getText();
-                int workername = Integer.valueOf(workerID.getText());
+                
                 String cat = category.getText();
                 String additiondate = additionDate.getText();
 

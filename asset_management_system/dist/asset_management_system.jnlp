@@ -11,7 +11,7 @@
   </resources>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="asset_management_system.jar" size="192087" download="eager" />
+    <jar href="asset_management_system.jar" size="190431" download="eager" />
     <jar href="lib/core-3.3.0.jar" size="541078" download="eager" />
     <jar href="lib/javase-3.3.0.jar" size="41451" download="eager" />
     <jar href="lib/javax.mail-1.5.0.jar" size="521991" download="eager" />

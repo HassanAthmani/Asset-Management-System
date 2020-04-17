@@ -298,7 +298,7 @@ public class AssetsController implements Initializable {
 
     ///////////////////////////   START  /////////////////////////////////////
     //FOR ALL ASSETS
-   /* @FXML
+    /* @FXML
     void loadFromDB(MouseEvent event) throws SQLException {
         //DB connection details
 
@@ -429,7 +429,6 @@ public class AssetsController implements Initializable {
         columnEdit.setCellFactory(cellFactory);
 
     }*/
-
     //FOR ASSETS
     @FXML
     void loadFromDB1(MouseEvent event) throws SQLException {
@@ -560,9 +559,8 @@ public class AssetsController implements Initializable {
         };
         //set the custom factory to action column
         columnEdit1.setCellFactory(cellFactory);
-*/
+         */
     }
-
 
     //FOR ASSETS IN MAINTENANCE
     @FXML
@@ -693,7 +691,7 @@ public class AssetsController implements Initializable {
         };
         //set the custom factory to action column
         columnEdit2.setCellFactory(cellFactory);
-*/
+         */
     }
 
     //FOR DEFERRED ASSETS
@@ -830,12 +828,10 @@ public class AssetsController implements Initializable {
         };
         //set the custom factory to action column
         columnEdit3.setCellFactory(cellFactory);
-*/
+         */
     }
 
     ///////////////////////  END  /////////////////////////////////////////////
-    
-    
     /////////////////////// START ////////////////////////////////////////////
     //ALL ASSETS
     public void load() throws SQLException {
@@ -968,6 +964,8 @@ public class AssetsController implements Initializable {
         columnEdit.setCellFactory(cellFactory);
 
     }
+    
+   
 
     //FOR ASSETS
     public void load1() throws SQLException {
@@ -1100,7 +1098,8 @@ public class AssetsController implements Initializable {
         columnEdit1.setCellFactory(cellFactory);
 
     }
-
+    
+     
     // MAINTENANCE
     public void load2() throws SQLException {
         //DB connection details
@@ -1231,6 +1230,8 @@ public class AssetsController implements Initializable {
         columnEdit2.setCellFactory(cellFactory);
 
     }
+
+   
 
     //DEFERRED ASSETS
     public void load3() throws SQLException {
@@ -1367,6 +1368,8 @@ public class AssetsController implements Initializable {
         columnEdit3.setCellFactory(cellFactory);
 
     }
+    
+   
 
     //////////////////////// END /////////////////////////////////////////////
     ////////////////////////   START  ////////////////////////////////////////
@@ -1510,7 +1513,7 @@ public class AssetsController implements Initializable {
             String password = "";
 
             connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, password);
-            data = FXCollections.observableArrayList();
+            data1 = FXCollections.observableArrayList();
             //Execute query and store result in a resultset
             ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM `asset_management_system`.`" + table + "` WHERE (`" + colmnVal + "` LIKE '%" + searchVal + "%')");
             while (rs.next()) {
@@ -1932,45 +1935,42 @@ public class AssetsController implements Initializable {
         //DEFERRED ASSETS
         choice3.getItems().addAll(" ", "ASSET ID", "ASSET NAME", "ASSET CODE", "ASSET DETAILS", "WORKER NAME", "WORKER ID", "CATEGORY", "ADDITION DATE", "DEFERRED DATE", "REASON");
         choice3.setValue(" ");
-        
-        
-        if (search.getText().isEmpty()){
-            
+
+        if (search.getText().isEmpty()) {
+
             try {
                 load();
             } catch (SQLException ex) {
                 Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-        }
-        else if(search1.getText().isEmpty()){
+
+        } 
+        if (search1.getText().isEmpty()) {
             try {
                 load1();
             } catch (SQLException ex) {
                 Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-        }
-        else if(search2.getText().isEmpty()){
+
+        } 
+        if (search2.getText().isEmpty()) {
             try {
                 load2();
             } catch (SQLException ex) {
                 Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-        }
-        else if(search3.getText().isEmpty()){
+
+        } 
+        if (search3.getText().isEmpty()) {
             try {
                 load3();
             } catch (SQLException ex) {
                 Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
         }
-        
 
         ///// SEARCH
-        
         /////ALL ASSETS
         search.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             //choice.getItems().addAll("ASSET ID", "ASSET NAME", "ASSET CODE", "ASSET DETAILS", "WORKER NAME", "WORKER ID", "CATEGORY", "ADDITION DATE", "COST");
@@ -2038,7 +2038,7 @@ public class AssetsController implements Initializable {
 
         });
         ////////////
-        
+
         /////AVAILABLE ASSETS
         search1.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             //choice.getItems().addAll("ASSET ID", "ASSET NAME", "ASSET CODE", "ASSET DETAILS", "WORKER NAME", "WORKER ID", "CATEGORY", "ADDITION DATE", "COST");
@@ -2108,7 +2108,7 @@ public class AssetsController implements Initializable {
 
         });
         /////////////
-        
+
         /////MAINTENANCE
         search2.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             //choice.getItems().addAll("ASSET ID", "ASSET NAME", "ASSET CODE", "ASSET DETAILS", "WORKER NAME", "WORKER ID", "CATEGORY", "ADDITION DATE", "COST");
@@ -2176,8 +2176,8 @@ public class AssetsController implements Initializable {
 
         });
         //////////
-        
-         /////DEFERRED
+
+        /////DEFERRED
         search3.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             //choice.getItems().addAll("ASSET ID", "ASSET NAME", "ASSET CODE", "ASSET DETAILS", "WORKER NAME", "WORKER ID", "CATEGORY", "ADDITION DATE", "COST");
 
@@ -2217,11 +2217,10 @@ public class AssetsController implements Initializable {
                         } else if ("DEFERRED DATE".equals(BoxValue)) {
                             String clmn = "deferredDate";
                             loada3(search3.getText(), tbl, clmn);
-                        }
-                        else if ("REASON".equals(BoxValue)) {
+                        } else if ("REASON".equals(BoxValue)) {
                             String clmn = "reason";
                             loada3(search3.getText(), tbl, clmn);
-                        }else if (" ".equals(BoxValue)) {
+                        } else if (" ".equals(BoxValue)) {
 
                             try {
                                 refresh("deferred assets");
@@ -2247,7 +2246,6 @@ public class AssetsController implements Initializable {
             }
 
         });
-        
 
     }
 

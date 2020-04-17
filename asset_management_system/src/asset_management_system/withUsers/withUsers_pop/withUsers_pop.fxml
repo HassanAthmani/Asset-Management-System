@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="652.0" prefWidth="958.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="asset_management_system.withUsers.withUsers_pop.WithUsers_popController">
    <children>
@@ -27,14 +28,19 @@
       <JFXTextField fx:id="assetName" layoutX="743.0" layoutY="98.0" />
       <JFXTextField fx:id="assetCode" layoutX="743.0" layoutY="161.0" />
       <JFXTextField fx:id="assigned_date" layoutX="743.0" layoutY="222.0" />
-      <Button fx:id="maintenance" layoutX="29.0" layoutY="481.0" mnemonicParsing="false" onAction="#ToMaintenance" text="SEND TO MAINTENANCE" />
+      <Button fx:id="maintenance" layoutX="29.0" layoutY="481.0" mnemonicParsing="false" onAction="#ToMaintenance" prefHeight="26.0" prefWidth="221.0" text="SEND TO MAINTENANCE" />
       <Button fx:id="deferBtn" layoutX="29.0" layoutY="581.0" mnemonicParsing="false" onAction="#defer" text="DEFER ASSET" />
-      <Button fx:id="assetsBtn" layoutX="767.0" layoutY="526.0" mnemonicParsing="false" onAction="#ToAssets" prefHeight="26.0" prefWidth="142.0" text="RETURN TO ASSETS" />
-      <Label layoutX="499.0" layoutY="363.0" prefHeight="19.0" prefWidth="120.0" text="REASON" />
+      <Button fx:id="assetsBtn" layoutX="733.0" layoutY="526.0" mnemonicParsing="false" onAction="#ToAssets" prefHeight="26.0" prefWidth="176.0" text="RETURN TO ASSETS" />
+      <Label fx:id="reasonLbl" layoutX="499.0" layoutY="363.0" prefHeight="19.0" prefWidth="120.0" text="REASON" />
       <JFXTextField fx:id="reason" layoutX="641.0" layoutY="360.0" prefHeight="26.0" prefWidth="203.0" promptText="REASON" />
       <CheckBox fx:id="deferCheck" layoutX="19.0" layoutY="539.0" mnemonicParsing="false" onAction="#check" prefHeight="18.0" prefWidth="150.0" text="DEFER ASSET" />
       <Label layoutX="533.0" layoutY="280.0" prefHeight="19.0" prefWidth="120.0" text="ASSIGNED BY" />
       <JFXTextField fx:id="assignedBy" layoutX="735.0" layoutY="283.0" prefHeight="26.0" prefWidth="150.0" />
       <ImageView fx:id="qr_code" fitHeight="196.0" fitWidth="221.0" layoutX="433.0" layoutY="444.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="title" layoutX="373.0" layoutY="22.0" prefHeight="50.0" prefWidth="319.0" text="ASSIGNED ASSET">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

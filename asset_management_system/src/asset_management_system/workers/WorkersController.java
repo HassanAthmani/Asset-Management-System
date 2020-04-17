@@ -268,11 +268,11 @@ public class WorkersController implements Initializable {
     
        @FXML
     void sample(MouseEvent event) {
-        try {
+       /* try {
              LoadDataFrmDB();
          } catch (SQLException ex) {
              Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
-         }
+         }*/
 
     }
 
@@ -297,6 +297,16 @@ public class WorkersController implements Initializable {
         //String checkBoxValue=checkBox.getValue().toString();
        
        // System.out.print(checkBoxValue);
+       
+       if (searchBox.getText().isEmpty()) {
+
+            try {
+                LoadDataFrmDB();
+            } catch (SQLException ex) {
+                Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } 
         
         ///THA MAGIC HAPPENS
          searchBox.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue,String newValue) -> {

@@ -6,8 +6,6 @@
 package asset_management_system.withUsers;
 
 import asset_management_system.assets.AssetsController;
-import asset_management_system.assets.all_assets;
-import asset_management_system.assets.asset_in_maintenance;
 import asset_management_system.usedAlot.assetSearch;
 import asset_management_system.usedAlot.json_code;
 import asset_management_system.workers.WorkersController;
@@ -51,6 +49,7 @@ import javafx.util.Callback;
  * @author User
  */
 public class WithUsersController implements Initializable {
+    
      public Connection connection;
      PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
@@ -111,6 +110,7 @@ public class WithUsersController implements Initializable {
       @FXML
     void loadFromDB(MouseEvent event) throws SQLException {
          //DB connection details
+         /*
         
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -253,7 +253,7 @@ public class WithUsersController implements Initializable {
         };  
         //set the custom factory to action column
         columnEdit.setCellFactory(cellFactory);        
-
+*/
     }
     
     
@@ -349,7 +349,7 @@ public class WithUsersController implements Initializable {
                             try {
                                 root = fxmlLoader.load(getClass().getResource("/asset_management_system/withUsers/withUsers_pop/withUsers_pop.fxml").openStream());
                                 Scene scene = new Scene(root);
-
+                                scene.getStylesheets().add("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
                                 stage.setScene(scene);
 
                                 stage.initModality(Modality.WINDOW_MODAL);
@@ -563,6 +563,16 @@ public class WithUsersController implements Initializable {
         // TODO
         choice.getItems().addAll(" ","ID", "ASSET ID", "ASSET NAME", "ASSET CODE", "PHONE NO", "WORKER NAME", "WORKER ID", "EMAIL", "ASSIGNED DATE", "ASSIGNED BY");
         choice.setValue("ASSET ID");
+        
+        if (search.getText().isEmpty()) {
+
+            try {
+                loada();
+            } catch (SQLException ex) {
+                Logger.getLogger(WithUsersController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } 
         
         search.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             //choice.getItems().addAll("ASSET ID", "ASSET NAME", "ASSET CODE", "ASSET DETAILS", "WORKER NAME", "WORKER ID", "CATEGORY", "ADDITION DATE", "COST");
