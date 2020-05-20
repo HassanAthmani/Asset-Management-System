@@ -82,7 +82,7 @@
             <Image url="@../img/ic_close.imageset/ic_close_2x.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="backToDashboard" fitHeight="38.0" fitWidth="44.0" layoutX="283.0" layoutY="14.0" onMousePressed="#imageClicked" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="backToDashboard" fitHeight="38.0" fitWidth="44.0" layoutX="283.0" layoutY="14.0" onMousePressed="#back" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/ic_arrow_back.imageset/ic_arrow_back_2x.png" />
          </image>

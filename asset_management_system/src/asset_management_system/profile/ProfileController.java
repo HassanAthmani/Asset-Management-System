@@ -9,6 +9,7 @@ import asset_management_system.usedAlot.DBOps;
 import asset_management_system.usedAlot.checkDetails;
 import asset_management_system.usedAlot.json_code;
 import asset_management_system.usedAlot.json_read;
+import asset_management_system.usedAlot.mover;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import java.io.FileNotFoundException;
@@ -43,15 +44,13 @@ import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import org.json.simple.parser.ParseException;
 
-
 public class ProfileController implements Initializable {
-    
+
     public Connection connection;
-     PreparedStatement preparedStatement = null;
+    PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
     private ObservableList<profile> data;
 
-    
     @FXML
     private JFXTextField phoneNo_txtfield;
 
@@ -72,7 +71,7 @@ public class ProfileController implements Initializable {
 
     @FXML
     private JFXPasswordField confirm_pass;
-    
+
     @FXML
     private JFXTextField pas_text;
 
@@ -114,82 +113,75 @@ public class ProfileController implements Initializable {
 
     @FXML
     private ImageView closeApp;
-        
-     @FXML
+
+    @FXML
     private JFXTextField secondName_txtfield;
-     
-     @FXML
+
+    @FXML
     private JFXTextField firstName_txtfield;
 
-
-    
-    
     @FXML
     private ImageView backToDashboard;
-    
-     @FXML
+
+    @FXML
     private JFXTextField department_txtfield;
 
     @FXML
     private JFXTextField location_txtfield;
-    
+
     @FXML
     private ImageView cancelChanges;
 
-    
-    
     @FXML
     private ImageView editInfo;
 
     @FXML
     private ImageView saveInfo;
-    
+
     @FXML
     private ImageView min;
-    
-     
-     
-     @FXML
+
+    @FXML
     private Label name2_lbl;
-     
-     @FXML
+
+    @FXML
     private Label name1_lbl;
-    
-      @FXML
+
+    @FXML
     void minimize(MouseEvent event) {
         //getting stage
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setIconified(true);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setIconified(true);
 
     }
-     
-     @FXML
-    void cancelAll(MouseEvent event){
-        json_read back=new json_read();
+
+    @FXML
+    void cancelAll(MouseEvent event) {
+        json_read back = new json_read();
         try {
             back.backToDB();
-             fill_data();
-             
-        saveInfo.setVisible(false);
-        current_pass.setVisible(false);
-        new_pass.setVisible(false);
-        confirm_pass.setVisible(false);
-        secondName_txtfield.setVisible(false);
-        firstName_txtfield.setVisible(false);
-        name1_lbl.setVisible(false);
-        name2_lbl.setVisible(false);
-       // changePass.setVisible(false);
-        pas_text.setVisible(false);
-        cancelChanges.setVisible(false);
-        editInfo.setVisible(true);
-        
-        current_pass.setEditable(false);
-         phoneNo_txtfield.setEditable(false);
-         email_txtfield.setEditable(false);
-         nationalID_txtfield.setEditable(false);
-         department_txtfield.setEditable(false);
-         location_txtfield.setEditable(false);
-            
+            fill_data();
+
+            saveInfo.setVisible(false);
+            current_pass.setVisible(false);
+            new_pass.setVisible(false);
+            confirm_pass.setVisible(false);
+            secondName_txtfield.setVisible(false);
+            firstName_txtfield.setVisible(false);
+            name1_lbl.setVisible(false);
+            name2_lbl.setVisible(false);
+            // changePass.setVisible(false);
+            pas_text.setVisible(false);
+            cancelChanges.setVisible(false);
+            editInfo.setVisible(true);
+
+            current_pass.setEditable(false);
+            phoneNo_txtfield.setEditable(false);
+            email_txtfield.setEditable(false);
+            nationalID_txtfield.setEditable(false);
+            department_txtfield.setEditable(false);
+            location_txtfield.setEditable(false);
+
         } catch (IOException ex) {
             Logger.getLogger(ProfileController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
@@ -197,49 +189,47 @@ public class ProfileController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(ProfileController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-         
-     }
-
-
-    
-      @FXML
-            /*     */
-    void imageClicked(MouseEvent event) throws IOException {
-        //you can use #onMousePressed or #orMouseClicked
-         Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/dashboard/dashboard.fxml"));
-           Scene newScene = new Scene(sceneFxml);
-
-            //getting stage
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            //setting scene on stage
-            window.setScene(newScene);
-            window.show();
 
     }
 
-   
+    @FXML
+    public void back(MouseEvent event) throws IOException {
+        //you can use #onMousePressed or #orMouseClicked
+        Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/dashboard/dashboard.fxml"));
+        Scene newScene = new Scene(sceneFxml);
+
+        //getting stage
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        mover movingWindow = new mover();
+        movingWindow.moving(sceneFxml, window);
+
+        //setting scene on stage
+        window.setScene(newScene);
+        window.show();
+        window.centerOnScreen();
+
+    }
+
     @FXML
     void closeAppWindow(MouseEvent event) {
         //getting stage
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.close();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.close();
 
     }
-    
+
     @FXML
-    void editStuff(MouseEvent event) throws IOException, FileNotFoundException, ParseException, SQLException{
-        json_read jsonReader=new json_read();
-        json_code jsonGet=new json_code();
-        
-        String id=jsonReader.profile_id();
-        
-        jsonGet.json_profile(current_pass.getText(), firstName_lbl.getText(),lastName_lbl.getText(),phoneNo_txtfield.getText(), email_txtfield.getText(),nationalID_txtfield.getText(), department_txtfield.getText(), location_txtfield.getText(),pas_text.getText());
-        
-        DBOps deleteData=new DBOps();
+    void editStuff(MouseEvent event) throws IOException, FileNotFoundException, ParseException, SQLException {
+        json_read jsonReader = new json_read();
+        json_code jsonGet = new json_code();
+
+        String id = jsonReader.profile_id();
+
+        jsonGet.json_profile(current_pass.getText(), firstName_lbl.getText(), lastName_lbl.getText(), phoneNo_txtfield.getText(), email_txtfield.getText(), nationalID_txtfield.getText(), department_txtfield.getText(), location_txtfield.getText(), pas_text.getText());
+
+        DBOps deleteData = new DBOps();
         deleteData.deleteRecord(id);
-        
+
         editInfo.setVisible(false);
         saveInfo.setVisible(true);
         //current_pass.setVisible(true);
@@ -250,37 +240,34 @@ public class ProfileController implements Initializable {
         name1_lbl.setVisible(true);
         name2_lbl.setVisible(true);
         cancelChanges.setVisible(true);
-       // changePass.setVisible(true);
-       current_pass.setEditable(true);
+        // changePass.setVisible(true);
+        current_pass.setEditable(true);
         phoneNo_txtfield.setEditable(true);
         email_txtfield.setEditable(true);
         nationalID_txtfield.setEditable(true);
         department_txtfield.setEditable(true);
         location_txtfield.setEditable(true);
-       
-        
+
     }
-    
-    
-    public void fill_data() throws SQLException{
-        json_read jsonReader=new json_read();
+
+    public void fill_data() throws SQLException {
+        json_read jsonReader = new json_read();
         try {
-            String id=jsonReader.profile_id();
+            String id = jsonReader.profile_id();
             String dbName = "asset_management_system";
-            String userName="root";
-            String password="";
+            String userName = "root";
+            String password = "";
             Class.forName("com.mysql.jdbc.Driver");
-            
+
             connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, password);
             //Execute query and store result in a resultset
-            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM current_workers WHERE workerID= "+id);
-            
-             while (rs.next()) {    
-                 
-                 //PUT DATA INTO THE TEXTFIELD
-                 
-               // workerID_txtfield.setText(rs.getString(1));
-               current_pass.setText(rs.getString(1));
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM current_workers WHERE workerID= " + id);
+
+            while (rs.next()) {
+
+                //PUT DATA INTO THE TEXTFIELD
+                // workerID_txtfield.setText(rs.getString(1));
+                current_pass.setText(rs.getString(1));
                 firstName_lbl.setText(rs.getString(2));
                 lastName_lbl.setText(rs.getString(3));
                 phoneNo_txtfield.setText(rs.getString(4));
@@ -290,21 +277,21 @@ public class ProfileController implements Initializable {
                 location_txtfield.setText(rs.getString(8));
                 pas_text.setText(rs.getString(9));
                 secondName_txtfield.setText(rs.getString(3));
-                 firstName_txtfield.setText(rs.getString(2));
-                
+                firstName_txtfield.setText(rs.getString(2));
+
                 //DISABLE THE TEXTFIELDS
                 //workerID_txtfield.setEditable(false);
                 //firstName_lbl.set
                 //lastName_lbl
-                 current_pass.setEditable(false);
+                current_pass.setEditable(false);
                 phoneNo_txtfield.setEditable(false);
                 email_txtfield.setEditable(false);
                 nationalID_txtfield.setEditable(false);
                 department_txtfield.setEditable(false);
                 location_txtfield.setEditable(false);
-                
+
             }
-            
+
             // TODO
         } catch (IOException ex) {
             Logger.getLogger(ProfileController.class.getName()).log(Level.SEVERE, null, ex);
@@ -314,23 +301,22 @@ public class ProfileController implements Initializable {
             Logger.getLogger(ProfileController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void loadFromDB() throws SQLException, IOException, FileNotFoundException, ParseException{
-         //DB connection details
+
+    public void loadFromDB() throws SQLException, IOException, FileNotFoundException, ParseException {
+        //DB connection details
         try {
-            json_read jsonReader=new json_read();
-        
-            String id=jsonReader.profile_id();
+            json_read jsonReader = new json_read();
+
+            String id = jsonReader.profile_id();
             String dbName = "asset_management_system";
-            String userName="root";
-            String password="";
+            String userName = "root";
+            String password = "";
             Class.forName("com.mysql.jdbc.Driver");
-            
 
             connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, password);
             data = FXCollections.observableArrayList();
             //Execute query and store result in a resultset
-            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM assigned_assets WHERE workerID="+id);
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM assigned_assets WHERE workerID=" + id);
 
             while (rs.next()) {
                 //get string from db
@@ -357,78 +343,74 @@ public class ProfileController implements Initializable {
         tble_view.setItems(null);
         tble_view.setItems(data);
 
-        
     }
-    
-    
+
     @FXML
-    void saveStuff(MouseEvent event) throws IOException, FileNotFoundException, ParseException, SQLException{
-        
-        json_read stuff=new json_read();
-         String password=stuff.profile_password();  
-         DBOps addData=new DBOps();
-        
-        
-        if(firstName_txtfield.getText().isEmpty() || secondName_txtfield.getText().isEmpty() || phoneNo_txtfield.getText().isEmpty() || email_txtfield.getText().isEmpty() || nationalID_txtfield.getText().isEmpty() || department_txtfield.getText().isEmpty() || location_txtfield.getText().isEmpty()){
+    void saveStuff(MouseEvent event) throws IOException, FileNotFoundException, ParseException, SQLException {
+
+        json_read stuff = new json_read();
+        String password = stuff.profile_password();
+        DBOps addData = new DBOps();
+
+        if (firstName_txtfield.getText().isEmpty() || secondName_txtfield.getText().isEmpty() || phoneNo_txtfield.getText().isEmpty() || email_txtfield.getText().isEmpty() || nationalID_txtfield.getText().isEmpty() || department_txtfield.getText().isEmpty() || location_txtfield.getText().isEmpty()) {
             int response = JOptionPane.showConfirmDialog(
                     null, "input required,no field should be empty", "error", JOptionPane.DEFAULT_OPTION);
-        }
-        else if(!Objects.equals(new_pass.getText(), confirm_pass.getText())){
-                int response = JOptionPane.showConfirmDialog(
+        } else if (!Objects.equals(new_pass.getText(), confirm_pass.getText())) {
+            int response = JOptionPane.showConfirmDialog(
                     null, "Please check the password fields, values should be similar or both password fields should be empty", "CRITICAL", JOptionPane.DEFAULT_OPTION);
-                               
-            }else if((new_pass.getText().isEmpty() && confirm_pass.getText().isEmpty()) && (!firstName_txtfield.getText().isEmpty() && !secondName_txtfield.getText().isEmpty() &&  !phoneNo_txtfield.getText().isEmpty() && !email_txtfield.getText().isEmpty() && !nationalID_txtfield.getText().isEmpty() && !department_txtfield.getText().isEmpty() && !location_txtfield.getText().isEmpty())){
-                            
-              //jsonGet.json_profile(current_pass.getText(), firstName_lbl.getText(),lastName_lbl.getText(),phoneNo_txtfield.getText(), email_txtfield.getText(),nationalID_txtfield.getText(), department_txtfield.getText(), location_txtfield.getText(),pas_text.getText());
-              addData.ProfileaddData(current_pass.getText(),firstName_txtfield.getText(), secondName_txtfield.getText(), phoneNo_txtfield.getText(), email_txtfield.getText(), nationalID_txtfield.getText(), department_txtfield.getText(),location_txtfield.getText(), password);
-              
-              fill_data();
-                  editInfo.setVisible(true);
-                  saveInfo.setVisible(false);
-                //current_pass.setVisible(false);
-                  new_pass.setVisible(false);
-                 confirm_pass.setVisible(false);
-                secondName_txtfield.setVisible(false);
-                firstName_txtfield.setVisible(false);
-                name1_lbl.setVisible(false);
-                name2_lbl.setVisible(false);
-             // changePass.setVisible(false);
-             cancelChanges.setVisible(false);
-             
-             ///NOT EDITABLE
-               current_pass.setEditable(false);
-                phoneNo_txtfield.setEditable(false);
-                email_txtfield.setEditable(false);
-                nationalID_txtfield.setEditable(false);
-                department_txtfield.setEditable(false);
-                location_txtfield.setEditable(false);
-              
-            }else if((!new_pass.getText().isEmpty() && !confirm_pass.getText().isEmpty()) && (Objects.equals(new_pass.getText(), confirm_pass.getText()) && (!firstName_txtfield.getText().isEmpty() && !secondName_txtfield.getText().isEmpty() &&  !phoneNo_txtfield.getText().isEmpty() && !email_txtfield.getText().isEmpty() && !nationalID_txtfield.getText().isEmpty() && !department_txtfield.getText().isEmpty() && !location_txtfield.getText().isEmpty()) )){
-               
-                addData.ProfileaddData(current_pass.getText(),firstName_txtfield.getText(), secondName_txtfield.getText(), phoneNo_txtfield.getText(), email_txtfield.getText(), nationalID_txtfield.getText(), department_txtfield.getText(),location_txtfield.getText(), confirm_pass.getText());
-                
-                 fill_data();
-                 editInfo.setVisible(true);
-                  saveInfo.setVisible(false);
-                //current_pass.setVisible(false);
-                  new_pass.setVisible(false);
-                 confirm_pass.setVisible(false);
-                secondName_txtfield.setVisible(false);
-                firstName_txtfield.setVisible(false);
-                name1_lbl.setVisible(false);
-                name2_lbl.setVisible(false);
-             // changePass.setVisible(false);
-             cancelChanges.setVisible(false);
-             
-             //NOT EDITABLE
-               current_pass.setEditable(false);
-                phoneNo_txtfield.setEditable(false);
-                email_txtfield.setEditable(false);
-                nationalID_txtfield.setEditable(false);
-                department_txtfield.setEditable(false);
-                location_txtfield.setEditable(false);
-            }    
-   
+
+        } else if ((new_pass.getText().isEmpty() && confirm_pass.getText().isEmpty()) && (!firstName_txtfield.getText().isEmpty() && !secondName_txtfield.getText().isEmpty() && !phoneNo_txtfield.getText().isEmpty() && !email_txtfield.getText().isEmpty() && !nationalID_txtfield.getText().isEmpty() && !department_txtfield.getText().isEmpty() && !location_txtfield.getText().isEmpty())) {
+
+            //jsonGet.json_profile(current_pass.getText(), firstName_lbl.getText(),lastName_lbl.getText(),phoneNo_txtfield.getText(), email_txtfield.getText(),nationalID_txtfield.getText(), department_txtfield.getText(), location_txtfield.getText(),pas_text.getText());
+            addData.ProfileaddData(current_pass.getText(), firstName_txtfield.getText(), secondName_txtfield.getText(), phoneNo_txtfield.getText(), email_txtfield.getText(), nationalID_txtfield.getText(), department_txtfield.getText(), location_txtfield.getText(), password);
+
+            fill_data();
+            editInfo.setVisible(true);
+            saveInfo.setVisible(false);
+            //current_pass.setVisible(false);
+            new_pass.setVisible(false);
+            confirm_pass.setVisible(false);
+            secondName_txtfield.setVisible(false);
+            firstName_txtfield.setVisible(false);
+            name1_lbl.setVisible(false);
+            name2_lbl.setVisible(false);
+            // changePass.setVisible(false);
+            cancelChanges.setVisible(false);
+
+            ///NOT EDITABLE
+            current_pass.setEditable(false);
+            phoneNo_txtfield.setEditable(false);
+            email_txtfield.setEditable(false);
+            nationalID_txtfield.setEditable(false);
+            department_txtfield.setEditable(false);
+            location_txtfield.setEditable(false);
+
+        } else if ((!new_pass.getText().isEmpty() && !confirm_pass.getText().isEmpty()) && (Objects.equals(new_pass.getText(), confirm_pass.getText()) && (!firstName_txtfield.getText().isEmpty() && !secondName_txtfield.getText().isEmpty() && !phoneNo_txtfield.getText().isEmpty() && !email_txtfield.getText().isEmpty() && !nationalID_txtfield.getText().isEmpty() && !department_txtfield.getText().isEmpty() && !location_txtfield.getText().isEmpty()))) {
+
+            addData.ProfileaddData(current_pass.getText(), firstName_txtfield.getText(), secondName_txtfield.getText(), phoneNo_txtfield.getText(), email_txtfield.getText(), nationalID_txtfield.getText(), department_txtfield.getText(), location_txtfield.getText(), confirm_pass.getText());
+
+            fill_data();
+            editInfo.setVisible(true);
+            saveInfo.setVisible(false);
+            //current_pass.setVisible(false);
+            new_pass.setVisible(false);
+            confirm_pass.setVisible(false);
+            secondName_txtfield.setVisible(false);
+            firstName_txtfield.setVisible(false);
+            name1_lbl.setVisible(false);
+            name2_lbl.setVisible(false);
+            // changePass.setVisible(false);
+            cancelChanges.setVisible(false);
+
+            //NOT EDITABLE
+            current_pass.setEditable(false);
+            phoneNo_txtfield.setEditable(false);
+            email_txtfield.setEditable(false);
+            nationalID_txtfield.setEditable(false);
+            department_txtfield.setEditable(false);
+            location_txtfield.setEditable(false);
+        }
+
     }
 
     @Override
@@ -438,7 +420,7 @@ public class ProfileController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(ProfileController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         saveInfo.setVisible(false);
         current_pass.setVisible(false);
         new_pass.setVisible(false);
@@ -450,16 +432,16 @@ public class ProfileController implements Initializable {
         //changePass.setVisible(false);
         pas_text.setVisible(false);
         cancelChanges.setVisible(false);
-        
-        checkDetails nw=new checkDetails();
-        nw.profile_checker(phoneNo_txtfield,"workerTell", saveInfo);
-        nw.profile_checker(nationalID_txtfield,"workerNationalID", saveInfo);
-        
-        nw.profile_checker2(firstName_txtfield,saveInfo);
-        nw.profile_checker2(secondName_txtfield,saveInfo);
-        nw.profile_checker2(department_txtfield,saveInfo);
-        nw.profile_checker2(location_txtfield,saveInfo);
-        
-    }    
-    
+
+        checkDetails nw = new checkDetails();
+        nw.profile_checker(phoneNo_txtfield, "workerTell", saveInfo);
+        nw.profile_checker(nationalID_txtfield, "workerNationalID", saveInfo);
+
+        nw.profile_checker2(firstName_txtfield, saveInfo);
+        nw.profile_checker2(secondName_txtfield, saveInfo);
+        nw.profile_checker2(department_txtfield, saveInfo);
+        nw.profile_checker2(location_txtfield, saveInfo);
+
+    }
+
 }

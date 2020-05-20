@@ -37,5 +37,10 @@
             <Image url="@../img/ic_arrow_back.imageset/ic_arrow_back_2x.png" />
          </image>
       </ImageView>
+      <ImageView fx:id="minimize" fitHeight="62.0" fitWidth="38.0" layoutX="1375.0" layoutY="23.0" onMousePressed="#minimizeIt" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/minimize/minimize.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

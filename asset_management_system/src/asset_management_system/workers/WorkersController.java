@@ -1,6 +1,7 @@
 
 package asset_management_system.workers;
 
+import asset_management_system.usedAlot.mover;
 import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
 import java.net.URL;
@@ -94,11 +95,22 @@ public class WorkersController implements Initializable {
 
             //getting stage
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+             mover movingWindow=new mover();
+             movingWindow.moving(sceneFxml, window);
 
             //setting scene on stage
             window.setScene(newScene);
+            
             window.show();
+            window.centerOnScreen();
 
+    }
+    
+    @FXML
+    void minimizeIt (MouseEvent event){
+        //getting stage
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setIconified(true);
     }
 
 
@@ -126,6 +138,13 @@ public class WorkersController implements Initializable {
         stage.initOwner(((Node)event.getSource()).getScene().getWindow());
          stage.setResizable(false);
         stage.resizableProperty();
+        stage.setOnCloseRequest(e -> {
+                                    try {
+                                         LoadDataFrmDB();
+                                    } catch (SQLException ex) {
+                                        Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                });
         
          root.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override

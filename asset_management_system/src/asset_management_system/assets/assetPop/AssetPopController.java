@@ -102,7 +102,7 @@ public class AssetPopController implements Initializable {
 
     @FXML
     void giveAsset(ActionEvent event) throws SQLException {
-        if (!assignTo.getText().isEmpty()) {
+        if (!assignTo.getText().isEmpty() && !assetID.getText().isEmpty()) {
             try {
 
                 String assetid = assetID.getText();
@@ -154,7 +154,7 @@ public class AssetPopController implements Initializable {
                         }
 
                     } else {
-                        int response = JOptionPane.showConfirmDialog(null, "Please check the worker ID you are to assign to", "Login Failed!", JOptionPane.DEFAULT_OPTION);
+                        int response = JOptionPane.showConfirmDialog(null, "Worker ID does not exist", "ERROR", JOptionPane.DEFAULT_OPTION);
                     }
                 }
 
@@ -164,6 +164,10 @@ public class AssetPopController implements Initializable {
                 Logger.getLogger(AssetPopController.class.getName()).log(Level.SEVERE, null, ex);
             }
 
+        }else {
+            int response = JOptionPane.showConfirmDialog(null, "Please check the fields,they should not be empty", "ERROR", JOptionPane.DEFAULT_OPTION);
+                   
+            
         }
 
     }
@@ -268,10 +272,9 @@ public class AssetPopController implements Initializable {
 
             int response = JOptionPane.showConfirmDialog(
                     null, "Please enter information in the field provided", "ERROR!", JOptionPane.DEFAULT_OPTION);
-            
 
-        } else if(!assetID.getText().isEmpty() && !assetName.getText().isEmpty() && !assetCode.getText().isEmpty() && !assetDetails.getText().isEmpty() && !workerName.getText().isEmpty() && !workerID.getText().isEmpty() && !category.getText().isEmpty() && !additionDate.getText().isEmpty() && !cost.getText().isEmpty()) {
-              
+        } else if (!assetID.getText().isEmpty() && !assetName.getText().isEmpty() && !assetCode.getText().isEmpty() && !assetDetails.getText().isEmpty() && !workerName.getText().isEmpty() && !workerID.getText().isEmpty() && !category.getText().isEmpty() && !additionDate.getText().isEmpty() && !cost.getText().isEmpty()) {
+
             String assetid = assetID.getText();
             String assetname = assetName.getText();
             String assetcode = assetCode.getText();
@@ -327,7 +330,7 @@ public class AssetPopController implements Initializable {
     @FXML
     void toDeferred(ActionEvent event) throws SQLException, IOException, FileNotFoundException, ParseException {
 
-        if (!reason.getText().isEmpty()) {
+        if (!reason.getText().isEmpty() && !assetID.getText().isEmpty()) {
 
             try {
 
@@ -355,7 +358,7 @@ public class AssetPopController implements Initializable {
                 String assetname = assetName.getText();
                 String assetcode = assetCode.getText();
                 String assetdetails = assetDetails.getText();
-                
+
                 String cat = category.getText();
                 String additiondate = additionDate.getText();
 
@@ -384,7 +387,7 @@ public class AssetPopController implements Initializable {
                 System.out.println("Error: " + ex);
             }
 
-        } else if (reason.getText().isEmpty()) {
+        } else if (reason.getText().isEmpty() && assetID.getText().isEmpty()) {
             int response = JOptionPane.showConfirmDialog(
                     null, "Please enter information in the field provided", "ERROR!", JOptionPane.DEFAULT_OPTION);
 
@@ -395,58 +398,64 @@ public class AssetPopController implements Initializable {
     @FXML
     void toMaintenance(ActionEvent event) throws SQLException, IOException, FileNotFoundException, ParseException {
 
-        try {
+        if (!assetID.getText().isEmpty()) {
+            try {
 
-            Class.forName("com.mysql.jdbc.Driver");
-            String url = "jdbc:mysql://localhost:3306/mysql?zeroDateTimeBehavior=convertToNull";
-            connection = DriverManager.getConnection(url, userName, password);
-            Statement statement = connection.createStatement();
+                Class.forName("com.mysql.jdbc.Driver");
+                String url = "jdbc:mysql://localhost:3306/mysql?zeroDateTimeBehavior=convertToNull";
+                connection = DriverManager.getConnection(url, userName, password);
+                Statement statement = connection.createStatement();
 
-            //GETTING WORKER INFO
-            json_read read = new json_read();
-            String workerid = read.profile_id();
-            String getWorker = "SELECT workerName FROM `asset_management_system`.`current_workers` WHERE workerID='" + workerid + "'";
-            ResultSet rss = connection.createStatement().executeQuery(getWorker);
+                //GETTING WORKER INFO
+                json_read read = new json_read();
+                String workerid = read.profile_id();
+                String getWorker = "SELECT workerName FROM `asset_management_system`.`current_workers` WHERE workerID='" + workerid + "'";
+                ResultSet rss = connection.createStatement().executeQuery(getWorker);
 
-            while (rss.next()) {
+                while (rss.next()) {
 
-                String name = rss.getString(1);
-                json_code nw = new json_code();
-                nw.json_assetID(name);
+                    String name = rss.getString(1);
+                    json_code nw = new json_code();
+                    nw.json_assetID(name);
+                }
+                json_read nw = new json_read();
+                String name = nw.asset_id();
+                String assetid = assetID.getText();
+                String assetname = assetName.getText();
+                String assetcode = assetCode.getText();
+                String assetdetails = assetDetails.getText();
+                int workername = Integer.valueOf(workerID.getText());
+                String cat = category.getText();
+                String additiondate = additionDate.getText();
+
+                String sql = "INSERT INTO `asset_management_system`.`asset_maintenance` (`assetID`, `assetName`, `assetCode`, `assetDetails`, `workerName`, `workerID`,`categoryID`,`additionDate`,`maintenanceDate`) VALUES (" + assetid + ",'" + assetname + "','" + assetcode + "','" + assetdetails + "','" + name + "'," + workerid + ",'" + cat + "','" + additiondate + "',CURDATE());";
+
+                statement.executeUpdate(sql);
+
+                String sql2 = "DELETE FROM `asset_management_system`.`available_assets` WHERE assetID= " + assetID.getText();
+
+                statement.executeUpdate(sql2);
+
+                connection.close();
+
+                assetID.clear();
+                assetName.clear();
+                assetCode.clear();
+                assetDetails.clear();
+                workerName.clear();
+                workerID.clear();
+                category.clear();
+                additionDate.clear();
+                cost.clear();
+                qr_code.setImage(null);
+
+            } catch (ClassNotFoundException ex) {
+                System.out.println("Error: " + ex);
             }
-            json_read nw = new json_read();
-            String name = nw.asset_id();
-            String assetid = assetID.getText();
-            String assetname = assetName.getText();
-            String assetcode = assetCode.getText();
-            String assetdetails = assetDetails.getText();
-            int workername = Integer.valueOf(workerID.getText());
-            String cat = category.getText();
-            String additiondate = additionDate.getText();
+        } else {
+            int response = JOptionPane.showConfirmDialog(
+                    null, "The fields should not be empty", "ERROR", JOptionPane.DEFAULT_OPTION);
 
-            String sql = "INSERT INTO `asset_management_system`.`asset_maintenance` (`assetID`, `assetName`, `assetCode`, `assetDetails`, `workerName`, `workerID`,`categoryID`,`additionDate`,`maintenanceDate`) VALUES (" + assetid + ",'" + assetname + "','" + assetcode + "','" + assetdetails + "','" + name + "'," + workerid + ",'" + cat + "','" + additiondate + "',CURDATE());";
-
-            statement.executeUpdate(sql);
-
-            String sql2 = "DELETE FROM `asset_management_system`.`available_assets` WHERE assetID= " + assetID.getText();
-
-            statement.executeUpdate(sql2);
-
-            connection.close();
-
-            assetID.clear();
-            assetName.clear();
-            assetCode.clear();
-            assetDetails.clear();
-            workerName.clear();
-            workerID.clear();
-            category.clear();
-            additionDate.clear();
-            cost.clear();
-            qr_code.setImage(null);
-
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Error: " + ex);
         }
     }
 

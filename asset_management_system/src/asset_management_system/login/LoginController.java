@@ -4,6 +4,7 @@ package asset_management_system.login;
 import asset_management_system.usedAlot.emailValidation;
 import asset_management_system.usedAlot.escapeChar;
 import asset_management_system.usedAlot.json_code;
+import asset_management_system.usedAlot.mover;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
@@ -147,6 +148,8 @@ public class LoginController implements Initializable {
 
             //getting stage
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            mover movingWindow=new mover();
+             movingWindow.moving(sceneFxml, window);
 
             //setting scene on stage
             window.setScene(newScene);

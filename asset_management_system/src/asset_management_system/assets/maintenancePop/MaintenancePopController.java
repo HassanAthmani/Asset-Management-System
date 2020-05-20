@@ -79,7 +79,7 @@ public class MaintenancePopController implements Initializable {
     @FXML
     void toAssets(ActionEvent event) throws SQLException {
             String assetid = assetID.getText();
-            
+            if (!assetID.getText().isEmpty()){
 
             try {
 
@@ -113,6 +113,11 @@ public class MaintenancePopController implements Initializable {
 
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(AssetPopController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            }
+            else {
+                int response = JOptionPane.showConfirmDialog(
+                    null, "No field should be empty", "ERROR", JOptionPane.DEFAULT_OPTION);
             }
 
     }
@@ -165,7 +170,7 @@ public class MaintenancePopController implements Initializable {
 
                 statement.executeUpdate(sql);
 
-                String sql2 = "DELETE FROM `asset_management_system`.`available_assets` WHERE assetID= " + assetID.getText();
+                String sql2 = "DELETE FROM `asset_management_system`.`asset_maintenance` WHERE `assetID` = " + assetID.getText();
 
                 statement.executeUpdate(sql2);
 

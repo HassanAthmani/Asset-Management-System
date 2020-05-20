@@ -8,6 +8,7 @@ package asset_management_system.withUsers;
 import asset_management_system.assets.AssetsController;
 import asset_management_system.usedAlot.assetSearch;
 import asset_management_system.usedAlot.json_code;
+import asset_management_system.usedAlot.mover;
 import asset_management_system.workers.WorkersController;
 import java.io.IOException;
 import java.net.URL;
@@ -49,20 +50,20 @@ import javafx.util.Callback;
  * @author User
  */
 public class WithUsersController implements Initializable {
-    
-     public Connection connection;
-     PreparedStatement preparedStatement = null;
+
+    public Connection connection;
+    PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
-    
-     String userName="root";
-     String password="";
-     
+
+    String userName = "root";
+    String password = "";
+
     public ObservableList<withUsers> data;
 
-   @FXML
+    @FXML
     private VBox vbox;
-   
-     @FXML
+
+    @FXML
     private TableView<withUsers> withUsers_tbl;
 
     @FXML
@@ -91,26 +92,62 @@ public class WithUsersController implements Initializable {
 
     @FXML
     private TableColumn<withUsers, String> assigned_date;
-    
-     @FXML
+
+    @FXML
     private TableColumn<withUsers, String> assignedBy;
-    
-     @FXML
+
+    @FXML
     private TableColumn columnEdit;
-     
-     @FXML
+
+    @FXML
     private TextField search;
 
     @FXML
     private ChoiceBox choice;
-    
+
     private double xOffset = 0;
     private double yOffset = 0;
-     
-      @FXML
+     mover movingWindow=new mover();
+    
+    @FXML
+    public void closeAppWindow(MouseEvent event) {
+        //getting stage
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        window.close();
+    }
+    
+    @FXML 
+    public void minimizeWindow(MouseEvent event){
+        //getting stage
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setIconified(true);
+    }
+    
+    @FXML
+    public void back(MouseEvent event) throws IOException{
+        
+         //you can use #onMousePressed or #orMouseClicked
+         Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/dashboard/dashboard.fxml"));
+           Scene newScene = new Scene(sceneFxml);
+
+            //getting stage
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            movingWindow.moving(sceneFxml, window);
+
+            //setting scene on stage
+            window.setScene(newScene);
+            
+            window.show();
+            window.centerOnScreen();            
+
+        
+    }
+
+    @FXML
     void loadFromDB(MouseEvent event) throws SQLException {
-         //DB connection details
-         /*
+        //DB connection details
+        /*
         
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -253,19 +290,16 @@ public class WithUsersController implements Initializable {
         };  
         //set the custom factory to action column
         columnEdit.setCellFactory(cellFactory);        
-*/
+         */
     }
-    
-    
-    public void loada()throws SQLException{
-        
-         //DB connection details
-        
+
+    public void loada() throws SQLException {
+
+        //DB connection details
         try {
             Class.forName("com.mysql.jdbc.Driver");
 
             String dbName = "asset_management_system";
-           
 
             connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, password);
             data = FXCollections.observableArrayList();
@@ -284,63 +318,59 @@ public class WithUsersController implements Initializable {
 
         //set cell value factor to tableview.
         //PropertyValue Factory must be set the same with the one set in model class.
-         id.setCellValueFactory(new PropertyValueFactory<>("transID"));
-          worker_id.setCellValueFactory(new PropertyValueFactory<>("workerID"));
-          worker_name.setCellValueFactory(new PropertyValueFactory<>("workerName"));
-          worker_phoneNo.setCellValueFactory(new PropertyValueFactory<>("workerTell"));
-          worker_email.setCellValueFactory(new PropertyValueFactory<>("workerEmail"));  
+        id.setCellValueFactory(new PropertyValueFactory<>("transID"));
+        worker_id.setCellValueFactory(new PropertyValueFactory<>("workerID"));
+        worker_name.setCellValueFactory(new PropertyValueFactory<>("workerName"));
+        worker_phoneNo.setCellValueFactory(new PropertyValueFactory<>("workerTell"));
+        worker_email.setCellValueFactory(new PropertyValueFactory<>("workerEmail"));
         asset_id.setCellValueFactory(new PropertyValueFactory<>("assetID"));
         asset_name.setCellValueFactory(new PropertyValueFactory<>("assetName"));
-        asset_code.setCellValueFactory(new PropertyValueFactory<>("assetCode"));                
+        asset_code.setCellValueFactory(new PropertyValueFactory<>("assetCode"));
         assigned_date.setCellValueFactory(new PropertyValueFactory<>("assignedDate"));
         assignedBy.setCellValueFactory(new PropertyValueFactory<>("assignedBy"));
-       
-        
 
         withUsers_tbl.setItems(null);
         withUsers_tbl.setItems(data);
-        
+
         //Lets create a cell factory to insert a button in every row.
-        Callback<TableColumn<withUsers,String>,TableCell<withUsers,String>> cellFactory=(param)->{
-         
+        Callback<TableColumn<withUsers, String>, TableCell<withUsers, String>> cellFactory = (param) -> {
+
             //make the tablecell containing button
-            final TableCell<withUsers,String> cell=new TableCell<withUsers,String>(){
-                
+            final TableCell<withUsers, String> cell = new TableCell<withUsers, String>() {
+
                 //override updateItem method
                 @Override
-                public void updateItem(String item,boolean empty){
+                public void updateItem(String item, boolean empty) {
                     super.updateItem(item, empty);
-                    
+
                     //ensure that cell is created only on non-empty rows
-                    if(empty){
+                    if (empty) {
                         setGraphic(null);
                         setText(null);
-                    }
-                    else{
+                    } else {
                         //Now we create the action button
-                        final Button editButton=new Button("+");
+                        final Button editButton = new Button("+");
                         //attach listener on button
-                        editButton.setOnAction(event ->{
-                            
-                                //Extract the clicked object
-                                withUsers p=getTableView().getItems().get(getIndex());
-                                
-                                //DATA 
-                                //System.out.println(p.getMac_address());  String.valueOf(p.getId())
-                                String id = String.valueOf(p.getTransID());
-                                String workerid = String.valueOf(p.getWorkerID());
-                                String worker = String.valueOf(p.getWorkerName());
-                                String workerTell= String.valueOf(p.getWorkerTell());
-                                String workeremail = String.valueOf(p.getWorkerEmail());
-                                String assetid = String.valueOf(p.getAssetID());
-                                String assetname = String.valueOf(p.getAssetName());
-                                String code = String.valueOf(p.getAssetCode());
-                                String assigned_date = String.valueOf(p.getAssignedDate());
-                                String assignedby=String.valueOf(p.getAssignedBy());
-                           
+                        editButton.setOnAction(event -> {
+
+                            //Extract the clicked object
+                            withUsers p = getTableView().getItems().get(getIndex());
+
+                            //DATA 
+                            //System.out.println(p.getMac_address());  String.valueOf(p.getId())
+                            String id = String.valueOf(p.getTransID());
+                            String workerid = String.valueOf(p.getWorkerID());
+                            String worker = String.valueOf(p.getWorkerName());
+                            String workerTell = String.valueOf(p.getWorkerTell());
+                            String workeremail = String.valueOf(p.getWorkerEmail());
+                            String assetid = String.valueOf(p.getAssetID());
+                            String assetname = String.valueOf(p.getAssetName());
+                            String code = String.valueOf(p.getAssetCode());
+                            String assigned_date = String.valueOf(p.getAssignedDate());
+                            String assignedby = String.valueOf(p.getAssignedBy());
 
                             json_code nw = new json_code();
-                            nw.WithUser_json(id, workerid, worker, workerTell, workeremail, assetid, assetname, code, assigned_date,assignedby);
+                            nw.WithUser_json(id, workerid, worker, workerTell, workeremail, assetid, assetname, code, assigned_date, assignedby);
 
                             ///// POP UP ////
                             Stage stage = new Stage();
@@ -356,6 +386,13 @@ public class WithUsersController implements Initializable {
                                 stage.initOwner(((Node) event.getSource()).getScene().getWindow());
                                 stage.setResizable(false);
                                 stage.resizableProperty();
+                                stage.setOnCloseRequest(e -> {
+                                    try {
+                                        loada();
+                                    } catch (SQLException ex) {
+                                        Logger.getLogger(WithUsersController.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                });
 
                                 root.setOnMousePressed(new EventHandler<MouseEvent>() {
                                     @Override
@@ -380,40 +417,32 @@ public class WithUsersController implements Initializable {
                             }
 
                             ///// POP UP ///////
-                               
-                               
-                               
-                               
-                               //PREVENT USER FROM EDITING TEXTFIELDS                               
-                                                                  
-                                    
-             
-                    });
+                            //PREVENT USER FROM EDITING TEXTFIELDS                               
+                        });
                         //Setting created button
                         setGraphic(editButton);
                         setText(null);
                     }
-                
-                };
-                    
+
+                }
+            ;
+
             };
             
             return cell;
-        };  
+        };
         //set the custom factory to action column
-        columnEdit.setCellFactory(cellFactory);        
+        columnEdit.setCellFactory(cellFactory);
 
     }
-    
-    public void search(String searchVal, String table, String colmnVal)throws SQLException{
-        
-         //DB connection details
-        
+
+    public void search(String searchVal, String table, String colmnVal) throws SQLException {
+
+        //DB connection details
         try {
             Class.forName("com.mysql.jdbc.Driver");
 
             String dbName = "asset_management_system";
-           
 
             connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, password);
             data = FXCollections.observableArrayList();
@@ -432,63 +461,59 @@ public class WithUsersController implements Initializable {
 
         //set cell value factor to tableview.
         //PropertyValue Factory must be set the same with the one set in model class.
-         id.setCellValueFactory(new PropertyValueFactory<>("transID"));
-          worker_id.setCellValueFactory(new PropertyValueFactory<>("workerID"));
-          worker_name.setCellValueFactory(new PropertyValueFactory<>("workerName"));
-          worker_phoneNo.setCellValueFactory(new PropertyValueFactory<>("workerTell"));
-          worker_email.setCellValueFactory(new PropertyValueFactory<>("workerEmail"));  
+        id.setCellValueFactory(new PropertyValueFactory<>("transID"));
+        worker_id.setCellValueFactory(new PropertyValueFactory<>("workerID"));
+        worker_name.setCellValueFactory(new PropertyValueFactory<>("workerName"));
+        worker_phoneNo.setCellValueFactory(new PropertyValueFactory<>("workerTell"));
+        worker_email.setCellValueFactory(new PropertyValueFactory<>("workerEmail"));
         asset_id.setCellValueFactory(new PropertyValueFactory<>("assetID"));
         asset_name.setCellValueFactory(new PropertyValueFactory<>("assetName"));
-        asset_code.setCellValueFactory(new PropertyValueFactory<>("assetCode"));                
+        asset_code.setCellValueFactory(new PropertyValueFactory<>("assetCode"));
         assigned_date.setCellValueFactory(new PropertyValueFactory<>("assignedDate"));
         assignedBy.setCellValueFactory(new PropertyValueFactory<>("assignedBy"));
-       
-        
 
         withUsers_tbl.setItems(null);
         withUsers_tbl.setItems(data);
-        
+
         //Lets create a cell factory to insert a button in every row.
-        Callback<TableColumn<withUsers,String>,TableCell<withUsers,String>> cellFactory=(param)->{
-         
+        Callback<TableColumn<withUsers, String>, TableCell<withUsers, String>> cellFactory = (param) -> {
+
             //make the tablecell containing button
-            final TableCell<withUsers,String> cell=new TableCell<withUsers,String>(){
-                
+            final TableCell<withUsers, String> cell = new TableCell<withUsers, String>() {
+
                 //override updateItem method
                 @Override
-                public void updateItem(String item,boolean empty){
+                public void updateItem(String item, boolean empty) {
                     super.updateItem(item, empty);
-                    
+
                     //ensure that cell is created only on non-empty rows
-                    if(empty){
+                    if (empty) {
                         setGraphic(null);
                         setText(null);
-                    }
-                    else{
+                    } else {
                         //Now we create the action button
-                        final Button editButton=new Button("+");
+                        final Button editButton = new Button("+");
                         //attach listener on button
-                        editButton.setOnAction(event ->{
-                            
-                                //Extract the clicked object
-                                withUsers p=getTableView().getItems().get(getIndex());
-                                
-                                //DATA 
-                                //System.out.println(p.getMac_address());  String.valueOf(p.getId())
-                                String id = String.valueOf(p.getTransID());
-                                String workerid = String.valueOf(p.getWorkerID());
-                                String worker = String.valueOf(p.getWorkerName());
-                                String workerTell= String.valueOf(p.getWorkerTell());
-                                String workeremail = String.valueOf(p.getWorkerEmail());
-                                String assetid = String.valueOf(p.getAssetID());
-                                String assetname = String.valueOf(p.getAssetName());
-                                String code = String.valueOf(p.getAssetCode());
-                                String assigned_date = String.valueOf(p.getAssignedDate());
-                                String assignedby=String.valueOf(p.getAssignedBy());
-                           
+                        editButton.setOnAction(event -> {
+
+                            //Extract the clicked object
+                            withUsers p = getTableView().getItems().get(getIndex());
+
+                            //DATA 
+                            //System.out.println(p.getMac_address());  String.valueOf(p.getId())
+                            String id = String.valueOf(p.getTransID());
+                            String workerid = String.valueOf(p.getWorkerID());
+                            String worker = String.valueOf(p.getWorkerName());
+                            String workerTell = String.valueOf(p.getWorkerTell());
+                            String workeremail = String.valueOf(p.getWorkerEmail());
+                            String assetid = String.valueOf(p.getAssetID());
+                            String assetname = String.valueOf(p.getAssetName());
+                            String code = String.valueOf(p.getAssetCode());
+                            String assigned_date = String.valueOf(p.getAssignedDate());
+                            String assignedby = String.valueOf(p.getAssignedBy());
 
                             json_code nw = new json_code();
-                            nw.WithUser_json(id, workerid, worker, workerTell, workeremail, assetid, assetname, code, assigned_date,assignedby);
+                            nw.WithUser_json(id, workerid, worker, workerTell, workeremail, assetid, assetname, code, assigned_date, assignedby);
 
                             ///// POP UP ////
                             Stage stage = new Stage();
@@ -528,42 +553,31 @@ public class WithUsersController implements Initializable {
                             }
 
                             ///// POP UP ///////
-                               
-                               
-                               
-                               
-                               //PREVENT USER FROM EDITING TEXTFIELDS                               
-                                                                  
-                                    
-             
-                    });
+                            //PREVENT USER FROM EDITING TEXTFIELDS                               
+                        });
                         //Setting created button
                         setGraphic(editButton);
                         setText(null);
                     }
-                
-                };
-                    
+
+                }
+            ;
+
             };
             
             return cell;
-        };  
+        };
         //set the custom factory to action column
-        columnEdit.setCellFactory(cellFactory);        
+        columnEdit.setCellFactory(cellFactory);
 
-        
     }
-        
-    
 
-    
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        choice.getItems().addAll(" ","ID", "ASSET ID", "ASSET NAME", "ASSET CODE", "PHONE NO", "WORKER NAME", "WORKER ID", "EMAIL", "ASSIGNED DATE", "ASSIGNED BY");
+        choice.getItems().addAll(" ", "ID", "ASSET ID", "ASSET NAME", "ASSET CODE", "PHONE NO", "WORKER NAME", "WORKER ID", "EMAIL", "ASSIGNED DATE", "ASSIGNED BY");
         choice.setValue("ASSET ID");
-        
+
         if (search.getText().isEmpty()) {
 
             try {
@@ -572,8 +586,8 @@ public class WithUsersController implements Initializable {
                 Logger.getLogger(WithUsersController.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-        } 
-        
+        }
+
         search.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             //choice.getItems().addAll("ASSET ID", "ASSET NAME", "ASSET CODE", "ASSET DETAILS", "WORKER NAME", "WORKER ID", "CATEGORY", "ADDITION DATE", "COST");
 
@@ -592,12 +606,11 @@ public class WithUsersController implements Initializable {
                         } else if ("ASSET NAME".equals(BoxValue)) {
                             String clmn = "assetName";
                             search(search.getText(), tbl, clmn);
-                        } 
-                        else if ("ID".equals(BoxValue)) {
+                        } else if ("ID".equals(BoxValue)) {
                             String clmn = "ID";
                             search(search.getText(), tbl, clmn);
-                            
-                        }else if ("ASSET CODE".equals(BoxValue)) {
+
+                        } else if ("ASSET CODE".equals(BoxValue)) {
                             String clmn = "assetCode";
                             search(search.getText(), tbl, clmn);
                         } else if ("PHONE NO".equals(BoxValue)) {
@@ -630,7 +643,7 @@ public class WithUsersController implements Initializable {
                     } else {
                         if (search.getText().isEmpty()) {
                             try {
-                                 loada();
+                                loada();
                                 // System.out.print("no empty search");
                             } catch (SQLException ex) {
                                 Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
@@ -645,6 +658,6 @@ public class WithUsersController implements Initializable {
 
         });
         ////////////
-    }    
-    
+    }
+
 }

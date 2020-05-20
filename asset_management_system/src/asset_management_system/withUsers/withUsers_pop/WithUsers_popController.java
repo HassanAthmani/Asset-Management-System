@@ -109,7 +109,7 @@ public class WithUsers_popController implements Initializable {
 
             statement.executeUpdate(sql);
 
-            String sql2 = "DELETE FROM `asset_management_system`.`asset_maintenance` WHERE assetID = " + assetid;
+            String sql2 = "DELETE FROM `asset_management_system`.`assigned_asset` WHERE assetID = " + assetid;
 
             statement.executeUpdate(sql2);
 
@@ -163,19 +163,19 @@ public class WithUsers_popController implements Initializable {
 
             //GETTING ASSSET DETAILS CAT AND ADDITIONDATE
             /// THEN DOING THE SQL STUFF 
-            String getAsset = "SELECT assetDetails,categoryID,additionDate FROM `asset_management_system`.`assets` WHERE assetID='" + assetID.getText() + "'";
-            ResultSet rs = connection.createStatement().executeQuery(getWorker);
+            String getAsset = "SELECT * FROM `asset_management_system`.`assets` WHERE assetID='" + assetID.getText() + "'";
+            ResultSet rs = connection.createStatement().executeQuery(getAsset);
 
             while (rs.next()) {
-                String assetdetails = rs.getString(1);
-                String cat = rs.getString(2);
-                String additiondate = rss.getString(3);
+                String assetdetails = rs.getString(4);
+                String cat = rs.getString(7);
+                String additiondate = rs.getString(8);
 
                 String sql = "INSERT INTO `asset_management_system`.`asset_maintenance` (`assetID`, `assetName`, `assetCode`, `assetDetails`, `workerName`, `workerID`,`categoryID`,`additionDate`,`maintenanceDate`) VALUES (" + assetid + ",'" + assetname + "','" + assetcode + "','" + assetdetails + "','" + name + "'," + workerid + ",'" + cat + "','" + additiondate + "',CURDATE());";
 
                 statement.executeUpdate(sql);
 
-                String sql2 = "DELETE FROM `asset_management_system`.`available_assets` WHERE assetID= " + assetID.getText();
+                String sql2 = "DELETE FROM `asset_management_system`.`assigned_asset` WHERE assetID= " + assetID.getText();
 
                 statement.executeUpdate(sql2);
 
@@ -223,7 +223,7 @@ public class WithUsers_popController implements Initializable {
     @FXML
     void defer(ActionEvent event) throws SQLException, IOException, FileNotFoundException, ParseException {
 
-        if (!reason.getText().isEmpty()) {
+        if (!reason.getText().isEmpty() && !assetID.getText().isEmpty()) {
 
             try {
 
@@ -253,20 +253,20 @@ public class WithUsers_popController implements Initializable {
 
                 //GETTING ASSSET DETAILS CAT AND ADDITIONDATE
                 /// THEN DOING THE SQL STUFF 
-                String getAsset = "SELECT assetDetails,categoryID,additionDate FROM `asset_management_system`.`assets` WHERE assetID='" + assetID.getText() + "'";
-                ResultSet rs = connection.createStatement().executeQuery(getWorker);
+                String getAsset = "SELECT * FROM `asset_management_system`.`assets` WHERE assetID='" + assetID.getText() + "'";
+                ResultSet rs = connection.createStatement().executeQuery(getAsset);
 
                 while (rs.next()) {
 
-                    String assetdetails = rs.getString(1);
-                    String cat = rs.getString(2);
-                    String additiondate = rs.getString(3);
+                    String assetdetails = rs.getString(4);
+                    String cat = rs.getString(7);
+                    String additiondate = rs.getString(8);
 
                     String sql = "INSERT INTO `asset_management_system`.`deferred_asset` (`assetID`, `assetName`, `assetCode`, `assetDetails`, `workerName`, `workerID`,`categoryID`,`additionDate`,`deferredDate`,`reason`) VALUES (" + assetid + ",'" + assetname + "','" + assetcode + "','" + assetdetails + "','" + name + "'," + workerid + ",'" + cat + "','" + additiondate + "',CURDATE(),'" + reason.getText() + "');";
 
                     statement.executeUpdate(sql);
 
-                    String sql2 = "DELETE FROM `asset_management_system`.`available_assets` WHERE assetID= " + assetID.getText();
+                    String sql2 = "DELETE FROM `asset_management_system`.`assigned_asset` WHERE `assetID` = " + assetID.getText();
 
                     statement.executeUpdate(sql2);
                 }

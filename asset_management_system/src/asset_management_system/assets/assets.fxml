@@ -17,11 +17,11 @@
       <VBox fx:id="vbox" prefHeight="900.0" prefWidth="240.0" style="-fx-background-color: #28d474; -fx-padding: 10; -fx-spacing: 8;" />
       <TabPane layoutX="240.0" layoutY="52.0" prefHeight="834.0" prefWidth="1248.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-            <Tab text="ALL ASSETS">
+            <Tab fx:id="pane0" text="ALL ASSETS">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="733.0" prefWidth="1192.0">
                      <children>
-                        <TableView fx:id="all_assets_tbl" layoutX="3.0" layoutY="94.0" prefHeight="695.0" prefWidth="1214.0">
+                        <TableView fx:id="all_assets_tbl" layoutX="8.0" layoutY="94.0" prefHeight="695.0" prefWidth="1209.0">
                            <columns>
                               <TableColumn fx:id="asset_id" prefWidth="94.39999389648438" text="ASSET ID" />
                               <TableColumn fx:id="asset_name" prefWidth="150.4000244140625" text="ASSET NAME" />
@@ -38,13 +38,14 @@
                         <TextField fx:id="search" layoutX="346.0" layoutY="38.0" prefHeight="26.0" prefWidth="217.0" />
                         <ChoiceBox fx:id="choice" layoutX="594.0" layoutY="39.0" prefWidth="150.0" />
                         <Button fx:id="addAsset" layoutX="1035.0" layoutY="52.0" mnemonicParsing="false" onAction="#addNew" prefHeight="26.0" prefWidth="146.0" text="ADD ASSET" />
+                        <Button fx:id="printer" layoutX="25.0" layoutY="40.0" mnemonicParsing="false" onAction="#printData" prefHeight="26.0" prefWidth="67.0" text="PRINT" />
                      </children>
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab text="ASSETS">
+            <Tab fx:id="pane1" text="ASSETS">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" onMouseEntered="#loadFromDB1" prefHeight="733.0" prefWidth="1192.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0"  prefHeight="733.0" prefWidth="1192.0">
                      <children>
                         <TableView fx:id="assets_tbl" layoutY="93.0" prefHeight="662.0" prefWidth="1218.0">
                            <columns>
@@ -62,13 +63,14 @@
                         </TableView>
                         <ChoiceBox fx:id="choice1" layoutX="302.0" layoutY="42.0" prefWidth="150.0" />
                         <TextField fx:id="search1" layoutX="44.0" layoutY="42.0" prefHeight="26.0" prefWidth="200.0" />
+                        <Button fx:id="printer1" layoutX="1152.0" layoutY="41.0" mnemonicParsing="false" onAction="#printData1" prefHeight="26.0" prefWidth="65.0" text="PRINT" />
                      </children>
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab text="ASSETS IN MAINTENANCE">
+            <Tab fx:id="pane2" text="ASSETS IN MAINTENANCE">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" onMouseEntered="#loadFromDB2" prefHeight="733.0" prefWidth="1192.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0"  prefHeight="733.0" prefWidth="1192.0">
                      <children>
                         <TableView fx:id="maintenance_tbl" layoutX="-1.0" layoutY="94.0" prefHeight="662.0" prefWidth="1218.0">
                            <columns>
@@ -86,13 +88,14 @@
                         </TableView>
                         <TextField fx:id="search2" layoutX="14.0" layoutY="34.0" prefHeight="26.0" prefWidth="216.0" />
                         <ChoiceBox fx:id="choice2" layoutX="274.0" layoutY="34.0" prefWidth="150.0" />
+                        <Button fx:id="printer2" layoutX="1150.0" layoutY="34.0" mnemonicParsing="false" onAction="#printData2" prefHeight="26.0" prefWidth="64.0" text="PRINT" />
                      </children>
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab text="DEFERRED ASSET">
+            <Tab fx:id="pane3" text="DEFERRED ASSET">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" onMouseEntered="#loadFromDB3" prefHeight="733.0" prefWidth="1192.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0"  prefHeight="733.0" prefWidth="1192.0">
                      <children>
                         <TableView fx:id="deferred_tbl" layoutX="-1.0" layoutY="94.0" prefHeight="662.0" prefWidth="1218.0">
                            <columns>
@@ -111,6 +114,7 @@
                         </TableView>
                         <ChoiceBox fx:id="choice3" layoutX="283.0" layoutY="38.0" prefWidth="150.0" />
                         <TextField fx:id="search3" layoutX="22.0" layoutY="38.0" prefHeight="26.0" prefWidth="214.0" />
+                        <Button fx:id="printer3" layoutX="1145.0" layoutY="38.0" mnemonicParsing="false" onAction="#printData3" prefHeight="26.0" prefWidth="69.0" text="PRINT" />
                      </children>
                   </AnchorPane>
                </content>

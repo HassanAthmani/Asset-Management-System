@@ -1,6 +1,7 @@
 package asset_management_system.dashboard;
 
 import asset_management_system.usedAlot.json_read;
+import asset_management_system.usedAlot.mover;
 import com.jfoenix.controls.JFXButton;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,16 +36,14 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.json.simple.parser.ParseException;
 
-
 public class DashboardController implements Initializable {
+
     public Connection connection;
-     PreparedStatement preparedStatement = null;
+    PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
     private ObservableList<dashboard> data;
 
-
-    
-     @FXML
+    @FXML
     private VBox vbox;
 
     @FXML
@@ -51,26 +51,26 @@ public class DashboardController implements Initializable {
 
     @FXML
     private Label assetsLbl;
-    
+
     @FXML
     private VBox totalCost_pane;
 
     @FXML
     private Label totalCostLbl;
-    
+
     @FXML
     private VBox workers_pane;
 
     @FXML
     private Label workersLbl;
-    
+
     @FXML
     private VBox withUsers_pane;
 
     @FXML
     private Label withWorkersLbl;
-    
-     @FXML
+
+    @FXML
     private AnchorPane pieChart_pane;
 
     @FXML
@@ -78,20 +78,20 @@ public class DashboardController implements Initializable {
 
     @FXML
     private AnchorPane tableView_pane;
-    
+
     @FXML
     private JFXButton profile_btn;
-    
-     @FXML
+
+    @FXML
     private JFXButton workers_btn;
-     
-     @FXML
+
+    @FXML
     private JFXButton assetWorkers_btn;
-     
-      @FXML
+
+    @FXML
     private JFXButton asset_btn;
-      
-       @FXML
+
+    @FXML
     private TableView<dashboard> tbleView_dash;
 
     @FXML
@@ -111,76 +111,93 @@ public class DashboardController implements Initializable {
 
     @FXML
     private TableColumn<dashboard, String> cost_clmn;
-    
+
     @FXML
     private Label assets_rst;
-    
-      @FXML
+
+    @FXML
     private Label my_profile;
-      
-      @FXML
+
+    @FXML
     private Label workers_rst;
-      
-      @FXML
+
+    @FXML
     private Label withWorkers_rst;
-      
+
     @FXML
     private ImageView backToDashboard;
-    
+
     @FXML
     private ImageView closeApp;
+
+    @FXML
+    private Label dashboardLabel;
     
+    ArrayList <Integer> cell =new ArrayList <Integer>();
+    ArrayList <String> name =new ArrayList <String>();
+    
+    mover movingWindow=new mover();
+    
+
     @FXML
     void ToProfile(ActionEvent event) throws IOException {
         //you can use #onMousePressed or #orMouseClicked
-         Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/profile/profile.fxml"));
-           Scene newScene = new Scene(sceneFxml);
-           
-           newScene.getStylesheets().add("/asset_management_system/css/tabpane.css"); 
+        Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/profile/profile.fxml"));
+        Scene newScene = new Scene(sceneFxml);
 
-            //getting stage
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        newScene.getStylesheets().add("/asset_management_system/css/tabpane.css");
 
-            //setting scene on stage
-            window.setScene(newScene);
-            window.show();
-            window.centerOnScreen();
+        //getting stage
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        
+        movingWindow.moving(sceneFxml, window);
+
+        //setting scene on stage
+        window.setScene(newScene);
+        window.show();
+        window.centerOnScreen();
 
     }
-     
-     @FXML
-     public void closeAppWindow(MouseEvent event){
-         //getting stage
+
+    @FXML
+    public void closeAppWindow(MouseEvent event) {
+        //getting stage
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        window.close();
+    }
+    
+    @FXML 
+    public void minimizeWindow(MouseEvent event){
+        //getting stage
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            
-            window.close();
-     }
+            window.setIconified(true);
+    }
 
     @FXML
     void imageClicked(MouseEvent event) throws IOException {
-         //you can use #onMousePressed or #orMouseClicked
-         Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/login/login.fxml"));
-           Scene newScene = new Scene(sceneFxml);
+        //you can use #onMousePressed or #orMouseClicked
+        Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/login/login.fxml"));
+        Scene newScene = new Scene(sceneFxml);
 
-            //getting stage
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        //getting stage
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        movingWindow.moving(sceneFxml, window);
 
-            //setting scene on stage
-            window.setScene(newScene);
-            window.show();
-            window.centerOnScreen();
+        //setting scene on stage
+        window.setScene(newScene);
+        window.show();
+        window.centerOnScreen();
 
     }
 
-      
-     public void LoadDataFrmDB() throws SQLException {
+    public void LoadDataFrmDB() throws SQLException {
         //DB connection details
         try {
             String dbName = "asset_management_system";
-            String userName="root";
-            String password="";
+            String userName = "root";
+            String password = "";
             Class.forName("com.mysql.jdbc.Driver");
-            
 
             connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, password);
             data = FXCollections.observableArrayList();
@@ -211,125 +228,123 @@ public class DashboardController implements Initializable {
         tbleView_dash.setItems(data);
 
     }
-     
-  ////////  https://www.mysqltutorial.org/mysql-count/
-     public void countData() throws SQLException, IOException, FileNotFoundException, ParseException{
-          //DB connection details
+
+    ////////  https://www.mysqltutorial.org/mysql-count/
+    public void countData() throws SQLException, IOException, FileNotFoundException, ParseException {
+        //DB connection details
         try {
             String dbName = "asset_management_system";
-            String userName="root";
-            String password="";
+            String userName = "root";
+            String password = "";
             Class.forName("com.mysql.jdbc.Driver");
-            
 
             connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, password);
-            json_read jsonReader=new json_read();
-            String id=jsonReader.profile_id();
-            
-      
+            json_read jsonReader = new json_read();
+            String id = jsonReader.profile_id();
+
             //Execute query and store result in a resultset
             ResultSet rs = connection.createStatement().executeQuery("SELECT COUNT(*) FROM assets");
-            ResultSet rs1 = connection.createStatement().executeQuery("SELECT workerName FROM worker_details WHERE workerID= "+id);
+            ResultSet rs1 = connection.createStatement().executeQuery("SELECT workerName FROM worker_details WHERE workerID= " + id);
             ResultSet rs2 = connection.createStatement().executeQuery("SELECT COUNT(*) FROM worker_details");
             ResultSet rs3 = connection.createStatement().executeQuery("SELECT COUNT(*) FROM assigned_asset");
-            
-             while (rs.next()) {                               
+
+            while (rs.next()) {
                 assets_rst.setText(rs.getString(1));
             }
-             while (rs1.next()) {                               
+            while (rs1.next()) {
                 my_profile.setText(rs1.getString(1));
             }
-             while (rs2.next()) {                               
+            while (rs2.next()) {
                 workers_rst.setText(rs2.getString(1));
             }
-             while (rs3.next()) {                               
+            while (rs3.next()) {
                 withWorkers_rst.setText(rs3.getString(1));
             }
-             connection.close();
-    
-            
-            
+            connection.close();
 
         } catch (ClassNotFoundException ex) {
 
             System.err.println("Error: " + ex);
         }
-     }   
-     
-     public void styling(){
-         // System.out.print(assets_rst.getText());
-        String f="-fx-font-family: 'Bebas Neue', cursive; -fx-font-size: 20;";
+    }
+
+    public void styling() {
+        // System.out.print(assets_rst.getText());
+        String f = "-fx-font-family: 'Bebas Neue', cursive; -fx-font-size: 20;";
         //NORMAL LABELS
-       assetsLbl.setStyle(f);
-       totalCostLbl.setStyle(f);
-       workersLbl.setStyle(f);
-       withWorkersLbl.setStyle(f);
-       
-       //LBLS WITH DB RESULTS
-       String rst="-fx-font-family: 'Lobster', cursive; -fx-font-size: 16;";
-       assets_rst.setStyle(rst);
-       my_profile.setStyle(rst);
-       workers_rst.setStyle(rst);
-       withWorkers_rst.setStyle(rst);
-       
-       //BUTTON FONTS 
-       String btn="-fx-font-family: 'Yanone Kaffeesatz', sans-serif; -fx-font-size: 16;";
-       profile_btn.setStyle(btn);
-       workers_btn.setStyle(btn);
-      assetWorkers_btn.setStyle(btn);
-      asset_btn.setStyle(btn);
-     }
-     
-     @FXML
+        assetsLbl.setStyle(f);
+        totalCostLbl.setStyle(f);
+        workersLbl.setStyle(f);
+        withWorkersLbl.setStyle(f);
+
+        //LBLS WITH DB RESULTS
+        String rst = "-fx-font-family: 'Lobster', cursive; -fx-font-size: 16;";
+        assets_rst.setStyle(rst);
+        my_profile.setStyle(rst);
+        workers_rst.setStyle(rst);
+        withWorkers_rst.setStyle(rst);
+        dashboardLabel.setStyle("-fx-font-family: 'Lobster', cursive; -fx-font-size: 30;");
+
+        //BUTTON FONTS 
+        String btn = "-fx-font-family: 'Yanone Kaffeesatz', sans-serif; -fx-font-size: 16;";
+        profile_btn.setStyle(btn);
+        workers_btn.setStyle(btn);
+        assetWorkers_btn.setStyle(btn);
+        asset_btn.setStyle(btn);
+    }
+
+    @FXML
     void goToWorkers(ActionEvent event) throws IOException {
-          //you can use #onMousePressed or #orMouseClicked
-         Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/workers/workers.fxml"));
-           Scene newScene = new Scene(sceneFxml);
-           
+        //you can use #onMousePressed or #orMouseClicked
+        Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/workers/workers.fxml"));
+        Scene newScene = new Scene(sceneFxml);
 
-            //getting stage
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        //getting stage
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        movingWindow.moving(sceneFxml, window);
 
-            //setting scene on stage
-            window.setScene(newScene);
-            window.show();
-            window.centerOnScreen();
+        //setting scene on stage
+        window.setScene(newScene);
+        window.show();
+        window.centerOnScreen();
 
     }
-    
-     @FXML
+
+    @FXML
     void goToAssets(ActionEvent event) throws IOException {
-         //you can use #onMousePressed or #orMouseClicked
-         Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/assets/assets.fxml"));
-           Scene newScene = new Scene(sceneFxml);
-           
-           newScene.getStylesheets().add("/asset_management_system/css/tabpane.css"); 
+        //you can use #onMousePressed or #orMouseClicked
+        Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/assets/assets.fxml"));
+        Scene newScene = new Scene(sceneFxml);
 
-            //getting stage
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        newScene.getStylesheets().add("/asset_management_system/css/tabpane.css");
 
-            //setting scene on stage
-            window.setScene(newScene);
-            window.show();
-            window.centerOnScreen();
+        //getting stage
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        movingWindow.moving(sceneFxml, window);
+
+        //setting scene on stage
+        window.setScene(newScene);
+        window.show();
+        window.centerOnScreen();
 
     }
-    
+
     @FXML
     void openWithWorkers(ActionEvent event) throws IOException {
-         //you can use #onMousePressed or #orMouseClicked
-         Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/withUsers/withUsers.fxml"));
-           Scene newScene = new Scene(sceneFxml);
-           
-           newScene.getStylesheets().add("/asset_management_system/css/tabpane.css"); 
+        //you can use #onMousePressed or #orMouseClicked
+        Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/withUsers/withUsers.fxml"));
+        Scene newScene = new Scene(sceneFxml);
 
-            //getting stage
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        newScene.getStylesheets().add("/asset_management_system/css/tabpane.css");
 
-            //setting scene on stage
-            window.setScene(newScene);
-            window.show();
-            window.centerOnScreen();
+        //getting stage
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        movingWindow.moving(sceneFxml, window);
+
+        //setting scene on stage
+        window.setScene(newScene);
+        window.show();
+        window.centerOnScreen();
 
     }
 
@@ -346,9 +361,7 @@ public class DashboardController implements Initializable {
         } catch (ParseException ex) {
             Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
-      
-      
-    }    
-    
+
+    }
+
 }
