@@ -4,6 +4,7 @@ import asset_management_system.usedAlot.assetSearch;
 import asset_management_system.usedAlot.json_code;
 import asset_management_system.usedAlot.json_read;
 import asset_management_system.usedAlot.mover;
+import asset_management_system.usedAlot.notification;
 import asset_management_system.workers.WorkersController;
 import com.itextpdf.text.BadElementException;
 import java.io.FileOutputStream;
@@ -270,6 +271,8 @@ public class AssetsController implements Initializable {
 
     private double xOffset = 0;
     private double yOffset = 0;
+    
+    notification notify=new notification();
 
     @FXML
     void addNew(ActionEvent event) throws IOException {
@@ -323,12 +326,13 @@ public class AssetsController implements Initializable {
     @FXML
     void imageClicked(MouseEvent event) throws IOException {
         //you can use #onMousePressed or #orMouseClicked
+        mover movingWindow = new mover();
         Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/dashboard/dashboard.fxml"));
         Scene newScene = new Scene(sceneFxml);
 
         //getting stage
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        mover movingWindow = new mover();
+        
         movingWindow.moving(sceneFxml, window);
 
         //setting scene on stage
@@ -1583,6 +1587,8 @@ public class AssetsController implements Initializable {
         /* Attach report table to PDF */
         my_pdf_report.add(my_report_table);
         my_pdf_report.close();
+        
+        notify.flash(printer," DOCUMENT HAS BEEN CREATED ");
 
     }
 
@@ -1695,6 +1701,7 @@ public class AssetsController implements Initializable {
         my_pdf_report.add(my_report_table);
         my_pdf_report.close();
 
+        notify.flash(printer," DOCUMENT HAS BEEN CREATED ");
     }
 
     //ASSET IN MAINTENANCE PRINTER
@@ -1805,6 +1812,8 @@ public class AssetsController implements Initializable {
         /* Attach report table to PDF */
         my_pdf_report.add(my_report_table);
         my_pdf_report.close();
+        
+        notify.flash(printer," DOCUMENT HAS BEEN CREATED ");
 
     }
 
@@ -1921,6 +1930,8 @@ public class AssetsController implements Initializable {
         /* Attach report table to PDF */
         my_pdf_report.add(my_report_table);
         my_pdf_report.close();
+        
+        notify.flash(printer," DOCUMENT HAS BEEN CREATED ");
 
     }
 

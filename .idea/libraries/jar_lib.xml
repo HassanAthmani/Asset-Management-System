@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="jar_lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/asset_management_system/jar_lib/javase-3.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/asset_management_system/jar_lib/json-simple-1.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/asset_management_system/jar_lib/javax.mail-1.5.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/asset_management_system/jar_lib/jfoenix-8.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/asset_management_system/jar_lib/core-3.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/asset_management_system/jar_lib/jfoenix-9.0.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

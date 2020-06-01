@@ -16,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -53,6 +54,9 @@ public class RegisterController implements Initializable {
 
     @FXML
     private VBox vbox;
+    
+    @FXML
+    private Label addWorkerLbl;
     
     /*@FXML
     private ImageView backToWorkers;*/
@@ -111,6 +115,9 @@ public class RegisterController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        addWorkerLbl.setStyle("-fx-font-family: 'Lobster', cursive; -fx-font-size: 30; -fx-font-weight: bold;");
+        
         vbox.setStyle("-fx-background-color: #28d474;\n"
                 + "-fx-padding: 10;\n"
                 + "-fx-spacing:8;\n"

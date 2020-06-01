@@ -6,10 +6,23 @@
 package asset_management_system.withUsers;
 
 import asset_management_system.assets.AssetsController;
+import asset_management_system.assets.all_assets;
 import asset_management_system.usedAlot.assetSearch;
 import asset_management_system.usedAlot.json_code;
+import asset_management_system.usedAlot.json_read;
 import asset_management_system.usedAlot.mover;
+import asset_management_system.usedAlot.notification;
 import asset_management_system.workers.WorkersController;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -23,6 +36,7 @@ import java.util.logging.Logger;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -43,6 +57,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import org.json.simple.parser.ParseException;
 
 /**
  * FXML Controller class
@@ -104,6 +119,9 @@ public class WithUsersController implements Initializable {
 
     @FXML
     private ChoiceBox choice;
+    
+    @FXML
+    private Button printer;
 
     private double xOffset = 0;
     private double yOffset = 0;
@@ -139,10 +157,129 @@ public class WithUsersController implements Initializable {
             window.setScene(newScene);
             
             window.show();
-            window.centerOnScreen();            
-
-        
+            window.centerOnScreen();   
     }
+    
+     @FXML
+    void printData(ActionEvent event) throws FileNotFoundException, DocumentException, IOException, ParseException, SQLException {
+        
+         Document my_pdf_report = new Document();
+
+        PdfWriter.getInstance(my_pdf_report, new FileOutputStream("ASSIGNED ASSETS REPORT.pdf"));
+        my_pdf_report.open();
+
+        //we have four columns in our table
+        PdfPTable my_report_table = new PdfPTable(10);
+        my_report_table.setWidthPercentage(100);
+        my_report_table.addCell(new PdfPCell(new Phrase("ID", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 8))));
+        my_report_table.addCell(new PdfPCell(new Phrase("WORKER ID", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 8))));
+        my_report_table.addCell(new PdfPCell(new Phrase("WORKER NAME", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 8))));
+        my_report_table.addCell(new PdfPCell(new Phrase("WORKER TEL.", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 8))));
+        my_report_table.addCell(new PdfPCell(new Phrase("WORKER EMAIL", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 8))));
+        my_report_table.addCell(new PdfPCell(new Phrase("ASSET ID", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 8))));
+        my_report_table.addCell(new PdfPCell(new Phrase("ASSET NAME", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 8))));
+        my_report_table.addCell(new PdfPCell(new Phrase("ASSET CODE", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 8))));
+        my_report_table.addCell(new PdfPCell(new Phrase("ASSIGNED DATE", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 8))));
+        my_report_table.addCell(new PdfPCell(new Phrase("ASSIGNED BY", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 8))));
+        my_report_table.completeRow();
+
+        //create a cell object
+        PdfPCell table_cell;
+        Paragraph space = new Paragraph("  ");
+        Float indent = 10.0f;
+        Paragraph title = new Paragraph(" MOTIVATION CHARITABLE TRUST ");
+        Paragraph tableName = new Paragraph("TABLE NAME:  ASSIGNED ASSET TABLE ");
+        my_pdf_report.add(title/*.setIndentationLeft(indent)*/);
+        my_pdf_report.add(space);
+        my_pdf_report.add(tableName);
+
+        try {
+            json_read jsonReader = new json_read();
+            String id = jsonReader.profile_id();
+
+            Class.forName("com.mysql.jdbc.Driver");
+
+            String dbName = "asset_management_system";
+
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, password);
+            data = FXCollections.observableArrayList();
+            //Execute query and store result in a resultset
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM worker_details WHERE workerID= " + id);
+
+            while (rs.next()) {
+
+                Paragraph workerid = new Paragraph("WORKER ID: " + rs.getString(1));
+                Paragraph workername = new Paragraph("WORKER NAME: " + rs.getString(2));
+                Paragraph email = new Paragraph("WORKER EMAIL: " + rs.getString(5));
+                Paragraph department = new Paragraph("WORKER DEPARTMENT: " + rs.getString(7));
+
+                my_pdf_report.add(workerid);
+                my_pdf_report.add(workername);
+                my_pdf_report.add(email);
+                my_pdf_report.add(department);
+                my_pdf_report.add(space);
+            }
+
+        } catch (ClassNotFoundException ex) {
+
+            System.err.println("Error: " + ex);
+        }
+
+        //com.itextpdf.text.Image image = com.itextpdf.text.Image.getInstance("MyQRCode.png");
+        for (withUsers o : withUsers_tbl.getItems()) {
+
+            // System.err.println(columnA.getCellData(o));
+            String Transid = id.getCellData(o);
+            table_cell = new PdfPCell(new Phrase(Transid, FontFactory.getFont(FontFactory.HELVETICA, 8)));
+            my_report_table.addCell(table_cell);
+
+            String workerID = worker_id.getCellData(o);
+            table_cell = new PdfPCell(new Phrase(workerID, FontFactory.getFont(FontFactory.HELVETICA, 8)));
+            my_report_table.addCell(table_cell);
+
+            String workerName = worker_name.getCellData(o);
+            table_cell = new PdfPCell(new Phrase(workerName, FontFactory.getFont(FontFactory.HELVETICA, 8)));
+            my_report_table.addCell(table_cell);
+
+            String workerPhoneNo = worker_phoneNo.getCellData(o);
+            table_cell = new PdfPCell(new Phrase(workerPhoneNo, FontFactory.getFont(FontFactory.HELVETICA, 8)));
+            my_report_table.addCell(table_cell);
+
+            String workerEmail = worker_email.getCellData(o);
+            table_cell = new PdfPCell(new Phrase(workerEmail, FontFactory.getFont(FontFactory.HELVETICA, 7)));
+            my_report_table.addCell(table_cell);
+
+            String assetID = asset_id.getCellData(o);
+            table_cell = new PdfPCell(new Phrase(assetID, FontFactory.getFont(FontFactory.HELVETICA, 8)));
+            my_report_table.addCell(table_cell);
+
+            String assetName = asset_name.getCellData(o);
+            table_cell = new PdfPCell(new Phrase(assetName, FontFactory.getFont(FontFactory.HELVETICA, 8)));
+            my_report_table.addCell(table_cell);
+
+            String code = asset_code.getCellData(o);
+            table_cell = new PdfPCell(new Phrase(code, FontFactory.getFont(FontFactory.HELVETICA, 8)));
+            my_report_table.addCell(table_cell);
+
+            String assignedDate = assigned_date.getCellData(o);
+            table_cell = new PdfPCell(new Phrase(assignedDate, FontFactory.getFont(FontFactory.HELVETICA, 8)));
+            my_report_table.addCell(table_cell);
+            
+             String assigned_by = assignedBy.getCellData(o);
+            table_cell = new PdfPCell(new Phrase(assigned_by, FontFactory.getFont(FontFactory.HELVETICA, 8)));
+            my_report_table.addCell(table_cell);
+
+        }
+        /* Attach report table to PDF */
+        my_pdf_report.add(my_report_table);
+        my_pdf_report.close();
+
+        notification notify=new notification();
+        notify.flash(printer," DOCUMENT HAS BEEN CREATED ");
+        
+
+    }
+
 
     @FXML
     void loadFromDB(MouseEvent event) throws SQLException {

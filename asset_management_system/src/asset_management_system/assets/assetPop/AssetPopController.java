@@ -99,6 +99,9 @@ public class AssetPopController implements Initializable {
 
     @FXML
     private Label assignID;
+    
+     @FXML
+    private Label assetLbl;
 
     @FXML
     void giveAsset(ActionEvent event) throws SQLException {
@@ -479,6 +482,9 @@ public class AssetPopController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        assetLbl.setStyle("-fx-font-family: 'Lobster', cursive; -fx-font-size: 20; -fx-font-weight: bold;");
+        
         defer.setVisible(false);
         reason.setVisible(false);
         save.setVisible(false);

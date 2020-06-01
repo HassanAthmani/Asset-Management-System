@@ -1,4 +1,3 @@
-
 package asset_management_system.assets.maintenancePop;
 
 import asset_management_system.assets.assetPop.AssetPopController;
@@ -23,14 +22,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javax.swing.JOptionPane;
 import static jdk.nashorn.internal.objects.NativeString.toUpperCase;
 import org.json.simple.parser.ParseException;
 
-
 public class MaintenancePopController implements Initializable {
+
     String userName = "root";
     String password = "";
     public Connection connection;
@@ -58,28 +58,29 @@ public class MaintenancePopController implements Initializable {
 
     @FXML
     private JFXTextField additionDate;
-    
-    
+
     @FXML
     private JFXTextField maintenanceDate;
-    
-     @FXML
-    private JFXTextField reason;
 
+    @FXML
+    private JFXTextField reason;
 
     @FXML
     private Button returnToAssets;
 
     @FXML
     private Button deferAsset;
-    
-     @FXML
+
+    @FXML
     private ImageView qr_code;
 
     @FXML
+    private Label mainLbl;
+
+    @FXML
     void toAssets(ActionEvent event) throws SQLException {
-            String assetid = assetID.getText();
-            if (!assetID.getText().isEmpty()){
+        String assetid = assetID.getText();
+        if (!assetID.getText().isEmpty()) {
 
             try {
 
@@ -88,16 +89,16 @@ public class MaintenancePopController implements Initializable {
                 connection = DriverManager.getConnection(url, userName, password);
                 Statement statement = connection.createStatement();
 
-                String sql = "INSERT INTO `asset_management_system`.`available_assets` SELECT * FROM `asset_management_system`.`assets` WHERE assetID="+assetid+" ;";
+                String sql = "INSERT INTO `asset_management_system`.`available_assets` SELECT * FROM `asset_management_system`.`assets` WHERE assetID=" + assetid + " ;";
 
                 statement.executeUpdate(sql);
 
-                String sql2 = "DELETE FROM `asset_management_system`.`asset_maintenance` WHERE assetID = "+assetid;
+                String sql2 = "DELETE FROM `asset_management_system`.`asset_maintenance` WHERE assetID = " + assetid;
 
                 statement.executeUpdate(sql2);
 
                 connection.close();
-                
+
                 assetID.clear();
                 assetName.clear();
                 assetCode.clear();
@@ -108,24 +109,21 @@ public class MaintenancePopController implements Initializable {
                 additionDate.clear();
                 maintenanceDate.clear();
                 qr_code.setImage(null);
-                
-                
 
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(AssetPopController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            }
-            else {
-                int response = JOptionPane.showConfirmDialog(
+        } else {
+            int response = JOptionPane.showConfirmDialog(
                     null, "No field should be empty", "ERROR", JOptionPane.DEFAULT_OPTION);
-            }
+        }
 
     }
 
     @FXML
     void toDeferred(ActionEvent event) throws SQLException, IOException, FileNotFoundException, ParseException {
-        if(!reason.getText().isEmpty() && !assetID.getText().isEmpty()){
-            
+        if (!reason.getText().isEmpty() && !assetID.getText().isEmpty()) {
+
             String assetid = assetID.getText();
             String assetname = assetName.getText();
             String assetcode = assetCode.getText();
@@ -134,8 +132,8 @@ public class MaintenancePopController implements Initializable {
             //String workerid = workerID.getText();
             String cat = category.getText();
             String additiondate = additionDate.getText();
-           // String maintenance = maintenanceDate.getText();
-            
+            // String maintenance = maintenanceDate.getText();
+
             try {
 
                 Class.forName("com.mysql.jdbc.Driver");
@@ -158,13 +156,13 @@ public class MaintenancePopController implements Initializable {
                 }
                 json_read nw = new json_read();
                 String name = nw.asset_id();
-               // String assetid = assetID.getText();
+                // String assetid = assetID.getText();
                 //String assetname = assetName.getText();
                 //String assetcode = assetCode.getText();
-               // String assetdetails = assetDetails.getText();
-               // int workername = Integer.valueOf(workerID.getText());
-              //  String cat = category.getText();
-              //  String additiondate = additionDate.getText();
+                // String assetdetails = assetDetails.getText();
+                // int workername = Integer.valueOf(workerID.getText());
+                //  String cat = category.getText();
+                //  String additiondate = additionDate.getText();
 
                 String sql = "INSERT INTO `asset_management_system`.`deferred_asset` (`assetID`, `assetName`, `assetCode`, `assetDetails`, `workerName`, `workerID`,`categoryID`,`additionDate`,`deferredDate`,`reason`) VALUES (" + assetid + ",'" + assetname + "','" + assetcode + "','" + assetdetails + "','" + name + "'," + workerid + ",'" + cat + "','" + additiondate + "',CURDATE(),'" + toUpperCase(reason.getText()) + "');";
 
@@ -197,26 +195,27 @@ public class MaintenancePopController implements Initializable {
                     null, "Please enter reason for deferring the asset", "ERROR!", JOptionPane.DEFAULT_OPTION);
 
         }
-            
-    
+
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        QR_Creator maker=new QR_Creator();
-        
+
+        mainLbl.setStyle("-fx-font-family: 'Lobster', cursive; -fx-font-size: 20; -fx-font-weight: bold;");
+
+        QR_Creator maker = new QR_Creator();
+
         try {
-            json_read nw=new json_read();
-             nw.setTomaintenance(assetID, assetName, assetCode, assetDetails, workerName, workerID, category, additionDate, maintenanceDate);
-             
+            json_read nw = new json_read();
+            nw.setTomaintenance(assetID, assetName, assetCode, assetDetails, workerName, workerID, category, additionDate, maintenanceDate);
+
             maker.QRGen(assetID.getText(), assetCode.getText(), assetName.getText());
-             String path="Asset"+assetID.getText()+".png";
-             Image imageObject;
-             imageObject = new Image(new FileInputStream(path));
+            String path = "Asset" + assetID.getText() + ".png";
+            Image imageObject;
+            imageObject = new Image(new FileInputStream(path));
             // ImageView image = new ImageView(imageObject);  
-             qr_code.setImage(imageObject);
-           
-             
+            qr_code.setImage(imageObject);
+
         } catch (WriterException ex) {
             Logger.getLogger(MaintenancePopController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -226,9 +225,7 @@ public class MaintenancePopController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(MaintenancePopController.class.getName()).log(Level.SEVERE, null, ex);
         }
-             
-             
-            
-    }    
-    
+
+    }
+
 }

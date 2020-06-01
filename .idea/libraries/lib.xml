@@ -1,0 +1,19 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/asset_management_system/dist/lib/javase-3.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/asset_management_system/dist/lib/core-3.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/asset_management_system/dist/lib/jfoenix-9.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/asset_management_system/dist/lib/itextpdf-5.5.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/asset_management_system/dist/lib/javax.mail-1.5.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/asset_management_system/dist/lib/json-simple-1.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/asset_management_system/dist/lib/jfoenix-8.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/asset_management_system/dist/lib/mysql-connector-java-5.1.47-bin.jar!/" />
+      <root url="jar://$PROJECT_DIR$/asset_management_system/dist/lib/io-7.1.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/asset_management_system/dist/lib/kernel-7.1.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/asset_management_system/dist/lib/layout-7.1.9.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

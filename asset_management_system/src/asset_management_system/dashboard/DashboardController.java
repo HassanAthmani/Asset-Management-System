@@ -47,28 +47,24 @@ public class DashboardController implements Initializable {
     private VBox vbox;
 
     @FXML
-    private VBox assets_pane;
+    private AnchorPane asset_pane;
 
-    @FXML
-    private Label assetsLbl;
+    
 
     @FXML
     private VBox totalCost_pane;
 
-    @FXML
-    private Label totalCostLbl;
+    
 
     @FXML
     private VBox workers_pane;
 
-    @FXML
-    private Label workersLbl;
+   
 
     @FXML
     private VBox withUsers_pane;
 
-    @FXML
-    private Label withWorkersLbl;
+   
 
     @FXML
     private AnchorPane pieChart_pane;
@@ -80,16 +76,16 @@ public class DashboardController implements Initializable {
     private AnchorPane tableView_pane;
 
     @FXML
-    private JFXButton profile_btn;
+    private ImageView profile_btn;
 
     @FXML
-    private JFXButton workers_btn;
+    private ImageView workers_btn;
 
     @FXML
-    private JFXButton assetWorkers_btn;
+    private ImageView assetWorkers_btn;
 
     @FXML
-    private JFXButton asset_btn;
+    private ImageView asset_btn;
 
     @FXML
     private TableView<dashboard> tbleView_dash;
@@ -140,12 +136,12 @@ public class DashboardController implements Initializable {
     
 
     @FXML
-    void ToProfile(ActionEvent event) throws IOException {
+    void ToProfile(MouseEvent event) throws IOException {
         //you can use #onMousePressed or #orMouseClicked
         Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/profile/profile.fxml"));
         Scene newScene = new Scene(sceneFxml);
 
-        newScene.getStylesheets().add("/asset_management_system/css/tabpane.css");
+        //newScene.getStylesheets().add("/asset_management_system/css/tabpane.css");
 
         //getting stage
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -249,16 +245,16 @@ public class DashboardController implements Initializable {
             ResultSet rs3 = connection.createStatement().executeQuery("SELECT COUNT(*) FROM assigned_asset");
 
             while (rs.next()) {
-                assets_rst.setText(rs.getString(1));
+                assets_rst.setText(rs.getString(1)+" ASSETS");
             }
             while (rs1.next()) {
-                my_profile.setText(rs1.getString(1));
+                my_profile.setText(rs1.getString(1)+"'S PROFILE ");
             }
             while (rs2.next()) {
-                workers_rst.setText(rs2.getString(1));
+                workers_rst.setText(rs2.getString(1)+" WORKERS");
             }
             while (rs3.next()) {
-                withWorkers_rst.setText(rs3.getString(1));
+                withWorkers_rst.setText(rs3.getString(1)+" ASSIGNED");
             }
             connection.close();
 
@@ -272,29 +268,29 @@ public class DashboardController implements Initializable {
         // System.out.print(assets_rst.getText());
         String f = "-fx-font-family: 'Bebas Neue', cursive; -fx-font-size: 20;";
         //NORMAL LABELS
-        assetsLbl.setStyle(f);
-        totalCostLbl.setStyle(f);
-        workersLbl.setStyle(f);
-        withWorkersLbl.setStyle(f);
+        //assetsLbl.setStyle(f);
+        //totalCostLbl.setStyle(f);
+        //workersLbl.setStyle(f);
+        //withWorkersLbl.setStyle(f);
 
         //LBLS WITH DB RESULTS
         String rst = "-fx-font-family: 'Lobster', cursive; -fx-font-size: 16;";
-        assets_rst.setStyle(rst);
-        my_profile.setStyle(rst);
-        workers_rst.setStyle(rst);
-        withWorkers_rst.setStyle(rst);
+        assets_rst.setStyle(f);
+        my_profile.setStyle(f);
+        workers_rst.setStyle(f);
+        withWorkers_rst.setStyle(f);
         dashboardLabel.setStyle("-fx-font-family: 'Lobster', cursive; -fx-font-size: 30;");
 
         //BUTTON FONTS 
         String btn = "-fx-font-family: 'Yanone Kaffeesatz', sans-serif; -fx-font-size: 16;";
-        profile_btn.setStyle(btn);
+       /* profile_btn.setStyle(btn);
         workers_btn.setStyle(btn);
         assetWorkers_btn.setStyle(btn);
-        asset_btn.setStyle(btn);
+        asset_btn.setStyle(btn);*/
     }
 
     @FXML
-    void goToWorkers(ActionEvent event) throws IOException {
+    void goToWorkers(MouseEvent event) throws IOException {
         //you can use #onMousePressed or #orMouseClicked
         Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/workers/workers.fxml"));
         Scene newScene = new Scene(sceneFxml);
@@ -311,7 +307,7 @@ public class DashboardController implements Initializable {
     }
 
     @FXML
-    void goToAssets(ActionEvent event) throws IOException {
+    void goToAssets(MouseEvent event) throws IOException {
         //you can use #onMousePressed or #orMouseClicked
         Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/assets/assets.fxml"));
         Scene newScene = new Scene(sceneFxml);
@@ -330,7 +326,7 @@ public class DashboardController implements Initializable {
     }
 
     @FXML
-    void openWithWorkers(ActionEvent event) throws IOException {
+    void openWithWorkers(MouseEvent event) throws IOException {
         //you can use #onMousePressed or #orMouseClicked
         Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/withUsers/withUsers.fxml"));
         Scene newScene = new Scene(sceneFxml);

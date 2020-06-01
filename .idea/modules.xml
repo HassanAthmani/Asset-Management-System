@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/asset_management_system/asset_management_system.iml" filepath="$PROJECT_DIR$/asset_management_system/asset_management_system.iml" />
+      <module fileurl="file://$PROJECT_DIR$/asset_management_system/jar_lib/mysql-connector-java-5.1.47/mysql-connector-java-5.1.47.iml" filepath="$PROJECT_DIR$/asset_management_system/jar_lib/mysql-connector-java-5.1.47/mysql-connector-java-5.1.47.iml" />
+    </modules>
+  </component>
+</project>

@@ -25,6 +25,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javax.swing.JOptionPane;
@@ -68,6 +69,9 @@ public class AddAssetController implements Initializable {
 
     @FXML
     private ChoiceBox category;
+    
+    @FXML
+    private Label addAssetLbl;
     
     
     @FXML
@@ -166,6 +170,8 @@ public class AddAssetController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        addAssetLbl.setStyle("-fx-font-family: 'Lobster', cursive; -fx-font-size: 20; -fx-font-weight: bold;");
         try {
             fill_data();
             // TODO

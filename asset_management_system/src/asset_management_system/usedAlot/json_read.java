@@ -119,7 +119,7 @@ public class json_read {
         String reason = (String)jsonObject.get("reason");
         
          String path="Asset12.png";
-             Image imageObject = new Image(new FileInputStream(path));
+             //Image imageObject = new Image(new FileInputStream(path));
              
             // ImageView image = new ImageView(imageObject);  
           //  qr_code.setImage(imageObject);
@@ -145,6 +145,8 @@ public class json_read {
          Object obj = parser.parse(new FileReader(".//json//AllItem.json"));
          JSONObject jsonObject = (JSONObject)obj;
          
+         ///.//json//AllItem.json
+         
         
         
       
@@ -159,8 +161,8 @@ public class json_read {
         String cost1 = (String)jsonObject.get("cost");
         
         
-         String path="Asset12.png";
-             Image imageObject = new Image(new FileInputStream(path));
+         /*String path="Asset12.png";
+             Image imageObject = new Image(new FileInputStream(path));*/
              
             // ImageView image = new ImageView(imageObject);  
            // qr_code.setImage(imageObject);
@@ -203,7 +205,7 @@ public class json_read {
        
         
          String path="Asset12.png";
-             Image imageObject = new Image(new FileInputStream(path));
+            // Image imageObject = new Image(new FileInputStream(path));
              
             // ImageView image = new ImageView(imageObject);  
           //  qr_code.setImage(imageObject);
@@ -284,7 +286,7 @@ public class json_read {
         
         
          String path="Asset12.png";
-             Image imageObject = new Image(new FileInputStream(path));
+             //Image imageObject = new Image(new FileInputStream(path));
              
             // ImageView image = new ImageView(imageObject);  
            // qr_code.setImage(imageObject);

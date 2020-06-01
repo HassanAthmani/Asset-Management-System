@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="900.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/8.0.25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="asset_management_system.dashboard.DashboardController">
+   <children>
+      <VBox fx:id="vbox" alignment="BOTTOM_CENTER" prefHeight="900.0" prefWidth="240.0" style="-fx-background-color: #28d474; -fx-padding: 10; -fx-spacing: 8;">
+         <children>
+            <Label prefHeight="18.0" prefWidth="269.0" text="MOTIVATION CHARITABLE TRUST" textAlignment="CENTER">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </Label>
+            <Label prefHeight="18.0" prefWidth="253.0" text="020 2616201">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+            <Label prefHeight="54.0" prefWidth="219.0" text="Motivation, Unit 2 Sheene Road, Bedminster, Bristol, BS3 4EG" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+         </children></VBox>
+      <AnchorPane fx:id="pieChart_pane" layoutX="274.0" layoutY="466.0" prefHeight="342.0" prefWidth="458.0" style="-fx-background-color: #c9f5f5;">
+         <children>
+            <PieChart fx:id="catChart" layoutX="-1.0" prefHeight="346.0" prefWidth="462.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="tableView_pane" layoutX="797.0" layoutY="469.0" prefHeight="341.0" prefWidth="656.0" style="-fx-background-color: #c9f5f5;">
+         <children>
+            <TableView fx:id="tbleView_dash" layoutX="1.0" prefHeight="340.0" prefWidth="654.0">
+              <columns>
+                <TableColumn fx:id="assetName_clmn" prefWidth="101.60003662109375" text="ASSET NAME" />
+                <TableColumn fx:id="assetCode_clmn" prefWidth="78.4000244140625" text="CODE" />
+                  <TableColumn fx:id="addedOn_clmn" prefWidth="101.5999755859375" text="ADDED ON" />
+                  <TableColumn fx:id="addedBy_clmn" prefWidth="127.19989013671875" text="ADDED BY" />
+                  <TableColumn fx:id="category_clmn" prefWidth="125.5999755859375" text="CATEGORY" />
+                  <TableColumn fx:id="cost_clmn" prefWidth="121.5999755859375" text="COST" />
+              </columns>
+            </TableView>
+         </children></AnchorPane>
+      <ImageView fx:id="backToDashboard" fitHeight="38.0" fitWidth="44.0" layoutX="274.0" layoutY="100.0" onMousePressed="#imageClicked" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/ic_exit_to_app.imageset/ic_exit_to_app_2x.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="closeApp" fitHeight="38.0" fitWidth="44.0" layoutX="1414.0" layoutY="14.0" onMousePressed="#closeAppWindow" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/ic_close.imageset/ic_close_2x.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="dashboardLabel" layoutX="750.0" layoutY="52.0" prefHeight="60.0" prefWidth="190.0" text="DASHBOARD " textAlignment="CENTER" underline="true" />
+      <ImageView fx:id="minimize" fitHeight="38.0" fitWidth="38.0" layoutX="1376.0" layoutY="14.0" onMousePressed="#minimizeWindow" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/minimize/minimize.png" />
+         </image>
+      </ImageView>
+      <AnchorPane fx:id="asset_pane" layoutX="274.0" layoutY="173.0" prefHeight="218.0" prefWidth="250.0" style="-fx-background-color: #c9f5f5;">
+         <children>
+            <ImageView fitHeight="131.0" fitWidth="129.0" layoutX="61.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/asset.png" />
+               </image>
+               <viewport>
+                  <Rectangle2D height="250.0" width="250.0" />
+               </viewport>
+            </ImageView>
+            <Label fx:id="assets_rst" layoutX="73.0" layoutY="14.0" prefHeight="30.0" prefWidth="162.0" text="Label" />
+            <JFXButton fx:id="asset_btn" buttonType="RAISED" contentDisplay="CENTER" layoutX="118.0" layoutY="180.0" onAction="#goToAssets" prefHeight="30.0" prefWidth="26.0" text="+">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="asset_pane1" layoutX="571.0" layoutY="173.0" prefHeight="218.0" prefWidth="250.0" style="-fx-background-color: #c9f5f5;">
+         <children>
+            <ImageView fitHeight="131.0" fitWidth="129.0" layoutX="61.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/profile.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="my_profile" layoutX="95.0" layoutY="5.0" prefHeight="30.0" prefWidth="114.0" text="Label" />
+            <JFXButton fx:id="profile_btn" buttonType="RAISED" contentDisplay="CENTER" layoutX="122.0" layoutY="173.0" onAction="#ToProfile" prefHeight="30.0" prefWidth="26.0" text="+" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="asset_pane11" layoutX="883.0" layoutY="173.0" prefHeight="218.0" prefWidth="250.0" style="-fx-background-color: #c9f5f5;">
+         <children>
+            <ImageView fitHeight="131.0" fitWidth="129.0" layoutX="61.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/workers.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="workers_rst" layoutX="92.0" layoutY="14.0" prefHeight="30.0" prefWidth="114.0" text="Label" />
+            <JFXButton fx:id="workers_btn" buttonType="RAISED" contentDisplay="CENTER" layoutX="123.0" layoutY="174.0" onAction="#goToWorkers" prefHeight="30.0" prefWidth="26.0" text="+" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="asset_pane12" layoutX="1201.0" layoutY="173.0" prefHeight="218.0" prefWidth="250.0" style="-fx-background-color: #c9f5f5;">
+         <children>
+            <ImageView fitHeight="131.0" fitWidth="129.0" layoutX="68.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/assigned.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="withWorkers_rst" layoutX="84.0" layoutY="14.0" prefHeight="30.0" prefWidth="121.0" text="Label" />
+            <JFXButton fx:id="assetWorkers_btn" contentDisplay="CENTER" layoutX="132.0" layoutY="174.0" onAction="#openWithWorkers" prefHeight="30.0" prefWidth="26.0" text="+" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

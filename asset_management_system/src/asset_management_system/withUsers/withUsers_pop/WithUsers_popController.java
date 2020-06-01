@@ -299,6 +299,9 @@ public class WithUsers_popController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        title.setStyle("-fx-font-family: 'Lobster', cursive; -fx-font-size: 36; -fx-font-weight: bold;");
+                
         // TODO
         reasonLbl.setVisible(false);
         reason.setVisible(false);

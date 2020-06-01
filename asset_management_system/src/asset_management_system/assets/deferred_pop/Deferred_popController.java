@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -67,6 +68,9 @@ public class Deferred_popController implements Initializable {
     
     @FXML
     private ImageView qr_code;
+    
+    @FXML
+    private Label deferredLbl;
 
  @FXML
     void closeAppWindow(MouseEvent event) {
@@ -79,6 +83,8 @@ public class Deferred_popController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        deferredLbl.setStyle("-fx-font-family: 'Lobster', cursive; -fx-font-size: 30; -fx-font-weight: bold;");
         json_read nw=new json_read();
         
         try {

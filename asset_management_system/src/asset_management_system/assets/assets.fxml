@@ -12,9 +12,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="900.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="asset_management_system.assets.AssetsController">
+<AnchorPane id="AnchorPane" prefHeight="900.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/8.0.25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="asset_management_system.assets.AssetsController">
    <children>
-      <VBox fx:id="vbox" prefHeight="900.0" prefWidth="240.0" style="-fx-background-color: #28d474; -fx-padding: 10; -fx-spacing: 8;" />
+      <VBox fx:id="vbox" prefHeight="900.0" prefWidth="240.0" style="-fx-background-color: #28d474; -fx-padding: 10; -fx-spacing: 8;">
+         <children>
+            <AnchorPane prefHeight="900.0" prefWidth="240.0" />
+         </children></VBox>
       <TabPane layoutX="240.0" layoutY="52.0" prefHeight="834.0" prefWidth="1248.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
             <Tab fx:id="pane0" text="ALL ASSETS">
@@ -45,7 +48,7 @@
             </Tab>
             <Tab fx:id="pane1" text="ASSETS">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0"  prefHeight="733.0" prefWidth="1192.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="733.0" prefWidth="1192.0">
                      <children>
                         <TableView fx:id="assets_tbl" layoutY="93.0" prefHeight="662.0" prefWidth="1218.0">
                            <columns>
@@ -70,7 +73,7 @@
             </Tab>
             <Tab fx:id="pane2" text="ASSETS IN MAINTENANCE">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0"  prefHeight="733.0" prefWidth="1192.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="733.0" prefWidth="1192.0">
                      <children>
                         <TableView fx:id="maintenance_tbl" layoutX="-1.0" layoutY="94.0" prefHeight="662.0" prefWidth="1218.0">
                            <columns>
@@ -95,7 +98,7 @@
             </Tab>
             <Tab fx:id="pane3" text="DEFERRED ASSET">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0"  prefHeight="733.0" prefWidth="1192.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="733.0" prefWidth="1192.0">
                      <children>
                         <TableView fx:id="deferred_tbl" layoutX="-1.0" layoutY="94.0" prefHeight="662.0" prefWidth="1218.0">
                            <columns>
@@ -121,7 +124,7 @@
             </Tab>
         </tabs>
       </TabPane>
-      <ImageView fx:id="backToDashboard" fitHeight="38.0" fitWidth="44.0" layoutX="262.0" layoutY="14.0" onMousePressed="#imageClicked" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="backToDashboard" fitHeight="38.0" fitWidth="44.0" layoutX="262.0" layoutY="14.0" onMouseClicked="#imageClicked" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/ic_arrow_back.imageset/ic_arrow_back_2x.png" />
          </image>

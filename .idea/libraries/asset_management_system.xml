@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="asset_management_system">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/asset_management_system/staff-icon-png-1.zip!/" />
+      <root url="jar://$PROJECT_DIR$/asset_management_system/staff-icon-png-6.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -205,8 +205,14 @@ public class ProfileController implements Initializable {
 
         //setting scene on stage
         window.setScene(newScene);
+        
+        
         window.show();
-        window.centerOnScreen();
+        System.out.println("X "+window.getX());
+        System.out.println("Y "+ window.getY());
+        /*window.setX(210.0);
+        window.setY(44.0);*/
+        //window.centerOnScreen();
 
     }
 

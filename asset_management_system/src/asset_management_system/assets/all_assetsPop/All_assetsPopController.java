@@ -16,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.json.simple.parser.ParseException;
@@ -55,6 +56,9 @@ public class All_assetsPopController implements Initializable {
 
     @FXML
     private Button printData;
+    
+    @FXML
+    private Label all_assetLbl;
 
     @FXML
     void printStuff(ActionEvent event) {
@@ -63,6 +67,8 @@ public class All_assetsPopController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        all_assetLbl.setStyle("-fx-font-family: 'Lobster', cursive; -fx-font-size: 30; -fx-font-weight: bold;");
         json_read nw= new json_read();
          try {
              nw.setToAllItems(assetID, assetName, assetCode, assetDetails, workerName, workerID, categoryID, additionDate, cost);

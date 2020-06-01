@@ -3,10 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/User/Documents/GitHub/Asset-Management-System/asset_management_system/src/asset_management_system/profile/ProfileController.java</file>
             <file>file:/C:/Users/User/Documents/GitHub/Asset-Management-System/asset_management_system/src/asset_management_system/workers/WorkersController.java</file>
-            <file>file:/C:/Users/User/Documents/GitHub/Asset-Management-System/asset_management_system/src/asset_management_system/dashboard/DashboardController.java</file>
-            <file>file:/C:/Users/User/Documents/GitHub/Asset-Management-System/asset_management_system/src/asset_management_system/withUsers/WithUsersController.java</file>
+            <file>file:/C:/Users/User/Documents/GitHub/Asset-Management-System/asset_management_system/src/asset_management_system/assets/assetPop/AssetPopController.java</file>
             <file>file:/C:/Users/User/Documents/GitHub/Asset-Management-System/asset_management_system/src/asset_management_system/assets/AssetsController.java</file>
         </group>
     </open-files>

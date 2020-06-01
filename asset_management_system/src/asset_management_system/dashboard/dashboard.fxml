@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="900.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="asset_management_system.dashboard.DashboardController">
+<AnchorPane id="AnchorPane" prefHeight="900.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/8.0.25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="asset_management_system.dashboard.DashboardController">
    <children>
       <VBox fx:id="vbox" alignment="BOTTOM_CENTER" prefHeight="900.0" prefWidth="240.0" style="-fx-background-color: #28d474; -fx-padding: 10; -fx-spacing: 8;">
          <children>
@@ -31,7 +31,7 @@
                </font>
             </Label>
          </children></VBox>
-      <AnchorPane fx:id="pieChart_pane" layoutX="253.0" layoutY="469.0" prefHeight="342.0" prefWidth="458.0" style="-fx-background-color: #c9f5f5;">
+      <AnchorPane fx:id="pieChart_pane" layoutX="274.0" layoutY="466.0" prefHeight="342.0" prefWidth="458.0" style="-fx-background-color: #c9f5f5;">
          <children>
             <PieChart fx:id="catChart" layoutX="-1.0" prefHeight="346.0" prefWidth="462.0" />
          </children>
@@ -49,50 +49,6 @@
               </columns>
             </TableView>
          </children></AnchorPane>
-      <VBox fx:id="assets_pane" alignment="CENTER" layoutX="263.0" layoutY="173.0" prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: #c9f5f5;">
-         <children>
-            <Label fx:id="assetsLbl" prefHeight="30.0" prefWidth="77.0" text="ASSETS">
-               <font>
-                  <Font name="Aparajita" size="20.0" />
-               </font>
-            </Label>
-            <Label fx:id="assets_rst" prefHeight="30.0" prefWidth="54.0" text="Label" />
-            <JFXButton fx:id="asset_btn" buttonType="RAISED" onAction="#goToAssets" prefHeight="30.0" prefWidth="64.0" text="more " />
-         </children>
-      </VBox>
-      <VBox fx:id="totalCost_pane" alignment="CENTER" layoutX="564.0" layoutY="173.0" prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: #c9f5f5;">
-         <children>
-            <Label fx:id="totalCostLbl" prefHeight="30.0" prefWidth="102.0" text="MY PROFILE">
-               <font>
-                  <Font name="Aparajita" size="20.0" />
-               </font>
-            </Label>
-            <Label fx:id="my_profile" prefHeight="30.0" prefWidth="54.0" text="Label" />
-            <JFXButton fx:id="profile_btn" buttonType="RAISED" onAction="#ToProfile" prefHeight="30.0" prefWidth="78.0" text="more" textAlignment="CENTER" />
-         </children>
-      </VBox>
-      <VBox fx:id="workers_pane" alignment="CENTER" layoutX="874.0" layoutY="173.0" prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: #c9f5f5;">
-         <children>
-            <Label fx:id="workersLbl" prefHeight="30.0" prefWidth="93.0" text="WORKERS">
-               <font>
-                  <Font name="Aparajita" size="20.0" />
-               </font>
-            </Label>
-            <Label fx:id="workers_rst" prefHeight="30.0" prefWidth="54.0" text="Label" />
-            <JFXButton fx:id="workers_btn" buttonType="RAISED" onAction="#goToWorkers" prefHeight="30.0" prefWidth="110.0" text="more" textAlignment="CENTER" />
-         </children>
-      </VBox>
-      <VBox fx:id="withUsers_pane" alignment="CENTER" layoutX="1202.0" layoutY="173.0" prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: #c9f5f5;">
-         <children>
-            <Label fx:id="withWorkersLbl" prefHeight="30.0" prefWidth="190.0" text="ASSETS WITH WORKERS" textAlignment="CENTER">
-               <font>
-                  <Font name="Aparajita" size="20.0" />
-               </font>
-            </Label>
-            <Label fx:id="withWorkers_rst" prefHeight="30.0" prefWidth="54.0" text="Label" />
-            <JFXButton fx:id="assetWorkers_btn" buttonType="RAISED" onAction="#openWithWorkers" prefHeight="30.0" prefWidth="78.0" text="more" textAlignment="CENTER" />
-         </children>
-      </VBox>
       <ImageView fx:id="backToDashboard" fitHeight="38.0" fitWidth="44.0" layoutX="274.0" layoutY="100.0" onMousePressed="#imageClicked" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/ic_exit_to_app.imageset/ic_exit_to_app_2x.png" />
@@ -109,5 +65,68 @@
             <Image url="@../img/minimize/minimize.png" />
          </image>
       </ImageView>
+      <AnchorPane fx:id="asset_pane" layoutX="274.0" layoutY="173.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="218.0" prefWidth="250.0" style="-fx-background-color: #c9f5f5;">
+         <children>
+            <ImageView fitHeight="131.0" fitWidth="129.0" layoutX="61.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/asset.png" />
+               </image>
+               <viewport>
+                  <Rectangle2D height="250.0" width="250.0" />
+               </viewport>
+            </ImageView>
+            <Label fx:id="assets_rst" layoutX="73.0" layoutY="14.0" prefHeight="30.0" prefWidth="162.0" text="Label" />
+            <ImageView fx:id="asset_btn" fitHeight="30.0" fitWidth="38.0" layoutX="111.0" layoutY="181.0" onMouseClicked="#goToAssets" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/add1.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="asset_pane1" layoutX="571.0" layoutY="173.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="218.0" prefWidth="250.0" style="-fx-background-color: #c9f5f5;">
+         <children>
+            <ImageView fitHeight="131.0" fitWidth="129.0" layoutX="61.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/profile.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="my_profile" layoutX="68.0" layoutY="5.0" prefHeight="30.0" prefWidth="114.0" text="Label" />
+            <ImageView fx:id="profile_btn" fitHeight="30.0" fitWidth="38.0" layoutX="110.0" layoutY="181.0" onMouseClicked="#ToProfile" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/add1.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="asset_pane11" layoutX="883.0" layoutY="173.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="218.0" prefWidth="250.0" style="-fx-background-color: #c9f5f5;">
+         <children>
+            <ImageView fitHeight="131.0" fitWidth="129.0" layoutX="61.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/workers.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="workers_rst" layoutX="92.0" layoutY="14.0" prefHeight="30.0" prefWidth="114.0" text="Label" />
+            <ImageView fx:id="workers_btn" fitHeight="30.0" fitWidth="38.0" layoutX="110.0" layoutY="181.0" onMouseClicked="#goToWorkers" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/add1.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="asset_pane12" layoutX="1201.0" layoutY="173.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="218.0" prefWidth="250.0" style="-fx-background-color: #c9f5f5;">
+         <children>
+            <ImageView fitHeight="131.0" fitWidth="129.0" layoutX="68.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/assigned.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="withWorkers_rst" layoutX="84.0" layoutY="14.0" prefHeight="30.0" prefWidth="121.0" text="Label" />
+            <ImageView fx:id="assetWorkers_btn" fitHeight="30.0" fitWidth="38.0" layoutX="118.0" layoutY="182.0" onMouseClicked="#openWithWorkers" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/add1.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
