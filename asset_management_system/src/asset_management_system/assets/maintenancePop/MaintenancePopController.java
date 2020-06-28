@@ -4,6 +4,7 @@ import asset_management_system.assets.assetPop.AssetPopController;
 import asset_management_system.usedAlot.QR_Creator;
 import asset_management_system.usedAlot.json_code;
 import asset_management_system.usedAlot.json_read;
+import asset_management_system.usedAlot.notification;
 import com.google.zxing.WriterException;
 import com.jfoenix.controls.JFXTextField;
 import java.io.FileInputStream;
@@ -77,6 +78,8 @@ public class MaintenancePopController implements Initializable {
     @FXML
     private Label mainLbl;
 
+    notification notify = new notification();
+
     @FXML
     void toAssets(ActionEvent event) throws SQLException {
         String assetid = assetID.getText();
@@ -109,6 +112,20 @@ public class MaintenancePopController implements Initializable {
                 additionDate.clear();
                 maintenanceDate.clear();
                 qr_code.setImage(null);
+
+                assetID.setEditable(false);
+                assetName.setEditable(false);
+                assetCode.setEditable(false);
+                assetDetails.setEditable(false);
+                workerName.setEditable(false);
+                workerID.setEditable(false);
+                category.setEditable(false);
+                additionDate.setEditable(false);
+                maintenanceDate.setEditable(false);
+
+                reason.clear();
+
+                notify.flash(returnToAssets, " ASSET HAS BEEN RETURNED ");
 
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(AssetPopController.class.getName()).log(Level.SEVERE, null, ex);
@@ -186,6 +203,19 @@ public class MaintenancePopController implements Initializable {
                 qr_code.setImage(null);
                 reason.clear();
 
+                assetID.setEditable(false);
+                assetName.setEditable(false);
+                assetCode.setEditable(false);
+                assetDetails.setEditable(false);
+                workerName.setEditable(false);
+                workerID.setEditable(false);
+                category.setEditable(false);
+                additionDate.setEditable(false);
+                maintenanceDate.setEditable(false);
+
+                reason.clear();
+                notify.flash(deferAsset, " ASSET HAS BEEN DEFERRED ");
+
             } catch (ClassNotFoundException ex) {
                 System.out.println("Error: " + ex);
             }
@@ -202,6 +232,18 @@ public class MaintenancePopController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         mainLbl.setStyle("-fx-font-family: 'Lobster', cursive; -fx-font-size: 20; -fx-font-weight: bold;");
+
+        assetID.setEditable(false);
+        assetName.setEditable(false);
+        assetCode.setEditable(false);
+        assetDetails.setEditable(false);
+        workerName.setEditable(false);
+        workerID.setEditable(false);
+        category.setEditable(false);
+        additionDate.setEditable(false);
+        maintenanceDate.setEditable(false);
+
+        reason.clear();
 
         QR_Creator maker = new QR_Creator();
 

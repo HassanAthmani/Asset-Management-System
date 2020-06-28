@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="552.0" prefWidth="869.0" xmlns="http://javafx.com/javafx/8.0.25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="asset_management_system.assets.addAsset.AddAssetController">
+<AnchorPane id="AnchorPane" prefHeight="552.0" prefWidth="869.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="asset_management_system.assets.addAsset.AddAssetController">
    <children>
       <Label layoutX="36.0" layoutY="51.0" prefHeight="22.0" prefWidth="135.0" style="-fx-font-weight: bold;" text="ASSET NAME" />
       <Label layoutX="36.0" layoutY="103.0" prefHeight="22.0" prefWidth="127.0" style="-fx-font-weight: bold;" text="ASSSET CODE" />
@@ -24,9 +24,9 @@
       <JFXTextField fx:id="workerName" layoutX="659.0" layoutY="108.0" />
       <JFXTextField fx:id="cost" layoutX="659.0" layoutY="169.0" />
       <ImageView fx:id="qr_code" fitHeight="156.0" fitWidth="200.0" layoutX="308.0" layoutY="342.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="addAsset" layoutX="379.0" layoutY="290.0" mnemonicParsing="false" onAction="#add" prefHeight="26.0" prefWidth="112.0" style="-fx-font-weight: bold;" text="ADD ASSET" />
+      <Button fx:id="addAsset" layoutX="379.0" layoutY="290.0" mnemonicParsing="false" onAction="#add" prefHeight="26.0" prefWidth="112.0" style="-fx-font-weight: bold; -fx-background-color: #42dc5c;" text="ADD ASSET" />
       <ChoiceBox fx:id="category" layoutX="196.0" layoutY="164.0" prefWidth="150.0" />
-      <Button fx:id="clear" layoutX="727.0" layoutY="498.0" mnemonicParsing="false" onAction="#clearFields" prefHeight="34.0" prefWidth="102.0" style="-fx-font-weight: bold;" text="CLEAR" />
+      <Button fx:id="clear" layoutX="727.0" layoutY="498.0" mnemonicParsing="false" onAction="#clearFields" prefHeight="34.0" prefWidth="102.0" style="-fx-font-weight: bold; -fx-background-color: #42dc5c;" text="CLEAR" />
       <Label fx:id="addAssetLbl" layoutX="408.0" layoutY="11.0" prefHeight="46.0" prefWidth="237.0" text="ADD ASSET" underline="true">
          <font>
             <Font name="System Bold" size="12.0" />

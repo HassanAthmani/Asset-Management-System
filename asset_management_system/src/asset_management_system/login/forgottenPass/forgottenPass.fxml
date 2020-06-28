@@ -8,12 +8,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="563.0" prefWidth="738.0" xmlns="http://javafx.com/javafx/8.0.25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="asset_management_system.login.forgottenPass.ForgottenPassController">
+<AnchorPane id="AnchorPane" prefHeight="563.0" prefWidth="738.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="asset_management_system.login.forgottenPass.ForgottenPassController">
    <children>
       <VBox fx:id="vbox" layoutX="1.0" layoutY="1.0" prefHeight="562.0" prefWidth="279.0" />
       <Label layoutX="461.0" layoutY="139.0" prefHeight="38.0" prefWidth="120.0" text="EMAIL" />
       <JFXTextField fx:id="email" layoutX="362.0" layoutY="219.0" prefHeight="26.0" prefWidth="298.0" promptText="enter your email address" />
-      <JFXButton fx:id="sendPass" layoutX="415.0" layoutY="335.0" onAction="#sendNewPass" text="SEND NEW PASSOWRD" />
+      <JFXButton fx:id="sendPass" layoutX="415.0" layoutY="335.0" onAction="#sendNewPass" style="-fx-background-color: #42dc5c;" text="SEND NEW PASSOWRD" />
       <ImageView fx:id="backToDashboard" fitHeight="38.0" fitWidth="44.0" layoutX="324.0" layoutY="14.0" onMousePressed="#imageClicked" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../img/ic_arrow_back.imageset/ic_arrow_back_2x.png" />

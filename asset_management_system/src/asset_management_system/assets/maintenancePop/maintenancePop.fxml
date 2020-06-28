@@ -50,14 +50,20 @@
       <JFXTextField fx:id="category" layoutX="739.0" layoutY="132.0" />
       <JFXTextField fx:id="additionDate" layoutX="739.0" layoutY="224.0" />
       <ImageView fx:id="qr_code" fitHeight="150.0" fitWidth="200.0" layoutX="498.0" layoutY="415.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="returnToAssets" layoutX="47.0" layoutY="521.0" mnemonicParsing="false" onAction="#toAssets" prefHeight="38.0" prefWidth="135.0" text="RETURN TO ASSETS" />
-      <Button fx:id="deferAsset" layoutX="754.0" layoutY="521.0" mnemonicParsing="false" onAction="#toDeferred" prefHeight="38.0" prefWidth="135.0" text="DEFER  ASSET" />
+      <Button fx:id="returnToAssets" layoutX="47.0" layoutY="521.0" mnemonicParsing="false" onAction="#toAssets" prefHeight="38.0" prefWidth="150.0" style="-fx-background-color: #42dc5c;" text="RETURN TO ASSETS">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
+      <Button fx:id="deferAsset" layoutX="754.0" layoutY="521.0" mnemonicParsing="false" onAction="#toDeferred" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #42dc5c;" text="DEFER  ASSET">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
       <Label layoutX="536.0" layoutY="296.0" prefHeight="18.0" prefWidth="144.0" text="MAINTENANCE DATE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Label>
       <JFXTextField fx:id="maintenanceDate" layoutX="739.0" layoutY="292.0" />
-      <Label layoutX="415.0" layoutY="356.0" prefHeight="18.0" prefWidth="116.0" text="REASON">
+      <Label alignment="CENTER" layoutX="415.0" layoutY="356.0" prefHeight="18.0" prefWidth="116.0" text="REASON">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Label>

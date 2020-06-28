@@ -10,8 +10,10 @@ import asset_management_system.usedAlot.checkDetails;
 import asset_management_system.usedAlot.json_code;
 import asset_management_system.usedAlot.json_read;
 import asset_management_system.usedAlot.mover;
+import asset_management_system.usedAlot.notification;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
@@ -40,6 +42,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import org.json.simple.parser.ParseException;
@@ -146,6 +150,41 @@ public class ProfileController implements Initializable {
 
     @FXML
     private Label name1_lbl;
+    
+    notification notify=new notification();
+
+    @FXML
+    void send_file(MouseEvent event) {
+
+    }
+
+    @FXML
+    void open_file(MouseEvent event) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        //Set extension filter
+        /*FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
+        FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");*/
+        FileChooser.ExtensionFilter extFilterPDF = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.PDF");
+        fileChooser.getExtensionFilters().addAll(extFilterPDF);
+        fileChooser.setTitle("PICK FILE ");
+        fileChooser.setInitialDirectory(new File("C:\\Bit_torrent"));
+
+        //Show open file dialog
+        File file = fileChooser.showOpenDialog(window);
+
+        if (file != null) {
+            /*Image image = new Image(file.toURI().toString());
+             imager.setImage(image);*/
+            System.out.println(file.toURI().toString());
+            if (file.toString().endsWith(".pdf")) {
+                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + file);
+            }
+        }
+
+    }
 
     @FXML
     void minimize(MouseEvent event) {
@@ -197,6 +236,7 @@ public class ProfileController implements Initializable {
         //you can use #onMousePressed or #orMouseClicked
         Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/dashboard/dashboard.fxml"));
         Scene newScene = new Scene(sceneFxml);
+        newScene.setFill(Color.ALICEBLUE);
 
         //getting stage
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -205,11 +245,10 @@ public class ProfileController implements Initializable {
 
         //setting scene on stage
         window.setScene(newScene);
-        
-        
+
         window.show();
-        System.out.println("X "+window.getX());
-        System.out.println("Y "+ window.getY());
+        System.out.println("X " + window.getX());
+        System.out.println("Y " + window.getY());
         /*window.setX(210.0);
         window.setY(44.0);*/
         //window.centerOnScreen();
@@ -322,7 +361,7 @@ public class ProfileController implements Initializable {
             connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, password);
             data = FXCollections.observableArrayList();
             //Execute query and store result in a resultset
-            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM assigned_assets WHERE workerID=" + id);
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM assigned_asset WHERE workerID=" + id);
 
             while (rs.next()) {
                 //get string from db
@@ -390,6 +429,7 @@ public class ProfileController implements Initializable {
             nationalID_txtfield.setEditable(false);
             department_txtfield.setEditable(false);
             location_txtfield.setEditable(false);
+            notify.flash(saveInfo," PROFILE DATA HAS SUCCESSFULLY CHANGED ");
 
         } else if ((!new_pass.getText().isEmpty() && !confirm_pass.getText().isEmpty()) && (Objects.equals(new_pass.getText(), confirm_pass.getText()) && (!firstName_txtfield.getText().isEmpty() && !secondName_txtfield.getText().isEmpty() && !phoneNo_txtfield.getText().isEmpty() && !email_txtfield.getText().isEmpty() && !nationalID_txtfield.getText().isEmpty() && !department_txtfield.getText().isEmpty() && !location_txtfield.getText().isEmpty()))) {
 
@@ -415,6 +455,8 @@ public class ProfileController implements Initializable {
             nationalID_txtfield.setEditable(false);
             department_txtfield.setEditable(false);
             location_txtfield.setEditable(false);
+            
+            notify.flash(saveInfo," PASSWORD AND PROFILE DATA HAS SUCCESSFULLY CHANGED ");
         }
 
     }
@@ -423,7 +465,12 @@ public class ProfileController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         try {
             fill_data();
+            loadFromDB();
         } catch (SQLException ex) {
+            Logger.getLogger(ProfileController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ProfileController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
             Logger.getLogger(ProfileController.class.getName()).log(Level.SEVERE, null, ex);
         }
 

@@ -12,6 +12,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.jfoenix.controls.JFXButton;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -44,8 +45,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.json.simple.parser.ParseException;
 
 public class WorkersController implements Initializable {
@@ -105,10 +108,47 @@ public class WorkersController implements Initializable {
     private double yOffset = 0;
 
     @FXML
+    void send_file(MouseEvent event) {
+        
+        
+
+    }
+
+    @FXML
+    void open_file(MouseEvent event) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        
+
+        //Set extension filter
+       
+        FileChooser.ExtensionFilter extFilterPDF = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.PDF");
+        fileChooser.getExtensionFilters().addAll( extFilterPDF);
+        fileChooser.setTitle("PICK FILE ");
+        fileChooser.setInitialDirectory(new File("C:\\Bit_torrent"));
+        
+
+        //Show open file dialog
+        File file = fileChooser.showOpenDialog(window);
+
+        if (file != null) {
+            /*Image image = new Image(file.toURI().toString());
+             imager.setImage(image);*/
+            System.out.println(file.toURI().toString());
+            if (file.toString().endsWith(".pdf")) {
+                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + file);
+            }
+        }
+
+    }
+
+    @FXML
     void imageClicked(MouseEvent event) throws IOException {
         //you can use #onMousePressed or #orMouseClicked
         Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/dashboard/dashboard.fxml"));
         Scene newScene = new Scene(sceneFxml);
+        newScene.setFill(Color.ALICEBLUE);
 
         //getting stage
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -117,25 +157,18 @@ public class WorkersController implements Initializable {
 
         //setting scene on stage
         window.setScene(newScene);
-        
+
         /*Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
         window.setX((primScreenBounds.getWidth() - 316.0) / 2);
         window.setY((primScreenBounds.getHeight() - 339.0) / 2);*/
-        
-       /* System.out.println("X "+window.getX());
+ /* System.out.println("X "+window.getX());
         System.out.println("Y "+ window.getY());*/
         window.show();
-        window.setX(210.0);
-        window.setY(41.0);
-       // window.centerOnScreen();
-        
-       
+
+        window.centerOnScreen();
+
         //x 210.0
         //Y 44.000001311302185
-        
-       
-        
-
     }
 
     @FXML
@@ -158,7 +191,7 @@ public class WorkersController implements Initializable {
 
         Document my_pdf_report = new Document();
 
-        PdfWriter.getInstance(my_pdf_report, new FileOutputStream("WORKERS.pdf"));
+        PdfWriter.getInstance(my_pdf_report, new FileOutputStream("./files/WORKERS.pdf"));
         my_pdf_report.open();
 
         //we have four columns in our table
@@ -252,9 +285,9 @@ public class WorkersController implements Initializable {
         /* Attach report table to PDF */
         my_pdf_report.add(my_report_table);
         my_pdf_report.close();
-        
-         notification notify=new notification();
-        notify.flash(printer," DOCUMENT HAS BEEN CREATED ");
+
+        notification notify = new notification();
+        notify.flash(printer, " DOCUMENT HAS BEEN CREATED ");
 
     }
 
@@ -264,6 +297,7 @@ public class WorkersController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader();
         Parent root = fxmlLoader.load(getClass().getResource("/asset_management_system/workers/addWorker/register.fxml").openStream());
         Scene scene = new Scene(root);
+        scene.setFill(Color.ALICEBLUE);
 
         stage.setScene(scene);
 

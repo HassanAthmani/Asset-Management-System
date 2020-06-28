@@ -53,7 +53,11 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
+import javafx.scene.image.Image;
+import javafx.stage.FileChooser;
+import javafx.stage.StageStyle;
 import org.json.simple.parser.ParseException;
 
 public class AssetsController implements Initializable {
@@ -69,6 +73,12 @@ public class AssetsController implements Initializable {
     public ObservableList<assets> data1;
     public ObservableList<asset_in_maintenance> data2;
     public ObservableList<deferred_assets> data3;
+
+    @FXML
+    private ImageView open;
+
+    @FXML
+    private ImageView send;
 
     @FXML
     private Button printer; //ALL ASSETS
@@ -271,14 +281,70 @@ public class AssetsController implements Initializable {
 
     private double xOffset = 0;
     private double yOffset = 0;
-    
-    notification notify=new notification();
+
+    notification notify = new notification();
+
+    @FXML
+    void send_file(MouseEvent event) throws IOException {
+        //you can use #onMousePressed or #orMouseClicked
+        mover movingWindow = new mover();
+
+        //getting stage
+        Stage window = new Stage();
+        Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/sendMail/sendMail.fxml"));
+        Scene newScene = new Scene(sceneFxml);
+
+        window.setScene(newScene);
+        newScene.setFill(Color.ALICEBLUE);
+
+        window.initModality(Modality.WINDOW_MODAL);
+        window.initOwner(((Node) event.getSource()).getScene().getWindow());
+        window.setResizable(false);
+        window.resizableProperty();
+        window.initStyle(StageStyle.UNDECORATED);
+
+        //setting scene on stage
+        movingWindow.moving(sceneFxml, window);
+        window.setScene(newScene);
+        window.showAndWait();
+        window.centerOnScreen();
+
+    }
+
+    @FXML
+    void open_file(MouseEvent event) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        //Set extension filter
+        /* FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
+        FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");*/
+        FileChooser.ExtensionFilter extFilterPDF = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.PDF");
+        fileChooser.getExtensionFilters().addAll(extFilterPDF);
+        fileChooser.setTitle("PICK FILE ");
+        fileChooser.setInitialDirectory(new File("C:\\Bit_torrent"));
+
+        //Show open file dialog
+        File file = fileChooser.showOpenDialog(window);
+
+        if (file != null) {
+            /*Image image = new Image(file.toURI().toString());
+             imager.setImage(image);*/
+            System.out.println(file.toURI().toString());
+            if (file.toString().endsWith(".pdf")) {
+                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + file);
+            }
+        }
+
+    }
 
     @FXML
     void addNew(ActionEvent event) throws IOException {
         Stage stage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("/asset_management_system/assets/addAsset/addAsset.fxml"));
         Scene newScene = new Scene(root);
+        newScene.setFill(Color.ALICEBLUE);
 
         stage.setScene(newScene);
 
@@ -329,17 +395,17 @@ public class AssetsController implements Initializable {
         mover movingWindow = new mover();
         Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/dashboard/dashboard.fxml"));
         Scene newScene = new Scene(sceneFxml);
+        newScene.setFill(Color.ALICEBLUE);
 
         //getting stage
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        
+
         movingWindow.moving(sceneFxml, window);
 
         //setting scene on stage
-        window.setScene(newScene);        
+        window.setScene(newScene);
         window.show();
         window.centerOnScreen();
-        
 
     }
 
@@ -427,6 +493,7 @@ public class AssetsController implements Initializable {
                             try {
                                 root = fxmlLoader.load(getClass().getResource("/asset_management_system/assets/all_assetsPop/all_assetsPop.fxml").openStream());
                                 Scene scene = new Scene(root);
+                                scene.setFill(Color.ALICEBLUE);
 
                                 stage.setScene(scene);
 
@@ -566,6 +633,7 @@ public class AssetsController implements Initializable {
                             try {
                                 root = fxmlLoader.load(getClass().getResource("/asset_management_system/assets/assetPop/assetPop.fxml").openStream());
                                 Scene scene = new Scene(root);
+                                scene.setFill(Color.ALICEBLUE);
 
                                 stage.setScene(scene);
 
@@ -705,6 +773,7 @@ public class AssetsController implements Initializable {
                             try {
                                 root = fxmlLoader.load(getClass().getResource("/asset_management_system/assets/maintenancePop/maintenancePop.fxml").openStream());
                                 Scene scene = new Scene(root);
+                                scene.setFill(Color.ALICEBLUE);
 
                                 stage.setScene(scene);
 
@@ -847,6 +916,7 @@ public class AssetsController implements Initializable {
                             try {
                                 root = fxmlLoader.load(getClass().getResource("/asset_management_system/assets/deferred_pop/deferred_pop.fxml").openStream());
                                 Scene scene = new Scene(root);
+                                scene.setFill(Color.ALICEBLUE);
 
                                 stage.setScene(scene);
 
@@ -987,6 +1057,7 @@ public class AssetsController implements Initializable {
                             try {
                                 root = fxmlLoader.load(getClass().getResource("/asset_management_system/assets/all_assetsPop/all_assetsPop.fxml").openStream());
                                 Scene scene = new Scene(root);
+                                scene.setFill(Color.ALICEBLUE);
 
                                 stage.setScene(scene);
 
@@ -1124,6 +1195,7 @@ public class AssetsController implements Initializable {
                             try {
                                 root = fxmlLoader.load(getClass().getResource("/asset_management_system/assets/assetPop/assetPop.fxml").openStream());
                                 Scene scene = new Scene(root);
+                                scene.setFill(Color.ALICEBLUE);
 
                                 stage.setScene(scene);
 
@@ -1263,6 +1335,7 @@ public class AssetsController implements Initializable {
                             try {
                                 root = fxmlLoader.load(getClass().getResource("/asset_management_system/assets/maintenancePop/maintenancePop.fxml").openStream());
                                 Scene scene = new Scene(root);
+                                scene.setFill(Color.ALICEBLUE);
 
                                 stage.setScene(scene);
 
@@ -1404,6 +1477,7 @@ public class AssetsController implements Initializable {
                             try {
                                 root = fxmlLoader.load(getClass().getResource("/asset_management_system/assets/deferred_pop/deferred_pop.fxml").openStream());
                                 Scene scene = new Scene(root);
+                                scene.setFill(Color.ALICEBLUE);
 
                                 stage.setScene(scene);
 
@@ -1478,13 +1552,12 @@ public class AssetsController implements Initializable {
     }
 
     ///////////// START PRINTING ////////////////////////////////////////////
-    
     //ALL ASSETS PRINTER
     @FXML
     void printData(ActionEvent event) throws FileNotFoundException, DocumentException, BadElementException, IOException, SQLException, ParseException {
         Document my_pdf_report = new Document();
 
-        PdfWriter.getInstance(my_pdf_report, new FileOutputStream("ALL ASSETS REPORT.pdf"));
+        PdfWriter.getInstance(my_pdf_report, new FileOutputStream("./files/ALL ASSETS REPORT.pdf"));
         my_pdf_report.open();
 
         //we have four columns in our table
@@ -1587,8 +1660,8 @@ public class AssetsController implements Initializable {
         /* Attach report table to PDF */
         my_pdf_report.add(my_report_table);
         my_pdf_report.close();
-        
-        notify.flash(printer," DOCUMENT HAS BEEN CREATED ");
+
+        notify.flash(printer, " DOCUMENT HAS BEEN CREATED ");
 
     }
 
@@ -1597,7 +1670,7 @@ public class AssetsController implements Initializable {
     void printData1(ActionEvent event) throws FileNotFoundException, DocumentException, BadElementException, IOException, SQLException, ParseException {
         Document my_pdf_report = new Document();
 
-        PdfWriter.getInstance(my_pdf_report, new FileOutputStream("AVAILABLE ASSETS REPORT.pdf"));
+        PdfWriter.getInstance(my_pdf_report, new FileOutputStream("./files/AVAILABLE ASSETS REPORT.pdf"));
         my_pdf_report.open();
 
         //we have four columns in our table
@@ -1701,7 +1774,7 @@ public class AssetsController implements Initializable {
         my_pdf_report.add(my_report_table);
         my_pdf_report.close();
 
-        notify.flash(printer," DOCUMENT HAS BEEN CREATED ");
+        notify.flash(printer, " DOCUMENT HAS BEEN CREATED ");
     }
 
     //ASSET IN MAINTENANCE PRINTER
@@ -1709,7 +1782,7 @@ public class AssetsController implements Initializable {
     void printData2(ActionEvent event) throws FileNotFoundException, DocumentException, BadElementException, IOException, SQLException, ParseException {
         Document my_pdf_report = new Document();
 
-        PdfWriter.getInstance(my_pdf_report, new FileOutputStream("ASSETS IN MAINTENANCE REPORT.pdf"));
+        PdfWriter.getInstance(my_pdf_report, new FileOutputStream("./files/ASSETS IN MAINTENANCE REPORT.pdf"));
         my_pdf_report.open();
 
         //we have four columns in our table
@@ -1812,8 +1885,8 @@ public class AssetsController implements Initializable {
         /* Attach report table to PDF */
         my_pdf_report.add(my_report_table);
         my_pdf_report.close();
-        
-        notify.flash(printer," DOCUMENT HAS BEEN CREATED ");
+
+        notify.flash(printer, " DOCUMENT HAS BEEN CREATED ");
 
     }
 
@@ -1822,7 +1895,7 @@ public class AssetsController implements Initializable {
     void printData3(ActionEvent event) throws FileNotFoundException, DocumentException, BadElementException, IOException, SQLException, ParseException {
         Document my_pdf_report = new Document();
 
-        PdfWriter.getInstance(my_pdf_report, new FileOutputStream("DEFERRED ASSET REPORT.pdf"));
+        PdfWriter.getInstance(my_pdf_report, new FileOutputStream("./files/DEFERRED ASSET REPORT.pdf"));
         my_pdf_report.open();
 
         //we have four columns in our table
@@ -1921,7 +1994,7 @@ public class AssetsController implements Initializable {
             String deferredDate = deferred3_date.getCellData(o);
             table_cell = new PdfPCell(new Phrase(deferredDate, FontFactory.getFont(FontFactory.HELVETICA, 8)));
             my_report_table.addCell(table_cell);
-            
+
             String reason = reason3.getCellData(o);
             table_cell = new PdfPCell(new Phrase(reason, FontFactory.getFont(FontFactory.HELVETICA, 7)));
             my_report_table.addCell(table_cell);
@@ -1930,8 +2003,8 @@ public class AssetsController implements Initializable {
         /* Attach report table to PDF */
         my_pdf_report.add(my_report_table);
         my_pdf_report.close();
-        
-        notify.flash(printer," DOCUMENT HAS BEEN CREATED ");
+
+        notify.flash(printer, " DOCUMENT HAS BEEN CREATED ");
 
     }
 

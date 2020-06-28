@@ -27,7 +27,7 @@
       <JFXTextField fx:id="assetID" layoutX="185.0" layoutY="86.0" />
       <JFXTextField fx:id="cost" layoutX="586.0" layoutY="328.0" />
       <ImageView fx:id="qr_code" fitHeight="179.0" fitWidth="226.0" layoutX="473.0" layoutY="414.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="printData" layoutX="157.0" layoutY="524.0" mnemonicParsing="false" onAction="#printStuff" prefHeight="26.0" prefWidth="118.0" style="-fx-font-weight: bold;" text="PRINT" />
+      <Button fx:id="printData" layoutX="157.0" layoutY="524.0" mnemonicParsing="false" onAction="#printStuff" prefHeight="26.0" prefWidth="118.0" style="-fx-font-weight: bold; -fx-background-color: #42dc5c;" text="PRINT" />
       <Label fx:id="all_assetLbl" layoutX="354.0" layoutY="22.0" prefHeight="46.0" prefWidth="184.0" text="ASSET" underline="true" />
    </children>
 </AnchorPane>

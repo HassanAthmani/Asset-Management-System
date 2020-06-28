@@ -2,7 +2,7 @@ package asset_management_system.dashboard;
 
 import asset_management_system.usedAlot.json_read;
 import asset_management_system.usedAlot.mover;
-import com.jfoenix.controls.JFXButton;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
@@ -17,7 +17,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -33,7 +32,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.json.simple.parser.ParseException;
 
 public class DashboardController implements Initializable {
@@ -49,22 +52,14 @@ public class DashboardController implements Initializable {
     @FXML
     private AnchorPane asset_pane;
 
-    
-
     @FXML
     private VBox totalCost_pane;
-
-    
 
     @FXML
     private VBox workers_pane;
 
-   
-
     @FXML
     private VBox withUsers_pane;
-
-   
 
     @FXML
     private AnchorPane pieChart_pane;
@@ -128,24 +123,87 @@ public class DashboardController implements Initializable {
 
     @FXML
     private Label dashboardLabel;
-    
-    ArrayList <Integer> cell =new ArrayList <Integer>();
-    ArrayList <String> name =new ArrayList <String>();
-    
-    mover movingWindow=new mover();
-    
+
+    @FXML
+    private ImageView open;
+
+    @FXML
+    private ImageView send;
+
+    ArrayList<Integer> cell = new ArrayList<Integer>();
+    ArrayList<String> name = new ArrayList<String>();
+
+    mover movingWindow = new mover();
+
+    @FXML
+    void send_file(MouseEvent event) {
+        try {
+            //you can use #onMousePressed or #orMouseClicked
+            mover movingWindow = new mover();
+
+            //getting stage
+            Stage window = new Stage();
+            Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/sendMail/sendMail.fxml"));
+            Scene newScene = new Scene(sceneFxml);
+
+            window.setScene(newScene);
+            newScene.setFill(Color.ALICEBLUE);
+            window.initModality(Modality.WINDOW_MODAL);
+            window.initOwner(((Node) event.getSource()).getScene().getWindow());
+            window.setResizable(false);
+            window.resizableProperty();
+            window.initStyle(StageStyle.UNDECORATED);
+
+            //setting scene on stage
+            movingWindow.moving(sceneFxml, window);
+            window.setScene(newScene);
+            window.showAndWait();
+            window.centerOnScreen();
+
+        } catch (IOException ex) {
+            Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    @FXML
+    void open_file(MouseEvent event) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        //Set extension filter
+        FileChooser.ExtensionFilter extFilterPDF = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.PDF");
+        fileChooser.getExtensionFilters().addAll(extFilterPDF);
+        fileChooser.setTitle("PICK FILE ");
+        fileChooser.setInitialDirectory(new File("C:\\Bit_torrent"));
+
+        //Show open file dialog
+        File file = fileChooser.showOpenDialog(window);
+
+        if (file != null) {
+            /*Image image = new Image(file.toURI().toString());
+             imager.setImage(image);*/
+            System.out.println(file.toURI().toString());
+            if (file.toString().endsWith(".pdf")) {
+                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + file);
+            }
+        }
+
+    }
 
     @FXML
     void ToProfile(MouseEvent event) throws IOException {
         //you can use #onMousePressed or #orMouseClicked
         Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/profile/profile.fxml"));
         Scene newScene = new Scene(sceneFxml);
+        newScene.setFill(Color.ALICEBLUE);
+        newScene.getStylesheets().add("/asset_management_system/css/tabpane.css");
 
         //newScene.getStylesheets().add("/asset_management_system/css/tabpane.css");
-
         //getting stage
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        
+
         movingWindow.moving(sceneFxml, window);
 
         //setting scene on stage
@@ -162,12 +220,12 @@ public class DashboardController implements Initializable {
 
         window.close();
     }
-    
-    @FXML 
-    public void minimizeWindow(MouseEvent event){
+
+    @FXML
+    public void minimizeWindow(MouseEvent event) {
         //getting stage
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setIconified(true);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setIconified(true);
     }
 
     @FXML
@@ -175,6 +233,7 @@ public class DashboardController implements Initializable {
         //you can use #onMousePressed or #orMouseClicked
         Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/login/login.fxml"));
         Scene newScene = new Scene(sceneFxml);
+        newScene.setFill(Color.ALICEBLUE);
 
         //getting stage
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -245,16 +304,16 @@ public class DashboardController implements Initializable {
             ResultSet rs3 = connection.createStatement().executeQuery("SELECT COUNT(*) FROM assigned_asset");
 
             while (rs.next()) {
-                assets_rst.setText(rs.getString(1)+" ASSETS");
+                assets_rst.setText(rs.getString(1) + " ASSETS");
             }
             while (rs1.next()) {
-                my_profile.setText(rs1.getString(1)+"'S PROFILE ");
+                my_profile.setText(rs1.getString(1) + "'S PROFILE ");
             }
             while (rs2.next()) {
-                workers_rst.setText(rs2.getString(1)+" WORKERS");
+                workers_rst.setText(rs2.getString(1) + " WORKERS");
             }
             while (rs3.next()) {
-                withWorkers_rst.setText(rs3.getString(1)+" ASSIGNED");
+                withWorkers_rst.setText(rs3.getString(1) + " ASSIGNED");
             }
             connection.close();
 
@@ -283,7 +342,7 @@ public class DashboardController implements Initializable {
 
         //BUTTON FONTS 
         String btn = "-fx-font-family: 'Yanone Kaffeesatz', sans-serif; -fx-font-size: 16;";
-       /* profile_btn.setStyle(btn);
+        /* profile_btn.setStyle(btn);
         workers_btn.setStyle(btn);
         assetWorkers_btn.setStyle(btn);
         asset_btn.setStyle(btn);*/
@@ -294,6 +353,8 @@ public class DashboardController implements Initializable {
         //you can use #onMousePressed or #orMouseClicked
         Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/workers/workers.fxml"));
         Scene newScene = new Scene(sceneFxml);
+        newScene.setFill(Color.ALICEBLUE);
+        newScene.getStylesheets().add("/asset_management_system/css/tabpane.css");
 
         //getting stage
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -311,6 +372,7 @@ public class DashboardController implements Initializable {
         //you can use #onMousePressed or #orMouseClicked
         Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/assets/assets.fxml"));
         Scene newScene = new Scene(sceneFxml);
+        newScene.setFill(Color.ALICEBLUE);
 
         newScene.getStylesheets().add("/asset_management_system/css/tabpane.css");
 
@@ -330,6 +392,7 @@ public class DashboardController implements Initializable {
         //you can use #onMousePressed or #orMouseClicked
         Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/withUsers/withUsers.fxml"));
         Scene newScene = new Scene(sceneFxml);
+        newScene.setFill(Color.ALICEBLUE);
 
         newScene.getStylesheets().add("/asset_management_system/css/tabpane.css");
 

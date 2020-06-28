@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="561.0" prefWidth="922.0" xmlns="http://javafx.com/javafx/8.0.25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="asset_management_system.login.register.RegisterController">
+<AnchorPane id="AnchorPane" prefHeight="561.0" prefWidth="922.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="asset_management_system.login.register.RegisterController">
    <children>
       <Label layoutX="297.0" layoutY="135.0" prefHeight="27.0" prefWidth="108.0" text="FIRST NAME" />
       <Label layoutX="297.0" layoutY="199.0" prefHeight="27.0" prefWidth="135.0" text="PHONE NUMBER" />
@@ -16,7 +16,7 @@
       <Label layoutX="306.0" layoutY="272.0" prefHeight="18.0" prefWidth="96.0" text="NATIONAL ID" />
       <Label layoutX="211.0" layoutY="236.0" prefHeight="18.0" prefWidth="96.0" />
       <Label layoutX="629.0" layoutY="135.0" prefHeight="27.0" prefWidth="108.0" text="SECOND NAME" />
-      <JFXButton fx:id="register_btn" layoutX="477.0" layoutY="471.0" onAction="#register" text="REGISTER" />
+      <JFXButton fx:id="register_btn" layoutX="477.0" layoutY="471.0" onAction="#register" style="-fx-background-color: #42dc5c;" text="REGISTER" />
       <JFXTextField fx:id="firstName" layoutX="432.0" layoutY="136.0" promptText="first name" />
       <JFXTextField fx:id="secondName" layoutX="736.0" layoutY="136.0" promptText="second name" />
       <JFXTextField fx:id="phoneNo" layoutX="433.0" layoutY="200.0" promptText="phone number" />

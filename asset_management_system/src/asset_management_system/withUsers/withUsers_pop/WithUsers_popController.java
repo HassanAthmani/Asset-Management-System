@@ -3,6 +3,7 @@ package asset_management_system.withUsers.withUsers_pop;
 import asset_management_system.usedAlot.QR_Creator;
 import asset_management_system.usedAlot.json_code;
 import asset_management_system.usedAlot.json_read;
+import asset_management_system.usedAlot.notification;
 import com.google.zxing.WriterException;
 import com.jfoenix.controls.JFXTextField;
 import java.io.FileInputStream;
@@ -34,6 +35,7 @@ public class WithUsers_popController implements Initializable {
     public Connection connection;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
+    notification notify = new notification();
 
     String userName = "root";
     String password = "";
@@ -88,115 +90,144 @@ public class WithUsers_popController implements Initializable {
 
     @FXML
     private Label reasonLbl;
-    
+
     @FXML
     private Label title;
 
-
     @FXML
     void ToAssets(ActionEvent event) throws SQLException {
+        if (!assetID.getText().isEmpty()) {
+            String assetid = assetID.getText();
 
-        String assetid = assetID.getText();
+            try {
 
-        try {
+                Class.forName("com.mysql.jdbc.Driver");
+                String url = "jdbc:mysql://localhost:3306/mysql?zeroDateTimeBehavior=convertToNull";
+                connection = DriverManager.getConnection(url, userName, password);
+                Statement statement = connection.createStatement();
 
-            Class.forName("com.mysql.jdbc.Driver");
-            String url = "jdbc:mysql://localhost:3306/mysql?zeroDateTimeBehavior=convertToNull";
-            connection = DriverManager.getConnection(url, userName, password);
-            Statement statement = connection.createStatement();
+                String sql = "INSERT INTO `asset_management_system`.`available_assets` SELECT * FROM `asset_management_system`.`assets` WHERE assetID=" + assetid + " ;";
 
-            String sql = "INSERT INTO `asset_management_system`.`available_assets` SELECT * FROM `asset_management_system`.`assets` WHERE assetID=" + assetid + " ;";
+                statement.executeUpdate(sql);
 
-            statement.executeUpdate(sql);
+                String sql2 = "DELETE FROM `asset_management_system`.`assigned_asset` WHERE assetID = " + assetid;
 
-            String sql2 = "DELETE FROM `asset_management_system`.`assigned_asset` WHERE assetID = " + assetid;
+                statement.executeUpdate(sql2);
 
-            statement.executeUpdate(sql2);
+                connection.close();
 
-            connection.close();
+                id.clear();
+                assetID.clear();
+                assetName.clear();
+                assetCode.clear();
+                workerTell.clear();
+                workerName.clear();
+                workerID.clear();
+                workerEmail.clear();
+                assigned_date.clear();
+                assignedBy.clear();
+                qr_code.setImage(null);
+                notify.flash(assetsBtn, "ASSET RETURNED TO THE STORE");
 
-            id.clear();
-            assetID.clear();
-            assetName.clear();
-            assetCode.clear();
-            workerTell.clear();
-            workerName.clear();
-            workerID.clear();
-            workerEmail.clear();
-            assigned_date.clear();
-            assignedBy.clear();
-            qr_code.setImage(null);
+                id.setEditable(false);
+                assetID.setEditable(false);
+                assetName.setEditable(false);
+                assetCode.setEditable(false);
+                workerTell.setEditable(false);
+                workerName.setEditable(false);
+                workerID.setEditable(false);
+                workerEmail.setEditable(false);
+                assigned_date.setEditable(false);
+                assignedBy.setEditable(false);
 
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(WithUsers_popController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(WithUsers_popController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            notify.flash(assetsBtn, "ASSET ID IS NOT AVAILABLE");
         }
-
     }
 
     @FXML
     void ToMaintenance(ActionEvent event) throws SQLException, IOException, FileNotFoundException, ParseException {
+        if (!assetID.getText().isEmpty()) {
+            try {
 
-        try {
+                Class.forName("com.mysql.jdbc.Driver");
+                String url = "jdbc:mysql://localhost:3306/mysql?zeroDateTimeBehavior=convertToNull";
+                connection = DriverManager.getConnection(url, userName, password);
+                Statement statement = connection.createStatement();
 
-            Class.forName("com.mysql.jdbc.Driver");
-            String url = "jdbc:mysql://localhost:3306/mysql?zeroDateTimeBehavior=convertToNull";
-            connection = DriverManager.getConnection(url, userName, password);
-            Statement statement = connection.createStatement();
+                //GETTING WORKER INFO
+                json_read read = new json_read();
+                String workerid = read.profile_id();
+                String getWorker = "SELECT workerName FROM `asset_management_system`.`current_workers` WHERE workerID='" + workerid + "'";
+                ResultSet rss = connection.createStatement().executeQuery(getWorker);
 
-            //GETTING WORKER INFO
-            json_read read = new json_read();
-            String workerid = read.profile_id();
-            String getWorker = "SELECT workerName FROM `asset_management_system`.`current_workers` WHERE workerID='" + workerid + "'";
-            ResultSet rss = connection.createStatement().executeQuery(getWorker);
+                while (rss.next()) {
 
-            while (rss.next()) {
+                    String name = rss.getString(1);
+                    json_code nw = new json_code();
+                    nw.json_assetID(name);
+                }
+                json_read nw = new json_read();
+                String name = nw.asset_id();
+                String assetid = assetID.getText();
+                String assetname = assetName.getText();
+                String assetcode = assetCode.getText();
 
-                String name = rss.getString(1);
-                json_code nw = new json_code();
-                nw.json_assetID(name);
+                //GETTING ASSSET DETAILS CAT AND ADDITIONDATE
+                /// THEN DOING THE SQL STUFF 
+                String getAsset = "SELECT * FROM `asset_management_system`.`assets` WHERE assetID='" + assetID.getText() + "'";
+                ResultSet rs = connection.createStatement().executeQuery(getAsset);
+
+                while (rs.next()) {
+                    String assetdetails = rs.getString(4);
+                    String cat = rs.getString(7);
+                    String additiondate = rs.getString(8);
+
+                    String sql = "INSERT INTO `asset_management_system`.`asset_maintenance` (`assetID`, `assetName`, `assetCode`, `assetDetails`, `workerName`, `workerID`,`categoryID`,`additionDate`,`maintenanceDate`) VALUES (" + assetid + ",'" + assetname + "','" + assetcode + "','" + assetdetails + "','" + name + "'," + workerid + ",'" + cat + "','" + additiondate + "',CURDATE());";
+
+                    statement.executeUpdate(sql);
+
+                    String sql2 = "DELETE FROM `asset_management_system`.`assigned_asset` WHERE assetID= " + assetID.getText();
+
+                    statement.executeUpdate(sql2);
+
+                }
+
+                connection.close();
+
+                id.clear();
+                assetID.clear();
+                assetName.clear();
+                assetCode.clear();
+                workerTell.clear();
+                workerName.clear();
+                workerID.clear();
+                workerEmail.clear();
+                assigned_date.clear();
+                assignedBy.clear();
+                qr_code.setImage(null);
+
+                notify.flash(maintenance, "ASSET SENT FOR MAINTENANCE.");
+
+                id.setEditable(false);
+                assetID.setEditable(false);
+                assetName.setEditable(false);
+                assetCode.setEditable(false);
+                workerTell.setEditable(false);
+                workerName.setEditable(false);
+                workerID.setEditable(false);
+                workerEmail.setEditable(false);
+                assigned_date.setEditable(false);
+                assignedBy.setEditable(false);
+
+            } catch (ClassNotFoundException ex) {
+                System.out.println("Error: " + ex);
             }
-            json_read nw = new json_read();
-            String name = nw.asset_id();
-            String assetid = assetID.getText();
-            String assetname = assetName.getText();
-            String assetcode = assetCode.getText();
-
-            //GETTING ASSSET DETAILS CAT AND ADDITIONDATE
-            /// THEN DOING THE SQL STUFF 
-            String getAsset = "SELECT * FROM `asset_management_system`.`assets` WHERE assetID='" + assetID.getText() + "'";
-            ResultSet rs = connection.createStatement().executeQuery(getAsset);
-
-            while (rs.next()) {
-                String assetdetails = rs.getString(4);
-                String cat = rs.getString(7);
-                String additiondate = rs.getString(8);
-
-                String sql = "INSERT INTO `asset_management_system`.`asset_maintenance` (`assetID`, `assetName`, `assetCode`, `assetDetails`, `workerName`, `workerID`,`categoryID`,`additionDate`,`maintenanceDate`) VALUES (" + assetid + ",'" + assetname + "','" + assetcode + "','" + assetdetails + "','" + name + "'," + workerid + ",'" + cat + "','" + additiondate + "',CURDATE());";
-
-                statement.executeUpdate(sql);
-
-                String sql2 = "DELETE FROM `asset_management_system`.`assigned_asset` WHERE assetID= " + assetID.getText();
-
-                statement.executeUpdate(sql2);
-
-            }
-
-            connection.close();
-
-            id.clear();
-            assetID.clear();
-            assetName.clear();
-            assetCode.clear();
-            workerTell.clear();
-            workerName.clear();
-            workerID.clear();
-            workerEmail.clear();
-            assigned_date.clear();
-            assignedBy.clear();
-            qr_code.setImage(null);
-
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Error: " + ex);
+        } else {
+            notify.flash(maintenance, "ASSET ID IS NOT AVAILABLE");
         }
 
     }
@@ -285,6 +316,19 @@ public class WithUsers_popController implements Initializable {
                 assignedBy.clear();
                 qr_code.setImage(null);
 
+                notify.flash(deferBtn, "ASSET HAS BEEN DEFERED.");
+
+                id.setEditable(false);
+                assetID.setEditable(false);
+                assetName.setEditable(false);
+                assetCode.setEditable(false);
+                workerTell.setEditable(false);
+                workerName.setEditable(false);
+                workerID.setEditable(false);
+                workerEmail.setEditable(false);
+                assigned_date.setEditable(false);
+                assignedBy.setEditable(false);
+
             } catch (ClassNotFoundException ex) {
                 System.out.println("Error: " + ex);
             }
@@ -299,9 +343,9 @@ public class WithUsers_popController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         title.setStyle("-fx-font-family: 'Lobster', cursive; -fx-font-size: 36; -fx-font-weight: bold;");
-                
+
         // TODO
         reasonLbl.setVisible(false);
         reason.setVisible(false);
@@ -317,9 +361,8 @@ public class WithUsers_popController implements Initializable {
         assigned_date.setEditable(false);
         assignedBy.setEditable(false);
         id.setEditable(false);
-       
-       // title.setStyle("-fx-font-family: 'Oswald', sans-serif; -fx-font-size: 20;");
-       
+
+        // title.setStyle("-fx-font-family: 'Oswald', sans-serif; -fx-font-size: 20;");
         title.setStyle("-fx-font-family: 'Bebas Neue', cursive;");
 
         json_read nw = new json_read();

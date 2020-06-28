@@ -21,6 +21,7 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -54,6 +55,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -119,14 +121,47 @@ public class WithUsersController implements Initializable {
 
     @FXML
     private ChoiceBox choice;
-    
+
     @FXML
     private Button printer;
 
     private double xOffset = 0;
     private double yOffset = 0;
-     mover movingWindow=new mover();
-    
+    mover movingWindow = new mover();
+
+    @FXML
+    void send_file(MouseEvent event) {
+
+    }
+
+    @FXML
+    void open_file(MouseEvent event) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        //Set extension filter
+        /*FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
+        FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");*/
+        FileChooser.ExtensionFilter extFilterPDF = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.PDF");
+        fileChooser.getExtensionFilters().addAll( extFilterPDF);
+        fileChooser.setTitle("PICK FILE ");
+        fileChooser.setInitialDirectory(new File("C:\\Bit_torrent"));
+
+        //Show open file dialog
+        File file = fileChooser.showOpenDialog(window);
+
+        if (file != null) {
+            /*Image image = new Image(file.toURI().toString());
+             imager.setImage(image);*/
+            System.out.println(file.toURI().toString());
+            if (file.toString().endsWith(".pdf")) {
+                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + file);
+            }
+        }
+
+    }
+
     @FXML
     public void closeAppWindow(MouseEvent event) {
         //getting stage
@@ -134,38 +169,39 @@ public class WithUsersController implements Initializable {
 
         window.close();
     }
-    
-    @FXML 
-    public void minimizeWindow(MouseEvent event){
-        //getting stage
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setIconified(true);
-    }
-    
+
     @FXML
-    public void back(MouseEvent event) throws IOException{
-        
-         //you can use #onMousePressed or #orMouseClicked
-         Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/dashboard/dashboard.fxml"));
-           Scene newScene = new Scene(sceneFxml);
-
-            //getting stage
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            movingWindow.moving(sceneFxml, window);
-
-            //setting scene on stage
-            window.setScene(newScene);
-            
-            window.show();
-            window.centerOnScreen();   
+    public void minimizeWindow(MouseEvent event) {
+        //getting stage
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setIconified(true);
     }
-    
-     @FXML
-    void printData(ActionEvent event) throws FileNotFoundException, DocumentException, IOException, ParseException, SQLException {
-        
-         Document my_pdf_report = new Document();
 
-        PdfWriter.getInstance(my_pdf_report, new FileOutputStream("ASSIGNED ASSETS REPORT.pdf"));
+    @FXML
+    public void back(MouseEvent event) throws IOException {
+
+        //you can use #onMousePressed or #orMouseClicked
+        Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/dashboard/dashboard.fxml"));
+        Scene newScene = new Scene(sceneFxml);
+        newScene.setFill(Color.ALICEBLUE);
+
+        //getting stage
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        movingWindow.moving(sceneFxml, window);
+
+        //setting scene on stage
+        window.setScene(newScene);
+
+        window.show();
+        window.centerOnScreen();
+    }
+
+    @FXML
+    void printData(ActionEvent event) throws FileNotFoundException, DocumentException, IOException, ParseException, SQLException {
+
+        Document my_pdf_report = new Document();
+
+        PdfWriter.getInstance(my_pdf_report, new FileOutputStream("./files/ASSIGNED ASSETS REPORT.pdf"));
         my_pdf_report.open();
 
         //we have four columns in our table
@@ -264,8 +300,8 @@ public class WithUsersController implements Initializable {
             String assignedDate = assigned_date.getCellData(o);
             table_cell = new PdfPCell(new Phrase(assignedDate, FontFactory.getFont(FontFactory.HELVETICA, 8)));
             my_report_table.addCell(table_cell);
-            
-             String assigned_by = assignedBy.getCellData(o);
+
+            String assigned_by = assignedBy.getCellData(o);
             table_cell = new PdfPCell(new Phrase(assigned_by, FontFactory.getFont(FontFactory.HELVETICA, 8)));
             my_report_table.addCell(table_cell);
 
@@ -274,12 +310,10 @@ public class WithUsersController implements Initializable {
         my_pdf_report.add(my_report_table);
         my_pdf_report.close();
 
-        notification notify=new notification();
-        notify.flash(printer," DOCUMENT HAS BEEN CREATED ");
-        
+        notification notify = new notification();
+        notify.flash(printer, " DOCUMENT HAS BEEN CREATED ");
 
     }
-
 
     @FXML
     void loadFromDB(MouseEvent event) throws SQLException {

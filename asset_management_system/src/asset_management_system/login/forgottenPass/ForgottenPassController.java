@@ -21,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import javax.mail.Message;
@@ -81,6 +82,7 @@ public class ForgottenPassController implements Initializable {
         //you can use #onMousePressed or #orMouseClicked
          Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/login/login.fxml"));
            Scene newScene = new Scene(sceneFxml);
+            newScene.setFill(Color.ALICEBLUE);
 
             //getting stage
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();

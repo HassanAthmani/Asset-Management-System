@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ac831c73-628c-4c3d-83ab-234fd0eca4d8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/asset_management_system/ALL ASSETS REPORT.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/ALL ASSETS REPORT.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asset_management_system/ASSETS IN MAINTENANCE REPORT.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/ASSETS IN MAINTENANCE REPORT.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asset_management_system/AVAILABLE ASSETS REPORT.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/AVAILABLE ASSETS REPORT.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asset_management_system/DEFERRED ASSET REPORT.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/DEFERRED ASSET REPORT.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/asset_management_system/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/Thumbs.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/asset_management_system/build/built-jar.properties" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/build/built-jar.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/asset_management_system/build/classes/asset_management_system/assets/AssetsController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/build/classes/asset_management_system/assets/AssetsController$1.class" afterDir="false" />
@@ -13,51 +9,25 @@
       <change beforePath="$PROJECT_DIR$/asset_management_system/build/classes/asset_management_system/assets/AssetsController$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/build/classes/asset_management_system/assets/AssetsController$3.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/asset_management_system/build/classes/asset_management_system/assets/AssetsController$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/build/classes/asset_management_system/assets/AssetsController$4.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/asset_management_system/build/classes/asset_management_system/assets/AssetsController.class" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/build/classes/asset_management_system/assets/AssetsController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asset_management_system/build/classes/asset_management_system/assets/addAsset/AddAssetController.class" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/build/classes/asset_management_system/assets/addAsset/AddAssetController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/asset_management_system/build/classes/asset_management_system/dashboard/DashboardController.class" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/build/classes/asset_management_system/dashboard/DashboardController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/asset_management_system/build/classes/asset_management_system/profile/ProfileController.class" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/build/classes/asset_management_system/profile/ProfileController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asset_management_system/build/classes/asset_management_system/usedAlot/json_read.class" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/build/classes/asset_management_system/usedAlot/json_read.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/asset_management_system/build/classes/asset_management_system/withUsers/WithUsersController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/build/classes/asset_management_system/withUsers/WithUsersController$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/asset_management_system/build/classes/asset_management_system/withUsers/WithUsersController.class" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/build/classes/asset_management_system/withUsers/WithUsersController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/asset_management_system/build/classes/asset_management_system/workers/WorkersController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/build/classes/asset_management_system/workers/WorkersController$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/asset_management_system/build/classes/asset_management_system/workers/WorkersController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/build/classes/asset_management_system/workers/WorkersController$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/asset_management_system/build/classes/asset_management_system/workers/WorkersController.class" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/build/classes/asset_management_system/workers/WorkersController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asset_management_system/build/classes/asset_management_system/workers/addWorker/RegisterController.class" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/build/classes/asset_management_system/workers/addWorker/RegisterController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asset_management_system/json/AllItem.json" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/json/AllItem.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asset_management_system/json/WithUser.json" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/json/WithUser.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asset_management_system/json/deferredItem.json" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/json/deferredItem.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asset_management_system/json/maintenance.json" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/json/maintenance.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/asset_management_system/nbproject/private/private.xml" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/nbproject/private/private.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asset_management_system/qr_images/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/qr_images/Thumbs.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/assets/AssetsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/assets/AssetsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/assets/addAsset/AddAssetController.java" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/assets/addAsset/AddAssetController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/assets/addAsset/addAsset.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/assets/addAsset/addAsset.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/assets/all_assetsPop/All_assetsPopController.java" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/assets/all_assetsPop/All_assetsPopController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/assets/all_assetsPop/all_assetsPop.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/assets/all_assetsPop/all_assetsPop.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/assets/assetPop/AssetPopController.java" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/assets/assetPop/AssetPopController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/assets/assetPop/assetPop.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/assets/assetPop/assetPop.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/assets/assets.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/assets/assets.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/assets/deferred_pop/Deferred_popController.java" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/assets/deferred_pop/Deferred_popController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/assets/deferred_pop/deferred_pop.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/assets/deferred_pop/deferred_pop.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/assets/maintenancePop/MaintenancePopController.java" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/assets/maintenancePop/MaintenancePopController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/assets/maintenancePop/maintenancePop.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/assets/maintenancePop/maintenancePop.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/dashboard/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/dashboard/DashboardController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/dashboard/dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/dashboard/dashboard.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/img/ic_arrow_back.imageset/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/img/ic_arrow_back.imageset/Thumbs.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/img/minimize/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/img/minimize/Thumbs.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/login/forgottenPass/forgottenPass.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/login/forgottenPass/forgottenPass.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/ic_arrow_back_imageset/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/ic_arrow_back_imageset/Thumbs.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/login/login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/login/login.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/login/register/register.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/login/register/register.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/profile/ProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/profile/ProfileController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/profile/profile.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/profile/profile.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/usedAlot/json_read.java" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/usedAlot/json_read.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/withUsers/WithUsersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/withUsers/WithUsersController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/withUsers/withUsers.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/withUsers/withUsers.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/withUsers/withUsers_pop/WithUsers_popController.java" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/withUsers/withUsers_pop/WithUsers_popController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/withUsers/withUsers_pop/withUsers_pop.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/withUsers/withUsers_pop/withUsers_pop.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/workers/WorkersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/workers/WorkersController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/workers/addWorker/RegisterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/workers/addWorker/RegisterController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/workers/addWorker/register.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/workers/addWorker/register.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/workers/workers.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/asset_management_system/src/asset_management_system/workers/workers.fxml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -71,8 +41,10 @@
     <session id="1551369414">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.closed" value="1" />
           <entry key="project.open.time.5" value="1" />
-          <entry key="project.opened" value="1" />
+          <entry key="project.open.time.65" value="1" />
+          <entry key="project.opened" value="2" />
         </counts>
       </usages-collector>
     </session>
@@ -105,8 +77,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane" />
     </panes>
   </component>
@@ -153,26 +125,23 @@
       <option name="presentableId" value="Default" />
       <updated>1590598388997</updated>
       <workItem from="1590598395065" duration="467000" />
+      <workItem from="1591702365969" duration="1163000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="467000" />
+    <option name="totallyTimeSpent" value="1630000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1050" extended-state="6" />
     <layout>
-      <window_info id="Image Layers" />
-      <window_info id="Designer" />
-      <window_info id="UI Designer" />
-      <window_info id="Capture Tool" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25375536" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="Designer" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Capture Tool" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -180,15 +149,19 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Palette" />
-      <window_info anchor="right" id="Theme Preview" />
-      <window_info anchor="right" id="Capture Analysis" />
-      <window_info anchor="right" id="Palette&#9;" />
-      <window_info anchor="right" id="Database" />
-      <window_info anchor="right" id="Maven Projects" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info anchor="right" id="Palette&#9;" order="6" />
+      <window_info anchor="right" id="Database" order="7" />
+      <window_info anchor="right" id="Maven Projects" order="8" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">

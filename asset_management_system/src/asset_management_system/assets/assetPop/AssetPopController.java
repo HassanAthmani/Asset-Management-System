@@ -3,6 +3,7 @@ package asset_management_system.assets.assetPop;
 import asset_management_system.usedAlot.QR_Creator;
 import asset_management_system.usedAlot.json_code;
 import asset_management_system.usedAlot.json_read;
+import asset_management_system.usedAlot.notification;
 import com.google.zxing.WriterException;
 import com.jfoenix.controls.JFXTextField;
 import java.io.FileInputStream;
@@ -99,9 +100,11 @@ public class AssetPopController implements Initializable {
 
     @FXML
     private Label assignID;
-    
-     @FXML
+
+    @FXML
     private Label assetLbl;
+
+    notification notify = new notification();
 
     @FXML
     void giveAsset(ActionEvent event) throws SQLException {
@@ -143,6 +146,8 @@ public class AssetPopController implements Initializable {
 
                             statement.executeUpdate(sql2);
 
+                            notify.flash(assign, " ASSET HAS BEEN ASSIGNED TO " + rss.getString(2));
+
                             assetID.clear();
                             assetName.clear();
                             assetCode.clear();
@@ -153,6 +158,16 @@ public class AssetPopController implements Initializable {
                             additionDate.clear();
                             cost.clear();
                             qr_code.setImage(null);
+
+                            assetID.setEditable(false);
+                            assetName.setEditable(false);
+                            assetCode.setEditable(false);
+                            assetDetails.setEditable(false);
+                            workerName.setEditable(false);
+                            workerID.setEditable(false);
+                            category.setEditable(false);
+                            additionDate.setEditable(false);
+                            cost.setEditable(false);
 
                         }
 
@@ -167,10 +182,9 @@ public class AssetPopController implements Initializable {
                 Logger.getLogger(AssetPopController.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-        }else {
+        } else {
             int response = JOptionPane.showConfirmDialog(null, "Please check the fields,they should not be empty", "ERROR", JOptionPane.DEFAULT_OPTION);
-                   
-            
+
         }
 
     }
@@ -213,11 +227,13 @@ public class AssetPopController implements Initializable {
 
         json_read nw = new json_read();
         nw.AssetPopBackToDB();
+        notify.flash(cancel, " NO CHANGES HAVE BEEN MADE. ");
 
     }
 
     @FXML
     void editInfo(ActionEvent event) throws SQLException {
+        if(!assetID.getText().isEmpty()){
 
         String assetid = assetID.getText();
         String assetname = assetName.getText();
@@ -265,6 +281,10 @@ public class AssetPopController implements Initializable {
         deferCheck.setVisible(false);
         maintenance.setVisible(false);
         assignCheck.setVisible(false);
+        }
+        else {
+            notify.flash(edit,"ASSET ID IS NOT AVAILABLE");
+        }
 
     }
 
@@ -302,6 +322,8 @@ public class AssetPopController implements Initializable {
                 String sql2 = "UPDATE `asset_management_system`.`assets` SET assetName='" + assetname + "', assetCode='" + assetcode + "',assetDetails='" + assetdetails + "', workerName='" + workername + "', workerID=" + workerid + ",categoryID='" + cat + "', additionDate= CURDATE(),cost=" + cosst + " WHERE assetID= " + assetID.getText();
 
                 statement.executeUpdate(sql2);
+
+                notify.flash(save, " ASSET DETAILS HAVE BEEN CHANGED. ");
 
                 connection.close();
 
@@ -372,6 +394,7 @@ public class AssetPopController implements Initializable {
                 String sql2 = "DELETE FROM `asset_management_system`.`available_assets` WHERE assetID= " + assetID.getText();
 
                 statement.executeUpdate(sql2);
+                notify.flash(defer, " ASSET HAS BEEN DEFERRED ");
 
                 connection.close();
 
@@ -385,6 +408,16 @@ public class AssetPopController implements Initializable {
                 additionDate.clear();
                 cost.clear();
                 qr_code.setImage(null);
+
+                assetID.setEditable(false);
+                assetName.setEditable(false);
+                assetCode.setEditable(false);
+                assetDetails.setEditable(false);
+                workerName.setEditable(false);
+                workerID.setEditable(false);
+                category.setEditable(false);
+                additionDate.setEditable(false);
+                cost.setEditable(false);
 
             } catch (ClassNotFoundException ex) {
                 System.out.println("Error: " + ex);
@@ -439,6 +472,8 @@ public class AssetPopController implements Initializable {
 
                 statement.executeUpdate(sql2);
 
+                notify.flash(maintenance, " ASSET HAS BEEN HAS BEEN SENT TO MAINTENANCE ");
+
                 connection.close();
 
                 assetID.clear();
@@ -451,6 +486,16 @@ public class AssetPopController implements Initializable {
                 additionDate.clear();
                 cost.clear();
                 qr_code.setImage(null);
+
+                assetID.setEditable(false);
+                assetName.setEditable(false);
+                assetCode.setEditable(false);
+                assetDetails.setEditable(false);
+                workerName.setEditable(false);
+                workerID.setEditable(false);
+                category.setEditable(false);
+                additionDate.setEditable(false);
+                cost.setEditable(false);
 
             } catch (ClassNotFoundException ex) {
                 System.out.println("Error: " + ex);
@@ -482,9 +527,9 @@ public class AssetPopController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         assetLbl.setStyle("-fx-font-family: 'Lobster', cursive; -fx-font-size: 20; -fx-font-weight: bold;");
-        
+
         defer.setVisible(false);
         reason.setVisible(false);
         save.setVisible(false);

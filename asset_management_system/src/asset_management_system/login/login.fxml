@@ -8,12 +8,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="562.0" prefWidth="674.0" xmlns="http://javafx.com/javafx/8.0.25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="asset_management_system.login.LoginController">
+<AnchorPane id="AnchorPane" prefHeight="562.0" prefWidth="674.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="asset_management_system.login.LoginController">
    <children>
-      <VBox fx:id="vbox" prefHeight="562.0" prefWidth="279.0" />
+      <VBox fx:id="vbox" prefHeight="562.0" prefWidth="240.0">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="274.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/motivation.PNG" />
+               </image>
+            </ImageView>
+         </children></VBox>
       <JFXTextField fx:id="username" layoutX="356.0" layoutY="145.0" prefHeight="26.0" prefWidth="229.0" promptText="username" />
-      <JFXButton fx:id="loginbtn" buttonType="RAISED" layoutX="444.0" layoutY="328.0" onAction="#login" ripplerFill="#67e3ffe5" text="login" />
-      <JFXButton fx:id="forgotPassBtn" layoutX="496.0" layoutY="388.0" onAction="#forgotPass" ripplerFill="#67e3ff" text="Forgot password?" />
+      <JFXButton fx:id="loginbtn" buttonType="RAISED" layoutX="444.0" layoutY="328.0" onAction="#login" ripplerFill="#67e3ffe5" style="-fx-background-color: #42dc5c;" text="login" />
+      <JFXButton fx:id="forgotPassBtn" layoutX="496.0" layoutY="388.0" onAction="#forgotPass" ripplerFill="#67e3ff" style="-fx-background-color: #42dc5c;" text="Forgot password?" />
       <JFXPasswordField fx:id="password" layoutX="356.0" layoutY="240.0" prefHeight="26.0" prefWidth="230.0" promptText="password" />
       <JFXButton fx:id="registerBtn" buttonType="RAISED" layoutX="414.0" layoutY="449.0" onAction="#register" prefHeight="26.0" prefWidth="102.0" ripplerFill="#67e3ffe5" text="register" />
       <ImageView fx:id="closeApp" fitHeight="38.0" fitWidth="44.0" layoutX="587.0" layoutY="14.0" onMousePressed="#closeAppWindow" pickOnBounds="true" preserveRatio="true">
