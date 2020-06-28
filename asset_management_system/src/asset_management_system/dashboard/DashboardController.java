@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -130,10 +131,53 @@ public class DashboardController implements Initializable {
     @FXML
     private ImageView send;
 
+    PreparedStatement ps;
+
     ArrayList<Integer> cell = new ArrayList<Integer>();
     ArrayList<String> name = new ArrayList<String>();
+    List<String> A = new ArrayList<String>();
+    
+    ObservableList<PieChart.Data> piechartdata;
 
     mover movingWindow = new mover();
+
+    public void loadData() throws SQLException {
+
+        A.add("LAPTOP");
+        A.add("PROJECTOR");
+        A.add("CAMERA");
+        A.add("MOBILE PHONE");
+        A.add("PRINTER");
+        A.add("KITCHEN ITEM");
+        A.add("MACHINERY ITEM");
+        
+        piechartdata=FXCollections.observableArrayList();
+
+        for (int i = 0; i < A.size(); i++) {
+            
+            try {
+                String dbName = "asset_management_system";
+                String userName = "root";
+                String password = "";
+                Class.forName("com.mysql.jdbc.Driver");
+                connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, password);
+
+                ps = connection.prepareStatement("SELECT COUNT(*) FROM assets WHERE categoryID='"+A.get(i)+"'");
+                ResultSet rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    piechartdata.add(new PieChart.Data(A.get(i), rs.getInt(1)));
+                    name.add(A.get(i));
+                    cell.add(rs.getInt(1));
+
+                }
+
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+    }
 
     @FXML
     void send_file(MouseEvent event) {
@@ -409,10 +453,13 @@ public class DashboardController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        
         styling();
         try {
             LoadDataFrmDB();
             countData();
+            loadData();
         } catch (SQLException ex) {
             Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -420,6 +467,8 @@ public class DashboardController implements Initializable {
         } catch (ParseException ex) {
             Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        catChart.setData(piechartdata);
 
     }
 
