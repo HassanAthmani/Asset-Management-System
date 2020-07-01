@@ -1,5 +1,6 @@
 package asset_management_system.workers;
 
+import asset_management_system.dashboard.DashboardController;
 import asset_management_system.usedAlot.json_read;
 import asset_management_system.usedAlot.mover;
 import asset_management_system.usedAlot.notification;
@@ -49,6 +50,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 import org.json.simple.parser.ParseException;
 
 public class WorkersController implements Initializable {
@@ -109,8 +111,32 @@ public class WorkersController implements Initializable {
 
     @FXML
     void send_file(MouseEvent event) {
-        
-        
+        try {
+            //you can use #onMousePressed or #orMouseClicked
+            mover movingWindow = new mover();
+
+            //getting stage
+            Stage window = new Stage();
+            Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/sendMail/sendMail.fxml"));
+            Scene newScene = new Scene(sceneFxml);
+
+            window.setScene(newScene);
+            newScene.setFill(Color.ALICEBLUE);
+            window.initModality(Modality.WINDOW_MODAL);
+            window.initOwner(((Node) event.getSource()).getScene().getWindow());
+            window.setResizable(false);
+            window.resizableProperty();
+            window.initStyle(StageStyle.UNDECORATED);
+
+            //setting scene on stage
+            movingWindow.moving(sceneFxml, window);
+            window.setScene(newScene);
+            window.showAndWait();
+            window.centerOnScreen();
+
+        } catch (IOException ex) {
+            Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
@@ -119,15 +145,12 @@ public class WorkersController implements Initializable {
         FileChooser fileChooser = new FileChooser();
 
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        
 
         //Set extension filter
-       
         FileChooser.ExtensionFilter extFilterPDF = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.PDF");
-        fileChooser.getExtensionFilters().addAll( extFilterPDF);
+        fileChooser.getExtensionFilters().addAll(extFilterPDF);
         fileChooser.setTitle("PICK FILE ");
         fileChooser.setInitialDirectory(new File("C:\\Bit_torrent"));
-        
 
         //Show open file dialog
         File file = fileChooser.showOpenDialog(window);
@@ -291,48 +314,6 @@ public class WorkersController implements Initializable {
 
     }
 
-    @FXML
-    void add(ActionEvent event) throws IOException {
-        Stage stage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        Parent root = fxmlLoader.load(getClass().getResource("/asset_management_system/workers/addWorker/register.fxml").openStream());
-        Scene scene = new Scene(root);
-        scene.setFill(Color.ALICEBLUE);
-
-        stage.setScene(scene);
-
-        stage.initModality(Modality.WINDOW_MODAL);
-        stage.initOwner(((Node) event.getSource()).getScene().getWindow());
-        stage.setResizable(false);
-        stage.resizableProperty();
-        stage.setOnCloseRequest(e -> {
-            try {
-                LoadDataFrmDB();
-            } catch (SQLException ex) {
-                Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
-
-        root.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                xOffset = event.getSceneX();
-                yOffset = event.getSceneY();
-            }
-        });
-        root.setOnMouseDragged(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                stage.setX(event.getScreenX() - xOffset);
-                stage.setY(event.getScreenY() - yOffset);
-            }
-        });
-        scene.setFill(Color.ALICEBLUE);
-        //stage.initStyle(StageStyle.UNDECORATED);
-        stage.showAndWait();
-
-    }
-
     public void LoadDataFrmDB() throws SQLException {
         //DB connection details
         try {
@@ -372,13 +353,50 @@ public class WorkersController implements Initializable {
 
     }
 
+    @FXML
+    void add(ActionEvent event) throws IOException {
+        Stage stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        Parent root = fxmlLoader.load(getClass().getResource("/asset_management_system/workers/addWorker/register.fxml").openStream());
+        Scene scene = new Scene(root);
+        scene.setFill(Color.ALICEBLUE);
+        stage.initStyle(StageStyle.UNDECORATED);
+
+        stage.setScene(scene);
+
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+        stage.setResizable(false);
+        stage.resizableProperty();
+        stage.setOnCloseRequest(e -> {
+            try {
+                LoadDataFrmDB();
+            } catch (SQLException ex) {
+                Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+
+        mover movingWindow = new mover();
+        movingWindow.moving(root, stage);
+
+        scene.setFill(Color.ALICEBLUE);
+        //stage.initStyle(StageStyle.UNDECORATED);
+        stage.showAndWait();
+
+    }
+
+    public void popClose() {
+        try {
+            LoadDataFrmDB();
+        } catch (SQLException ex) {
+            Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     public void loada(String searchVal, String colmnVal) {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-
-            String dbName = "asset_management_system";
-            String userName = "root";
-            String password = "";
 
             connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, password);
             data = FXCollections.observableArrayList();
@@ -449,11 +467,53 @@ public class WorkersController implements Initializable {
 
     }
 
+    public void checkPosition() throws SQLException, IOException, FileNotFoundException, ParseException, ParseException {
+
+        try {
+            json_read jsonReader = new json_read();
+            String dbName = "asset_management_system";
+            String userName = "root";
+            String password = "";
+            Class.forName("com.mysql.jdbc.Driver");
+            String id = jsonReader.profile_id();
+            String position = "";
+
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, password);
+
+            //Execute query and store result in a resultset
+            ResultSet rs = connection.createStatement().executeQuery("SELECT position FROM `position` WHERE workerID=" + id);
+
+            if (!rs.isBeforeFirst()) {
+                System.out.println("No data");
+               
+            } else {
+                while (rs.next()) {
+                    System.out.println("string" + rs.getString(1));
+                    //"PROJECT MANAGER", "ACCOUNTANT", "REGIONAL DIRECTOR", "PROJECT OFFICER", "TECHNICAL OFFICER", "RSD OFFICER", "LOGISTICS OFFICER","STAFF");
+                    if (rs.getString(1).equals("REGIONAL DIRECTOR") || rs.getString(1).equals("PROJECT MANAGER") || rs.getString(1).equals("LOGISTICS OFFICER")) {
+                        addWorker.setVisible(true);
+                        
+                    } else {
+                        addWorker.setVisible(false);
+                        
+                    }
+                    position = rs.getString(1);
+                }
+                System.out.println("string" + position + id);
+            }
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         try {
             LoadDataFrmDB();
-        } catch (SQLException ex) {
+            checkPosition();
+        } catch (SQLException | IOException | ParseException ex) {
             Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
         }
 

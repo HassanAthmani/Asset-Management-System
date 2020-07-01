@@ -27,7 +27,7 @@ public class DBOps {
             String sql = "INSERT INTO `asset_management_system`.`worker_details` (`workerID`, `workerName`, `workerLastName`, `workerTell`, `workerEmail`, `workerNationalID`,`department`,`location`,`pass_word`) VALUES (NULL,'" + firstname + "','" + secondname + "','" + phoneno + "','" + email + "','"+natid+"','"+department+"','"+location+"',' ' );";
             
             TimeUnit.SECONDS.sleep(1);  
-            String mover="INSERT INTO `asset_management_system`.`current_workers` SELECT * FROM `asset_management_system`.`worker_details` WHERE assetCode='"+phoneno+"'";
+            String mover="INSERT INTO `asset_management_system`.`current_workers` SELECT * FROM `asset_management_system`.`worker_details` WHERE workerTell='"+phoneno+"'";
 
             statement.executeUpdate(sql);   
             statement.executeUpdate(mover); 

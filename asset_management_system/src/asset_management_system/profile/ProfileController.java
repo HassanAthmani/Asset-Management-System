@@ -251,7 +251,7 @@ public class ProfileController implements Initializable {
         System.out.println("Y " + window.getY());
         /*window.setX(210.0);
         window.setY(44.0);*/
-        //window.centerOnScreen();
+        window.centerOnScreen();
 
     }
 

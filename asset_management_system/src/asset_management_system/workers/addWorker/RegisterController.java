@@ -6,21 +6,26 @@ import asset_management_system.usedAlot.DBOps;
 import asset_management_system.usedAlot.sendingPass;
 import asset_management_system.usedAlot.checkDetails;
 import asset_management_system.usedAlot.emailValidation;
+import asset_management_system.usedAlot.notification;
+import asset_management_system.workers.WorkersController;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javax.swing.JOptionPane;
 import static jdk.nashorn.internal.objects.NativeString.toUpperCase;
 
@@ -63,12 +68,21 @@ public class RegisterController implements Initializable {
     
     @FXML
     private ImageView closeApp;
+    
+    @FXML
+    private ChoiceBox position;
 
     @FXML
-    void closeAppWindow(MouseEvent event) {
+    void closeAppWindow(MouseEvent event) throws SQLException {
         //getting stage
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();            
-            window.close();
+            //window.close();
+            //****** TO FIRE EVENT SO THAT THE EVENT LISTENER IN THE CALLING STAGE CAN REGISTER A CLOSE ON REQUEST
+           // primaryStage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
+            window.fireEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
+            
+            
+            
     }
 
    
@@ -77,7 +91,7 @@ public class RegisterController implements Initializable {
          sendingPass nwAcc=new sendingPass();      
         
         
-         if(email.getText().isEmpty() || firstName.getText().isEmpty() || secondName.getText().isEmpty() || phoneNo.getText().isEmpty() || natID.getText().isEmpty() || department.getText().isEmpty() || location.getText().isEmpty()){
+         if(email.getText().isEmpty() || firstName.getText().isEmpty() || secondName.getText().isEmpty() || phoneNo.getText().isEmpty() || natID.getText().isEmpty() || department.getText().isEmpty() || location.getText().isEmpty() || position.getValue().toString().isEmpty()){
               
              int response = JOptionPane.showConfirmDialog(
         null,"Make sure the text fields should not be empty","Required Input",JOptionPane.DEFAULT_OPTION); 
@@ -98,6 +112,11 @@ public class RegisterController implements Initializable {
           TimeUnit.SECONDS.sleep(1);  
           nwAcc.NewAcc(email.getText());
           
+          nwAcc.position(mail,position.getValue().toString());
+          notification notify=new notification();
+          notify.flash(register_btn,"ACCOUNT HAS BEEN SUCESSFULLY CREATED");
+          
+          
           email.clear();
           firstName.clear();
           secondName.clear();
@@ -115,6 +134,10 @@ public class RegisterController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        position.getItems().addAll("PROJECT MANAGER", "ACCOUNTANT", "REGIONAL DIRECTOR", "PROJECT OFFICER", "TECHNICAL OFFICER", "RSD OFFICER", "LOGISTICS OFFICER","STAFF");
+        position.setValue("STAFF");
+       
         
         addWorkerLbl.setStyle("-fx-font-family: 'Lobster', cursive; -fx-font-size: 30; -fx-font-weight: bold;");
         

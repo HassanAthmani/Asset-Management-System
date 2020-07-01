@@ -4,15 +4,19 @@
  * and open the template in the editor.
  */
 package asset_management_system.usedAlot;
+
 import asset_management_system.usedAlot.escapeChar;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.Node;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -26,43 +30,70 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import static jdk.nashorn.internal.objects.NativeString.toUpperCase;
 
-
 public class sendingPass {
-    escapeChar nw=new escapeChar();
-    String userName="root";
-    String password="";
+
+    escapeChar nw = new escapeChar();
+    String userName = "root";
+    String password = "";
     public Connection connection;
-    String senderMail="johnruben150@gmail.com";
-    int pass=106316008;
-    
-       public void DBfunction(String ReMail,int pass) throws SQLException{
-           try {
-             String url = "jdbc:mysql://localhost:3306/mysql?zeroDateTimeBehavior=convertToNull";
+    String senderMail = "johnruben150@gmail.com";
+    int pass = 106316008;
+
+    public void position(String email, String position) {
+        escapeChar escapee = new escapeChar();
+        String Rmail = escapee.escapeChar1(email);
+
+        try {
+            String url = "jdbc:mysql://localhost:3306/mysql?zeroDateTimeBehavior=convertToNull";
             connection = DriverManager.getConnection(url, userName, password);
             Statement statement = connection.createStatement();
-             Class.forName("com.mysql.jdbc.Driver");
-             
-             String account = "UPDATE `asset_management_system`.`worker_details` SET pass_word='"+pass+"' WHERE  (workerEmail LIKE '%"+ReMail+"%')";
-            statement.executeUpdate(account);
-            
-            String workingAccount = "UPDATE `asset_management_system`.`current_workers` SET pass_word='"+pass+"' WHERE  (workerEmail LIKE '%"+ReMail+"%')";
-             statement.executeUpdate(workingAccount);
-         }
-         catch (ClassNotFoundException ex) {
+            Class.forName("com.mysql.jdbc.Driver");
+
+            String details = "SELECT * FROM `asset_management_system`.`worker_details` WHERE  (workerEmail LIKE '%" + Rmail + "%')";
+            ResultSet rs = connection.createStatement().executeQuery(details);
+
+            while (rs.next()) {
+                String sql = "INSERT INTO `asset_management_system`.`position` (`workerID`, `position`) VALUES (" + rs.getString(1) + ",'" + toUpperCase(position) + "' );";
+                statement.executeUpdate(sql);
+            }
+
+        } catch (ClassNotFoundException ex) {
 
             System.err.println("Error: " + ex);
-        } 
-       }     
-    
-    public void NewAcc(String recipientMail) throws SQLException, ClassNotFoundException{
-         int min=100001;
-        int max=9999999;
-        int randomNum = ThreadLocalRandom.current().nextInt(min, max+1);
-        escapeChar escapee=new escapeChar();
-         String Rmail =escapee.escapeChar1(recipientMail);
-                 
-         DBfunction(Rmail,randomNum);
-                         
+        } catch (SQLException ex) {
+            Logger.getLogger(sendingPass.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void DBfunction(String ReMail, int pass) throws SQLException {
+        try {
+            String url = "jdbc:mysql://localhost:3306/mysql?zeroDateTimeBehavior=convertToNull";
+            connection = DriverManager.getConnection(url, userName, password);
+            Statement statement = connection.createStatement();
+            Class.forName("com.mysql.jdbc.Driver");
+
+            String account = "UPDATE `asset_management_system`.`worker_details` SET pass_word='" + pass + "' WHERE  (workerEmail LIKE '%" + ReMail + "%')";
+            statement.executeUpdate(account);
+
+            String workingAccount = "UPDATE `asset_management_system`.`current_workers` SET pass_word='" + pass + "' WHERE  (workerEmail LIKE '%" + ReMail + "%')";
+            statement.executeUpdate(workingAccount);
+
+        } catch (ClassNotFoundException ex) {
+
+            System.err.println("Error: " + ex);
+        }
+    }
+
+    public void NewAcc(String recipientMail) throws SQLException, ClassNotFoundException {
+        int min = 100001;
+        int max = 9999999;
+        int randomNum = ThreadLocalRandom.current().nextInt(min, max + 1);
+        escapeChar escapee = new escapeChar();
+        String Rmail = escapee.escapeChar1(recipientMail);
+
+        DBfunction(Rmail, randomNum);
+
         // Recipient's email ID needs to be mentioned.
         String to = recipientMail;
 
@@ -109,7 +140,7 @@ public class sendingPass {
             message.setSubject("ACCOUNT SUCCESFULLY CREATED ");
 
             // Now set the actual message
-            message.setText("YOUR ACCOUNT PASSOWRD IS : "+randomNum+" YOU CAN CHANGE IT WITHIN THE PROFILE SECTION AFTER A SUCCESFUL LOGIN");
+            message.setText("YOUR ACCOUNT PASSOWRD IS : " + randomNum + " YOU CAN CHANGE IT WITHIN THE PROFILE SECTION AFTER A SUCCESFUL LOGIN");
 
             System.out.println("sending...");
             // Send message
@@ -119,16 +150,16 @@ public class sendingPass {
             mex.printStackTrace();
         }
     }
-    
-    public void recoverAcc(String recipientMail) throws SQLException{
-         
-         int min=100001;
-        int max=9999999;
-        int randomNum = ThreadLocalRandom.current().nextInt(min, max+1);
-        String Rmail = toUpperCase( nw.escapeChar1(recipientMail)) ;
-                 
-         DBfunction(Rmail,randomNum);
-       
+
+    public void recoverAcc(String recipientMail) throws SQLException {
+
+        int min = 100001;
+        int max = 9999999;
+        int randomNum = ThreadLocalRandom.current().nextInt(min, max + 1);
+        String Rmail = toUpperCase(nw.escapeChar1(recipientMail));
+
+        DBfunction(Rmail, randomNum);
+
         // Recipient's email ID needs to be mentioned.
         String to = recipientMail;
 
@@ -175,7 +206,7 @@ public class sendingPass {
             message.setSubject("ACCOUNT RECOVERY ");
 
             // Now set the actual message
-            message.setText("YOUR NEW ACCOUNT PASSOWRD IS : "+randomNum+" YOU CAN CHANGE IT WITHIN THE PROFILE SECTION AFTER A SUCCESFUL LOGIN");
+            message.setText("YOUR NEW ACCOUNT PASSOWRD IS : " + randomNum + " YOU CAN CHANGE IT WITHIN THE PROFILE SECTION AFTER A SUCCESFUL LOGIN");
 
             System.out.println("sending...");
             // Send message
@@ -185,12 +216,12 @@ public class sendingPass {
             mex.printStackTrace();
         }
     }
-    
-    public void sendAttachment(String sendTo,String subject,String text,File f,Node node) throws IOException{
-        
-         notification nw=new notification();
-         
-         // Recipient's email ID needs to be mentioned.
+
+    public void sendAttachment(String sendTo, String subject, String text, File f, Node node) throws IOException {
+
+        notification nw = new notification();
+
+        // Recipient's email ID needs to be mentioned.
         String to = sendTo;
 
         // Sender's email ID needs to be mentioned
@@ -213,7 +244,7 @@ public class sendingPass {
 
             protected PasswordAuthentication getPasswordAuthentication() {
 
-                return new PasswordAuthentication(senderMail,"106316008");
+                return new PasswordAuthentication(senderMail, "106316008");
 
             }
 
@@ -241,10 +272,8 @@ public class sendingPass {
             try {
 
                 //File f =new File("H:\\pepipost_tutorials\\javaemail1.PNG");
-               
-
                 attachmentPart.attachFile(f);
-                textPart.setText(text+" (File name "+ f.getName()+")");
+                textPart.setText(text + " (File name " + f.getName() + ")");
                 multipart.addBodyPart(textPart);
                 multipart.addBodyPart(attachmentPart);
 
@@ -265,9 +294,7 @@ public class sendingPass {
             mex.printStackTrace();
             nw.flash(node, "AN ERROR OCCURED FILE WASNT SENT.");
         }
-        
+
     }
-    
-    
-    
+
 }
