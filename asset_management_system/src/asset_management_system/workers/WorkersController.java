@@ -485,17 +485,18 @@ public class WorkersController implements Initializable {
 
             if (!rs.isBeforeFirst()) {
                 System.out.println("No data");
-               
+                addWorker.setVisible(false);
+
             } else {
                 while (rs.next()) {
                     System.out.println("string" + rs.getString(1));
                     //"PROJECT MANAGER", "ACCOUNTANT", "REGIONAL DIRECTOR", "PROJECT OFFICER", "TECHNICAL OFFICER", "RSD OFFICER", "LOGISTICS OFFICER","STAFF");
                     if (rs.getString(1).equals("REGIONAL DIRECTOR") || rs.getString(1).equals("PROJECT MANAGER") || rs.getString(1).equals("LOGISTICS OFFICER")) {
                         addWorker.setVisible(true);
-                        
+
                     } else {
                         addWorker.setVisible(false);
-                        
+
                     }
                     position = rs.getString(1);
                 }
