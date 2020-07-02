@@ -5,6 +5,7 @@
  */
 package asset_management_system.profile;
 
+import asset_management_system.dashboard.DashboardController;
 import asset_management_system.usedAlot.DBOps;
 import asset_management_system.usedAlot.checkDetails;
 import asset_management_system.usedAlot.json_code;
@@ -44,7 +45,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javax.swing.JOptionPane;
 import org.json.simple.parser.ParseException;
 
@@ -155,6 +158,32 @@ public class ProfileController implements Initializable {
 
     @FXML
     void send_file(MouseEvent event) {
+        try {
+            //you can use #onMousePressed or #orMouseClicked
+            mover movingWindow = new mover();
+
+            //getting stage
+            Stage window = new Stage();
+            Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/sendMail/sendMail.fxml"));
+            Scene newScene = new Scene(sceneFxml);
+
+            window.setScene(newScene);
+            newScene.setFill(Color.ALICEBLUE);
+            window.initModality(Modality.WINDOW_MODAL);
+            window.initOwner(((Node) event.getSource()).getScene().getWindow());
+            window.setResizable(false);
+            window.resizableProperty();
+            window.initStyle(StageStyle.UNDECORATED);
+
+            //setting scene on stage
+            movingWindow.moving(sceneFxml, window);
+            window.setScene(newScene);
+            window.showAndWait();
+            window.centerOnScreen();
+
+        } catch (IOException ex) {
+            Logger.getLogger(ProfileController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
