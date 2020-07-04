@@ -5,6 +5,8 @@
  */
 package asset_management_system;
 
+import asset_management_system.usedAlot.notification;
+import java.io.File;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +14,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -25,20 +26,45 @@ public class Asset_management_system extends Application {
 
     private double xOffset = 0;
     private double yOffset = 0;
-    
+
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/asset_management_system/dashboard/dashboard.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/asset_management_system/login/login.fxml"));
+
+        File file = new File(".//json");
+        File file1 = new File(".//files");
+
+        // if the directory does not exist, create it
+        if (!file.exists() && !file1.exists()) {
+            System.out.println("creating directory: " + file.getName() + " and " + file1.getName());
+            boolean result = false;
+
+            try {
+
+                file.mkdir();
+                file1.mkdir();
+                result = true;
+            } catch (SecurityException se) {
+                //handle it
+                notification notify = new notification();
+                notify.flash(root, "REQUIRED FILES NOT CREATED. PLEASE RESTART APP");
+            }
+            if (result) {
+                System.out.println("DIR created");
+            }
+        }
+
         
+
         Scene scene = new Scene(root);
         //scene.getStylesheets().add("http://fonts.googleapis.com/css?family=New+Rocker");
         scene.getStylesheets().add("https://fonts.googleapis.com/css?family=Bebas+Neue&display=swap");
         scene.getStylesheets().add("https://fonts.googleapis.com/css?family=Lobster&display=swap");
         scene.getStylesheets().add("https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz&display=swap");
-        
-        scene.getStylesheets().add("/asset_management_system/css/tabpane.css"); 
+
+        scene.getStylesheets().add("/asset_management_system/css/tabpane.css");
         stage.setScene(scene);
-         stage.setResizable(false);
+        stage.setResizable(false);
         stage.resizableProperty();
         root.setStyle("-fx-background-color: transparent;");
         stage.initStyle(StageStyle.UNDECORATED);
@@ -56,16 +82,14 @@ public class Asset_management_system extends Application {
                 stage.setX(event.getScreenX() - xOffset);
                 stage.setY(event.getScreenY() - yOffset);
             }
-        });  
+        });
         //scene.setFill(Color.TRANSPARENT);
-      scene.setFill(Color.ALICEBLUE);
-        
-        
-       
+        scene.setFill(Color.ALICEBLUE);
+
         //stage.initStyle(StageStyle.TRANSPARENT);
         stage.centerOnScreen();
         stage.show();
-        
+
     }
 
     /**
@@ -74,5 +98,5 @@ public class Asset_management_system extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }

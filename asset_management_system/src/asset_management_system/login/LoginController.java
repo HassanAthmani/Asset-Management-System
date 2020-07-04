@@ -12,12 +12,15 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import java.awt.HeadlessException;
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,6 +33,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
+import org.apache.commons.io.FileUtils;
 
 public class LoginController implements Initializable {
 
@@ -59,11 +63,19 @@ public class LoginController implements Initializable {
     private ImageView closeApp;
 
     notification notify = new notification();
+    File file = new File(".//json");
+    File file1 = new File(".//files");
 
     @FXML
     public void closeAppWindow(MouseEvent event) {
         //getting stage
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        try {
+            FileUtils.deleteDirectory(new File(".//json"));
+            FileUtils.deleteDirectory(new File(".//files"));
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         window.close();
     }

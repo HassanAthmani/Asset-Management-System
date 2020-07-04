@@ -51,6 +51,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+import org.apache.commons.io.FileUtils;
 import org.json.simple.parser.ParseException;
 
 public class WorkersController implements Initializable {
@@ -108,6 +109,8 @@ public class WorkersController implements Initializable {
 
     private double xOffset = 0;
     private double yOffset = 0;
+    
+    notification notify=new notification();
 
     @FXML
     void send_file(MouseEvent event) {
@@ -135,7 +138,7 @@ public class WorkersController implements Initializable {
             window.centerOnScreen();
 
         } catch (IOException ex) {
-            Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
+            notify.flash(printer, "AN ERROR EXPERIENCED WHEN REMOVING SOME FILES");
         }
 
     }
@@ -205,6 +208,12 @@ public class WorkersController implements Initializable {
     void closeAppWindow(MouseEvent event) {
         //getting stage
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+         try {
+            FileUtils.deleteDirectory(new File(".//json"));
+            FileUtils.deleteDirectory(new File(".//files"));
+        } catch (IOException ex) {
+            notify.flash(printer, "AN ERROR EXPERIENCED WHEN REMOVING SOME FILES");
+        }
         window.close();
 
     }

@@ -7,6 +7,7 @@ package asset_management_system.withUsers;
 
 import asset_management_system.assets.AssetsController;
 import asset_management_system.assets.all_assets;
+import asset_management_system.dashboard.DashboardController;
 import asset_management_system.usedAlot.assetSearch;
 import asset_management_system.usedAlot.json_code;
 import asset_management_system.usedAlot.json_read;
@@ -58,7 +59,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Callback;
+import org.apache.commons.io.FileUtils;
 import org.json.simple.parser.ParseException;
 
 /**
@@ -128,9 +131,36 @@ public class WithUsersController implements Initializable {
     private double xOffset = 0;
     private double yOffset = 0;
     mover movingWindow = new mover();
+    notification notify = new notification();
 
     @FXML
     void send_file(MouseEvent event) {
+        try {
+            //you can use #onMousePressed or #orMouseClicked
+            mover movingWindow = new mover();
+
+            //getting stage
+            Stage window = new Stage();
+            Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/sendMail/sendMail.fxml"));
+            Scene newScene = new Scene(sceneFxml);
+
+            window.setScene(newScene);
+            newScene.setFill(Color.ALICEBLUE);
+            window.initModality(Modality.WINDOW_MODAL);
+            window.initOwner(((Node) event.getSource()).getScene().getWindow());
+            window.setResizable(false);
+            window.resizableProperty();
+            window.initStyle(StageStyle.UNDECORATED);
+
+            //setting scene on stage
+            movingWindow.moving(sceneFxml, window);
+            window.setScene(newScene);
+            window.showAndWait();
+            window.centerOnScreen();
+
+        } catch (IOException ex) {
+            notify.flash(search, "AN ERROR EXPERIENCED WHEn ACCESSING SOME FILES");
+        }
 
     }
 
@@ -144,7 +174,7 @@ public class WithUsersController implements Initializable {
         /*FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
         FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");*/
         FileChooser.ExtensionFilter extFilterPDF = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.PDF");
-        fileChooser.getExtensionFilters().addAll( extFilterPDF);
+        fileChooser.getExtensionFilters().addAll(extFilterPDF);
         fileChooser.setTitle("PICK FILE ");
         fileChooser.setInitialDirectory(new File("C:\\Bit_torrent"));
 
@@ -166,7 +196,12 @@ public class WithUsersController implements Initializable {
     public void closeAppWindow(MouseEvent event) {
         //getting stage
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
+        try {
+            FileUtils.deleteDirectory(new File(".//json"));
+            FileUtils.deleteDirectory(new File(".//files"));
+        } catch (IOException ex) {
+            notify.flash(search, "AN ERROR EXPERIENCED WHEN REMOVING SOME FILES");
+        }
         window.close();
     }
 

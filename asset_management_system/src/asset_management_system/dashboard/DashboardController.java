@@ -2,6 +2,7 @@ package asset_management_system.dashboard;
 
 import asset_management_system.usedAlot.json_read;
 import asset_management_system.usedAlot.mover;
+import asset_management_system.usedAlot.notification;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -38,6 +39,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.apache.commons.io.FileUtils;
 import org.json.simple.parser.ParseException;
 
 public class DashboardController implements Initializable {
@@ -136,6 +138,8 @@ public class DashboardController implements Initializable {
     ArrayList<Integer> cell = new ArrayList<Integer>();
     ArrayList<String> name = new ArrayList<String>();
     List<String> A = new ArrayList<String>();
+    
+    notification notify=new notification();
     
     ObservableList<PieChart.Data> piechartdata;
 
@@ -261,6 +265,12 @@ public class DashboardController implements Initializable {
     public void closeAppWindow(MouseEvent event) {
         //getting stage
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        try {
+            FileUtils.deleteDirectory(new File(".//json"));
+            FileUtils.deleteDirectory(new File(".//files"));
+        } catch (IOException ex) {
+            notify.flash(backToDashboard, "AN ERROR EXPERIENCED WHEN REMOVING SOME FILES");
+        }
 
         window.close();
     }

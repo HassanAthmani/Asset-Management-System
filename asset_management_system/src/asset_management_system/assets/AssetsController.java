@@ -58,6 +58,7 @@ import java.io.FileNotFoundException;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.StageStyle;
+import org.apache.commons.io.FileUtils;
 import org.json.simple.parser.ParseException;
 
 public class AssetsController implements Initializable {
@@ -385,6 +386,13 @@ public class AssetsController implements Initializable {
     void closeAppWindow(MouseEvent event) {
         //getting stage
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        
+        try {
+            FileUtils.deleteDirectory(new File(".//json"));
+            FileUtils.deleteDirectory(new File(".//files"));
+        } catch (IOException ex) {
+            notify.flash(backToDashboard, "AN ERROR EXPERIENCED WHEN REMOVING SOME FILES");
+        }
         window.close();
 
     }

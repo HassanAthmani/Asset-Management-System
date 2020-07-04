@@ -5,7 +5,6 @@
  */
 package asset_management_system.profile;
 
-import asset_management_system.dashboard.DashboardController;
 import asset_management_system.usedAlot.DBOps;
 import asset_management_system.usedAlot.checkDetails;
 import asset_management_system.usedAlot.json_code;
@@ -29,14 +28,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -49,6 +46,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javax.swing.JOptionPane;
+import org.apache.commons.io.FileUtils;
 import org.json.simple.parser.ParseException;
 
 public class ProfileController implements Initializable {
@@ -288,6 +286,13 @@ public class ProfileController implements Initializable {
     void closeAppWindow(MouseEvent event) {
         //getting stage
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        try {
+            FileUtils.deleteDirectory(new File(".//json"));
+            FileUtils.deleteDirectory(new File(".//files"));
+        } catch (IOException ex) {
+            notify.flash(closeApp, "AN ERROR EXPERIENCED WHEN REMOVING SOME FILES");
+        }
+
         window.close();
 
     }

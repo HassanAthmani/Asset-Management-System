@@ -1,9 +1,11 @@
 
 package asset_management_system.login.forgottenPass;
 
+import asset_management_system.usedAlot.notification;
 import asset_management_system.usedAlot.sendingPass;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -32,6 +34,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.swing.JOptionPane;
+import org.apache.commons.io.FileUtils;
 
 
 
@@ -52,10 +55,18 @@ public class ForgottenPassController implements Initializable {
      @FXML
     private ImageView closeApp;
      
+     notification notify=new notification();
+     
      @FXML
      public void closeAppWindow(MouseEvent event){
          //getting stage
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            try {
+            FileUtils.deleteDirectory(new File(".//json"));
+            FileUtils.deleteDirectory(new File(".//files"));
+        } catch (IOException ex) {
+            notify.flash(backToDashboard, "AN ERROR EXPERIENCED WHEN REMOVING SOME FILES");
+        }
             
             window.close();
          
