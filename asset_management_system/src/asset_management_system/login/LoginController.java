@@ -72,7 +72,7 @@ public class LoginController implements Initializable {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         try {
             FileUtils.deleteDirectory(new File(".//json"));
-            FileUtils.deleteDirectory(new File(".//files"));
+            //FileUtils.deleteDirectory(new File(".//files"));
         } catch (IOException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -111,7 +111,7 @@ public class LoginController implements Initializable {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
 
-                String dbName = "inventory_project";
+                String dbName = "asset_management_system";
                 String user = "root";
                 String passw = "";
 
@@ -119,7 +119,7 @@ public class LoginController implements Initializable {
 
                 try {
                     //String sql = "SELECT * FROM login WHERE username = ? and password = ?";
-                    String sql = "SELECT * FROM `asset_management_system`.`worker_details` WHERE (workerEmail LIKE '%" + emailEscape + "%') AND (pass_word LIKE '%" + pass + "%')";
+                    String sql = "SELECT * FROM `asset_management_system`.`worker_details` WHERE (workerEmail LIKE '%" + emailEscape + "%') AND (pass_word='" + pass + "')";
                     // String sql="SELECT * FROM `asset_management_system`.`worker_details` WHERE (workerEmail LIKE '%"+emailEscape+"%') AND (pass_word ='"+pass+"')";
 
                     preparedStatement = connection.prepareStatement(sql);
@@ -193,7 +193,35 @@ public class LoginController implements Initializable {
 
         //setting scene on stage
         window.setScene(newScene);
+        window.centerOnScreen();
         window.show();
+
+    }
+
+    public void databaseCheck() {
+        String user = "root";
+        String passw = "";
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/mysql?zeroDateTimeBehavior=convertToNull";
+            connection = DriverManager.getConnection(url, user, passw);
+
+            //iterate each catalog in the ResultSet
+            while (resultSet.next()) {
+                // Get the database name, which is at position 1
+                String databaseName = resultSet.getString(1);
+                if (databaseName.equals("asset_management_system")) {
+
+                    notify.flash(loginbtn, "DATABASE IS AVAILABLE");
+                } else {
+                    notify.flash(loginbtn, "AN ERROR OCCURED CHECK IF DATABASE IS AVAILABLE");
+
+                }
+            }
+            resultSet.close();
+        } catch (ClassNotFoundException | SQLException ex) {
+            notify.flash(loginbtn, "AN ERROR OCCURED CHECK IF DATABASE IS AVAILABLE");
+        }
 
     }
 
@@ -206,6 +234,9 @@ public class LoginController implements Initializable {
 
         emailValidation valid = new emailValidation();
         valid.loginVal(username, "workerEmail", loginbtn);
+
+        //databaseCheck();
+
     }
 
 }

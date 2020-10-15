@@ -15,6 +15,8 @@ public class json_code {
 
     public void json_id(String id) {
         //Add worker id
+        File file1 = new File(".//json");
+        file1.mkdir();
         JSONObject id_info = new JSONObject();
         id_info.put("worker_id", id);
 

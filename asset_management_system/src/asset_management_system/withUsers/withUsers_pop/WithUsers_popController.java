@@ -1,13 +1,20 @@
 package asset_management_system.withUsers.withUsers_pop;
 
+import asset_management_system.assets.all_assetsPop.All_assetsPopController;
 import asset_management_system.usedAlot.QR_Creator;
 import asset_management_system.usedAlot.json_code;
 import asset_management_system.usedAlot.json_read;
 import asset_management_system.usedAlot.notification;
 import com.google.zxing.WriterException;
+import com.itextpdf.text.BadElementException;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.jfoenix.controls.JFXTextField;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -93,6 +100,56 @@ public class WithUsers_popController implements Initializable {
 
     @FXML
     private Label title;
+    
+    @FXML
+    private Button printData;
+    
+    @FXML
+    void printStuff(ActionEvent event) throws FileNotFoundException, DocumentException {
+        try {
+            Document my_pdf_report = new Document();
+
+            
+            PdfWriter.getInstance(my_pdf_report, new FileOutputStream("./files/ASSET_" + assetID.getText() + ".pdf"));
+            my_pdf_report.open(); //MOST IMPORTANT
+            Paragraph title = new Paragraph(" MOTIVATION CHARITABLE TRUST ");
+            Paragraph cost1 = new Paragraph(" ASSIGNED ASSET "+"\n");
+            Paragraph assetid = new Paragraph(" ASSET ID: " + assetID.getText());
+            Paragraph assetname = new Paragraph(" ASSET NAME: " + assetName.getText());
+            Paragraph assetcode = new Paragraph(" ASSET CODE: " + assetCode.getText());
+            Paragraph assetdetails = new Paragraph("ASSIGNED DATE: " + assigned_date.getText());
+            Paragraph workername = new Paragraph(" WORKER NAME: " + workerName.getText());
+            Paragraph workerid = new Paragraph(" WORKER ID: " + workerID.getText());
+            Paragraph catid = new Paragraph(" ASSIGNED BY: " + assignedBy.getText());
+            
+            Paragraph additiondate = new Paragraph(" WORKER EMAIL: " + workerEmail.getText());
+            Paragraph name = new Paragraph(" ASSET ");
+
+            my_pdf_report.add(title);
+            my_pdf_report.add(cost1);
+            my_pdf_report.add(assetid);
+            my_pdf_report.add(name);
+            my_pdf_report.add(assetname);
+            my_pdf_report.add(assetcode);            
+            my_pdf_report.add(catid);
+            my_pdf_report.add(workername);
+            my_pdf_report.add(workerid);            
+            my_pdf_report.add(additiondate);
+            my_pdf_report.add(assetdetails);
+
+            com.itextpdf.text.Image image = com.itextpdf.text.Image.getInstance(".//qrCode//Asset" + assetID.getText() + ".png");
+            my_pdf_report.add(image);
+
+            my_pdf_report.close();
+            notify.flash(printData, "ASSET DETAILS HAVE BEEN PRINTED.");
+
+        } catch (BadElementException ex) {
+            Logger.getLogger(WithUsers_popController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(WithUsers_popController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 
     @FXML
     void ToAssets(ActionEvent event) throws SQLException {

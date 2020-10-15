@@ -1,6 +1,7 @@
 package asset_management_system.workers;
 
 import asset_management_system.dashboard.DashboardController;
+import asset_management_system.usedAlot.checkPosition;
 import asset_management_system.usedAlot.json_read;
 import asset_management_system.usedAlot.mover;
 import asset_management_system.usedAlot.notification;
@@ -210,7 +211,7 @@ public class WorkersController implements Initializable {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
          try {
             FileUtils.deleteDirectory(new File(".//json"));
-            FileUtils.deleteDirectory(new File(".//files"));
+            //FileUtils.deleteDirectory(new File(".//files"));
         } catch (IOException ex) {
             notify.flash(printer, "AN ERROR EXPERIENCED WHEN REMOVING SOME FILES");
         }
@@ -522,7 +523,9 @@ public class WorkersController implements Initializable {
 
         try {
             LoadDataFrmDB();
-            checkPosition();
+            //checkPosition();
+            checkPosition checkin=new checkPosition();
+            checkin.checkPosition(addWorker);
         } catch (SQLException | IOException | ParseException ex) {
             Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
         }

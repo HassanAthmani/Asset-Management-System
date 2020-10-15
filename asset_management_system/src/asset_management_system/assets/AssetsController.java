@@ -1,6 +1,7 @@
 package asset_management_system.assets;
 
 import asset_management_system.usedAlot.assetSearch;
+import asset_management_system.usedAlot.checkPosition;
 import asset_management_system.usedAlot.json_code;
 import asset_management_system.usedAlot.json_read;
 import asset_management_system.usedAlot.mover;
@@ -389,7 +390,7 @@ public class AssetsController implements Initializable {
         
         try {
             FileUtils.deleteDirectory(new File(".//json"));
-            FileUtils.deleteDirectory(new File(".//files"));
+            //FileUtils.deleteDirectory(new File(".//files"));
         } catch (IOException ex) {
             notify.flash(backToDashboard, "AN ERROR EXPERIENCED WHEN REMOVING SOME FILES");
         }
@@ -2019,371 +2020,381 @@ public class AssetsController implements Initializable {
     //////////////// END PRINTING ////////////////////////////////////////////
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-        pane0.setOnSelectionChanged(e -> {
-            try {
-                load();
-
-            } catch (SQLException ex) {
-                Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
-
-        pane1.setOnSelectionChanged(e -> {
-            try {
-                load1();
-
-            } catch (SQLException ex) {
-                Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
-
-        pane2.setOnSelectionChanged(e -> {
-            try {
-
-                load2();
-
-            } catch (SQLException ex) {
-                Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
-
-        pane3.setOnSelectionChanged(e -> {
-            try {
-
-                load3();
-
-            } catch (SQLException ex) {
-                Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
-
-        //ALL ASSETS
-        choice.getItems().addAll(" ", "ASSET ID", "ASSET NAME", "ASSET CODE", "ASSET DETAILS", "WORKER NAME", "WORKER ID", "CATEGORY", "ADDITION DATE", "COST");
-        choice.setValue(" ");
-
-        //AVAILABLE ASSETS
-        choice1.getItems().addAll(" ", "ASSET ID", "ASSET NAME", "ASSET CODE", "ASSET DETAILS", "WORKER NAME", "WORKER ID", "CATEGORY", "ADDITION DATE", "COST");
-        choice1.setValue(" ");
-
-        //MAINTENANCE
-        choice2.getItems().addAll(" ", "ASSET ID", "ASSET NAME", "ASSET CODE", "ASSET DETAILS", "WORKER NAME", "WORKER ID", "CATEGORY", "ADDITION DATE", "MAINTENANCE DATE");
-        choice2.setValue(" ");
-
-        //DEFERRED ASSETS
-        choice3.getItems().addAll(" ", "ASSET ID", "ASSET NAME", "ASSET CODE", "ASSET DETAILS", "WORKER NAME", "WORKER ID", "CATEGORY", "ADDITION DATE", "DEFERRED DATE", "REASON");
-        choice3.setValue(" ");
-
-        if (search.getText().isEmpty()) {
-
-            try {
-                load();
-            } catch (SQLException ex) {
-                Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
-        if (search1.getText().isEmpty()) {
-            try {
-                load1();
-            } catch (SQLException ex) {
-                Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
-        if (search2.getText().isEmpty()) {
-            try {
-                load2();
-            } catch (SQLException ex) {
-                Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
-        if (search3.getText().isEmpty()) {
-            try {
-                load3();
-            } catch (SQLException ex) {
-                Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
-
-        ///// SEARCH
-        /////ALL ASSETS
-        search.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            //choice.getItems().addAll("ASSET ID", "ASSET NAME", "ASSET CODE", "ASSET DETAILS", "WORKER NAME", "WORKER ID", "CATEGORY", "ADDITION DATE", "COST");
-
-            String tbl = "assets";
-            if (oldValue != newValue) {
+        try {
+            checkPosition checkin=new checkPosition();
+            checkin.checkPosition(addAsset);
+            
+            pane0.setOnSelectionChanged(e -> {
                 try {
-
-                    if (!search.getText().isEmpty()) {
-
-                        String BoxValue = choice.getValue().toString();
-
-                        if ("ASSET ID".equals(BoxValue)) {
-                            String clmn = "assetID";
-                            loada(search.getText(), tbl, clmn);
-
-                        } else if ("ASSET NAME".equals(BoxValue)) {
-                            String clmn = "assetName";
-                            loada(search.getText(), tbl, clmn);
-                        } else if ("ASSET CODE".equals(BoxValue)) {
-                            String clmn = "assetCode";
-                            loada(search.getText(), tbl, clmn);
-                        } else if ("ASSET DETAILS".equals(BoxValue)) {
-                            String clmn = "assetDetails";
-                            loada(search.getText(), tbl, clmn);
-                        } else if ("WORKER NAME".equals(BoxValue)) {
-                            String clmn = "workerName";
-                            loada(search.getText(), tbl, clmn);
-                        } else if ("WORKER ID".equals(BoxValue)) {
-                            String clmn = "workerID";
-                            loada(search.getText(), tbl, clmn);
-                        } else if ("CATEGORY".equals(BoxValue)) {
-                            String clmn = "categoryID";
-                            loada(search.getText(), tbl, clmn);
-                        } else if ("ADDITION DATE".equals(BoxValue)) {
-                            String clmn = "additionDate";
-                            loada(search.getText(), tbl, clmn);
-                        } else if ("COST".equals(BoxValue)) {
-                            String clmn = "cost";
-                            loada(search.getText(), tbl, clmn);
-                        } else if (" ".equals(BoxValue)) {
-
-                            try {
-                                refresh("all assets");
-                                // System.out.print("no empty search");
-                            } catch (SQLException ex) {
-                                Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
-                    } else {
-                        if (search.getText().isEmpty()) {
-                            try {
-                                refresh("all assets");
-                                // System.out.print("no empty search");
-                            } catch (SQLException ex) {
-                                Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
-                    }
+                    load();
+                    
                 } catch (SQLException ex) {
-                    Logger.getLogger(assetSearch.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-            }
-
-        });
-        ////////////
-
-        /////AVAILABLE ASSETS
-        search1.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            //choice.getItems().addAll("ASSET ID", "ASSET NAME", "ASSET CODE", "ASSET DETAILS", "WORKER NAME", "WORKER ID", "CATEGORY", "ADDITION DATE", "COST");
-
-            String tbl = "available_assets";
-            if (oldValue != newValue) {
-                try {
-
-                    if (!search1.getText().isEmpty()) {
-
-                        String BoxValue = choice1.getValue().toString();
-
-                        if ("ASSET ID".equals(BoxValue)) {
-                            String clmn = "assetID";
-                            loada1(search1.getText(), tbl, clmn);
-
-                        } else if ("ASSET NAME".equals(BoxValue)) {
-                            String clmn = "assetName";
-                            loada1(search1.getText(), tbl, clmn);
-                        } else if ("ASSET CODE".equals(BoxValue)) {
-                            String clmn = "assetCode";
-                            loada1(search1.getText(), tbl, clmn);
-                        } else if ("ASSET DETAILS".equals(BoxValue)) {
-                            String clmn = "assetDetails";
-                            loada1(search1.getText(), tbl, clmn);
-                        } else if ("WORKER NAME".equals(BoxValue)) {
-                            String clmn = "workerName";
-                            loada1(search1.getText(), tbl, clmn);
-                        } else if ("WORKER ID".equals(BoxValue)) {
-                            String clmn = "workerID";
-                            loada1(search1.getText(), tbl, clmn);
-                        } else if ("CATEGORY".equals(BoxValue)) {
-                            String clmn = "categoryID";
-                            loada1(search1.getText(), tbl, clmn);
-                        } else if ("ADDITION DATE".equals(BoxValue)) {
-                            String clmn = "additionDate";
-                            loada1(search1.getText(), tbl, clmn);
-                        } else if ("COST".equals(BoxValue)) {
-                            String clmn = "cost";
-                            loada1(search1.getText(), tbl, clmn);
-                        } else if (" ".equals(BoxValue)) {
-
-                            try {
-                                refresh("available assets");
-                                // System.out.print("no empty search");
-                            } catch (SQLException ex) {
-                                Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
-                    } else {
-                        if (search1.getText().isEmpty()) {
-                            try {
-                                refresh("available assets");
-                                // System.out.print("no empty search");
-                            } catch (SQLException ex) {
-                                Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
-                    }
-                } catch (SQLException ex) {
-                    Logger.getLogger(assetSearch.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ClassNotFoundException ex) {
                     Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
-            }
-
-        });
-        /////////////
-
-        /////MAINTENANCE
-        search2.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            //choice.getItems().addAll("ASSET ID", "ASSET NAME", "ASSET CODE", "ASSET DETAILS", "WORKER NAME", "WORKER ID", "CATEGORY", "ADDITION DATE", "COST");
-
-            String tbl = "asset_maintenance";
-            if (oldValue != newValue) {
+            });
+            
+            pane1.setOnSelectionChanged(e -> {
                 try {
-
-                    if (!search2.getText().isEmpty()) {
-
-                        String BoxValue = choice2.getValue().toString();
-
-                        if ("ASSET ID".equals(BoxValue)) {
-                            String clmn = "assetID";
-                            loada2(search2.getText(), tbl, clmn);
-
-                        } else if ("ASSET NAME".equals(BoxValue)) {
-                            String clmn = "assetName";
-                            loada2(search2.getText(), tbl, clmn);
-                        } else if ("ASSET CODE".equals(BoxValue)) {
-                            String clmn = "assetCode";
-                            loada2(search2.getText(), tbl, clmn);
-                        } else if ("ASSET DETAILS".equals(BoxValue)) {
-                            String clmn = "assetDetails";
-                            loada2(search2.getText(), tbl, clmn);
-                        } else if ("WORKER NAME".equals(BoxValue)) {
-                            String clmn = "workerName";
-                            loada2(search2.getText(), tbl, clmn);
-                        } else if ("WORKER ID".equals(BoxValue)) {
-                            String clmn = "workerID";
-                            loada2(search2.getText(), tbl, clmn);
-                        } else if ("CATEGORY".equals(BoxValue)) {
-                            String clmn = "categoryID";
-                            loada2(search2.getText(), tbl, clmn);
-                        } else if ("ADDITION DATE".equals(BoxValue)) {
-                            String clmn = "additionDate";
-                            loada2(search2.getText(), tbl, clmn);
-                        } else if ("MAINTENANCE DATE".equals(BoxValue)) {
-                            String clmn = "maintenanceDate";
-                            loada2(search2.getText(), tbl, clmn);
-                        } else if (" ".equals(BoxValue)) {
-
-                            try {
-                                refresh("maintenance");
-                                // System.out.print("no empty search");
-                            } catch (SQLException ex) {
-                                Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
-                    } else {
-                        if (search2.getText().isEmpty()) {
-                            try {
-                                refresh("maintenance");
-                                // System.out.print("no empty search");
-                            } catch (SQLException ex) {
-                                Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
-                    }
+                    load1();
+                    
                 } catch (SQLException ex) {
-                    Logger.getLogger(assetSearch.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
-            }
-
-        });
-        //////////
-
-        /////DEFERRED
-        search3.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            //choice.getItems().addAll("ASSET ID", "ASSET NAME", "ASSET CODE", "ASSET DETAILS", "WORKER NAME", "WORKER ID", "CATEGORY", "ADDITION DATE", "COST");
-
-            String tbl = "deferred_asset";
-            if (oldValue != newValue) {
+            });
+            
+            pane2.setOnSelectionChanged(e -> {
                 try {
-
-                    if (!search3.getText().isEmpty()) {
-
-                        String BoxValue = choice3.getValue().toString();
-
-                        if ("ASSET ID".equals(BoxValue)) {
-                            String clmn = "assetID";
-                            loada3(search3.getText(), tbl, clmn);
-
-                        } else if ("ASSET NAME".equals(BoxValue)) {
-                            String clmn = "assetName";
-                            loada3(search3.getText(), tbl, clmn);
-                        } else if ("ASSET CODE".equals(BoxValue)) {
-                            String clmn = "assetCode";
-                            loada3(search3.getText(), tbl, clmn);
-                        } else if ("ASSET DETAILS".equals(BoxValue)) {
-                            String clmn = "assetDetails";
-                            loada3(search3.getText(), tbl, clmn);
-                        } else if ("WORKER NAME".equals(BoxValue)) {
-                            String clmn = "workerName";
-                            loada3(search3.getText(), tbl, clmn);
-                        } else if ("WORKER ID".equals(BoxValue)) {
-                            String clmn = "workerID";
-                            loada3(search3.getText(), tbl, clmn);
-                        } else if ("CATEGORY".equals(BoxValue)) {
-                            String clmn = "categoryID";
-                            loada3(search3.getText(), tbl, clmn);
-                        } else if ("ADDITION DATE".equals(BoxValue)) {
-                            String clmn = "additionDate";
-                            loada3(search3.getText(), tbl, clmn);
-                        } else if ("DEFERRED DATE".equals(BoxValue)) {
-                            String clmn = "deferredDate";
-                            loada3(search3.getText(), tbl, clmn);
-                        } else if ("REASON".equals(BoxValue)) {
-                            String clmn = "reason";
-                            loada3(search3.getText(), tbl, clmn);
-                        } else if (" ".equals(BoxValue)) {
-
-                            try {
-                                refresh("deferred assets");
-                                // System.out.print("no empty search");
-                            } catch (SQLException ex) {
-                                Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
-                    } else {
-                        if (search3.getText().isEmpty()) {
-                            try {
-                                refresh("deferred assets");
-                                // System.out.print("no empty search");
-                            } catch (SQLException ex) {
-                                Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
-                    }
+                    
+                    load2();
+                    
                 } catch (SQLException ex) {
-                    Logger.getLogger(assetSearch.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
+            });
+            
+            pane3.setOnSelectionChanged(e -> {
+                try {
+                    
+                    load3();
+                    
+                } catch (SQLException ex) {
+                    Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+            
+            //ALL ASSETS
+            choice.getItems().addAll(" ", "ASSET ID", "ASSET NAME", "ASSET CODE", "ASSET DETAILS", "WORKER NAME", "WORKER ID", "CATEGORY", "ADDITION DATE", "COST");
+            choice.setValue(" ");
+            
+            //AVAILABLE ASSETS
+            choice1.getItems().addAll(" ", "ASSET ID", "ASSET NAME", "ASSET CODE", "ASSET DETAILS", "WORKER NAME", "WORKER ID", "CATEGORY", "ADDITION DATE", "COST");
+            choice1.setValue(" ");
+            
+            //MAINTENANCE
+            choice2.getItems().addAll(" ", "ASSET ID", "ASSET NAME", "ASSET CODE", "ASSET DETAILS", "WORKER NAME", "WORKER ID", "CATEGORY", "ADDITION DATE", "MAINTENANCE DATE");
+            choice2.setValue(" ");
+            
+            //DEFERRED ASSETS
+            choice3.getItems().addAll(" ", "ASSET ID", "ASSET NAME", "ASSET CODE", "ASSET DETAILS", "WORKER NAME", "WORKER ID", "CATEGORY", "ADDITION DATE", "DEFERRED DATE", "REASON");
+            choice3.setValue(" ");
+            
+            if (search.getText().isEmpty()) {
+                
+                try {
+                    load();
+                } catch (SQLException ex) {
+                    Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
             }
+            if (search1.getText().isEmpty()) {
+                try {
+                    load1();
+                } catch (SQLException ex) {
+                    Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            }
+            if (search2.getText().isEmpty()) {
+                try {
+                    load2();
+                } catch (SQLException ex) {
+                    Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            }
+            if (search3.getText().isEmpty()) {
+                try {
+                    load3();
+                } catch (SQLException ex) {
+                    Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            }
+            
+            ///// SEARCH
+            /////ALL ASSETS
+            search.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+                //choice.getItems().addAll("ASSET ID", "ASSET NAME", "ASSET CODE", "ASSET DETAILS", "WORKER NAME", "WORKER ID", "CATEGORY", "ADDITION DATE", "COST");
+                
+                String tbl = "assets";
+                if (oldValue != newValue) {
+                    try {
+                        
+                        if (!search.getText().isEmpty()) {
+                            
+                            String BoxValue = choice.getValue().toString();
+                            
+                            if ("ASSET ID".equals(BoxValue)) {
+                                String clmn = "assetID";
+                                loada(search.getText(), tbl, clmn);
+                                
+                            } else if ("ASSET NAME".equals(BoxValue)) {
+                                String clmn = "assetName";
+                                loada(search.getText(), tbl, clmn);
+                            } else if ("ASSET CODE".equals(BoxValue)) {
+                                String clmn = "assetCode";
+                                loada(search.getText(), tbl, clmn);
+                            } else if ("ASSET DETAILS".equals(BoxValue)) {
+                                String clmn = "assetDetails";
+                                loada(search.getText(), tbl, clmn);
+                            } else if ("WORKER NAME".equals(BoxValue)) {
+                                String clmn = "workerName";
+                                loada(search.getText(), tbl, clmn);
+                            } else if ("WORKER ID".equals(BoxValue)) {
+                                String clmn = "workerID";
+                                loada(search.getText(), tbl, clmn);
+                            } else if ("CATEGORY".equals(BoxValue)) {
+                                String clmn = "categoryID";
+                                loada(search.getText(), tbl, clmn);
+                            } else if ("ADDITION DATE".equals(BoxValue)) {
+                                String clmn = "additionDate";
+                                loada(search.getText(), tbl, clmn);
+                            } else if ("COST".equals(BoxValue)) {
+                                String clmn = "cost";
+                                loada(search.getText(), tbl, clmn);
+                            } else if (" ".equals(BoxValue)) {
+                                
+                                try {
+                                    refresh("all assets");
+                                    // System.out.print("no empty search");
+                                } catch (SQLException ex) {
+                                    Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                        } else {
+                            if (search.getText().isEmpty()) {
+                                try {
+                                    refresh("all assets");
+                                    // System.out.print("no empty search");
+                                } catch (SQLException ex) {
+                                    Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                        }
+                    } catch (SQLException ex) {
+                        Logger.getLogger(assetSearch.class.getName()).log(Level.SEVERE, null, ex);
+                    }
 
-        });
+                }
+                
+            });
+            ////////////
+            
+            /////AVAILABLE ASSETS
+            search1.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+                //choice.getItems().addAll("ASSET ID", "ASSET NAME", "ASSET CODE", "ASSET DETAILS", "WORKER NAME", "WORKER ID", "CATEGORY", "ADDITION DATE", "COST");
+                
+                String tbl = "available_assets";
+                if (oldValue != newValue) {
+                    try {
+                        
+                        if (!search1.getText().isEmpty()) {
+                            
+                            String BoxValue = choice1.getValue().toString();
+                            
+                            if ("ASSET ID".equals(BoxValue)) {
+                                String clmn = "assetID";
+                                loada1(search1.getText(), tbl, clmn);
+                                
+                            } else if ("ASSET NAME".equals(BoxValue)) {
+                                String clmn = "assetName";
+                                loada1(search1.getText(), tbl, clmn);
+                            } else if ("ASSET CODE".equals(BoxValue)) {
+                                String clmn = "assetCode";
+                                loada1(search1.getText(), tbl, clmn);
+                            } else if ("ASSET DETAILS".equals(BoxValue)) {
+                                String clmn = "assetDetails";
+                                loada1(search1.getText(), tbl, clmn);
+                            } else if ("WORKER NAME".equals(BoxValue)) {
+                                String clmn = "workerName";
+                                loada1(search1.getText(), tbl, clmn);
+                            } else if ("WORKER ID".equals(BoxValue)) {
+                                String clmn = "workerID";
+                                loada1(search1.getText(), tbl, clmn);
+                            } else if ("CATEGORY".equals(BoxValue)) {
+                                String clmn = "categoryID";
+                                loada1(search1.getText(), tbl, clmn);
+                            } else if ("ADDITION DATE".equals(BoxValue)) {
+                                String clmn = "additionDate";
+                                loada1(search1.getText(), tbl, clmn);
+                            } else if ("COST".equals(BoxValue)) {
+                                String clmn = "cost";
+                                loada1(search1.getText(), tbl, clmn);
+                            } else if (" ".equals(BoxValue)) {
+                                
+                                try {
+                                    refresh("available assets");
+                                    // System.out.print("no empty search");
+                                } catch (SQLException ex) {
+                                    Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                        } else {
+                            if (search1.getText().isEmpty()) {
+                                try {
+                                    refresh("available assets");
+                                    // System.out.print("no empty search");
+                                } catch (SQLException ex) {
+                                    Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                        }
+                    } catch (SQLException ex) {
+                        Logger.getLogger(assetSearch.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }
+                
+            });
+            /////////////
+            
+            /////MAINTENANCE
+            search2.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+                //choice.getItems().addAll("ASSET ID", "ASSET NAME", "ASSET CODE", "ASSET DETAILS", "WORKER NAME", "WORKER ID", "CATEGORY", "ADDITION DATE", "COST");
+                
+                String tbl = "asset_maintenance";
+                if (oldValue != newValue) {
+                    try {
+                        
+                        if (!search2.getText().isEmpty()) {
+                            
+                            String BoxValue = choice2.getValue().toString();
+                            
+                            if ("ASSET ID".equals(BoxValue)) {
+                                String clmn = "assetID";
+                                loada2(search2.getText(), tbl, clmn);
+                                
+                            } else if ("ASSET NAME".equals(BoxValue)) {
+                                String clmn = "assetName";
+                                loada2(search2.getText(), tbl, clmn);
+                            } else if ("ASSET CODE".equals(BoxValue)) {
+                                String clmn = "assetCode";
+                                loada2(search2.getText(), tbl, clmn);
+                            } else if ("ASSET DETAILS".equals(BoxValue)) {
+                                String clmn = "assetDetails";
+                                loada2(search2.getText(), tbl, clmn);
+                            } else if ("WORKER NAME".equals(BoxValue)) {
+                                String clmn = "workerName";
+                                loada2(search2.getText(), tbl, clmn);
+                            } else if ("WORKER ID".equals(BoxValue)) {
+                                String clmn = "workerID";
+                                loada2(search2.getText(), tbl, clmn);
+                            } else if ("CATEGORY".equals(BoxValue)) {
+                                String clmn = "categoryID";
+                                loada2(search2.getText(), tbl, clmn);
+                            } else if ("ADDITION DATE".equals(BoxValue)) {
+                                String clmn = "additionDate";
+                                loada2(search2.getText(), tbl, clmn);
+                            } else if ("MAINTENANCE DATE".equals(BoxValue)) {
+                                String clmn = "maintenanceDate";
+                                loada2(search2.getText(), tbl, clmn);
+                            } else if (" ".equals(BoxValue)) {
+                                
+                                try {
+                                    refresh("maintenance");
+                                    // System.out.print("no empty search");
+                                } catch (SQLException ex) {
+                                    Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                        } else {
+                            if (search2.getText().isEmpty()) {
+                                try {
+                                    refresh("maintenance");
+                                    // System.out.print("no empty search");
+                                } catch (SQLException ex) {
+                                    Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                        }
+                    } catch (SQLException ex) {
+                        Logger.getLogger(assetSearch.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }
+                
+            });
+            //////////
+            
+            /////DEFERRED
+            search3.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+                //choice.getItems().addAll("ASSET ID", "ASSET NAME", "ASSET CODE", "ASSET DETAILS", "WORKER NAME", "WORKER ID", "CATEGORY", "ADDITION DATE", "COST");
+                
+                String tbl = "deferred_asset";
+                if (oldValue != newValue) {
+                    try {
+                        
+                        if (!search3.getText().isEmpty()) {
+                            
+                            String BoxValue = choice3.getValue().toString();
+                            
+                            if ("ASSET ID".equals(BoxValue)) {
+                                String clmn = "assetID";
+                                loada3(search3.getText(), tbl, clmn);
+                                
+                            } else if ("ASSET NAME".equals(BoxValue)) {
+                                String clmn = "assetName";
+                                loada3(search3.getText(), tbl, clmn);
+                            } else if ("ASSET CODE".equals(BoxValue)) {
+                                String clmn = "assetCode";
+                                loada3(search3.getText(), tbl, clmn);
+                            } else if ("ASSET DETAILS".equals(BoxValue)) {
+                                String clmn = "assetDetails";
+                                loada3(search3.getText(), tbl, clmn);
+                            } else if ("WORKER NAME".equals(BoxValue)) {
+                                String clmn = "workerName";
+                                loada3(search3.getText(), tbl, clmn);
+                            } else if ("WORKER ID".equals(BoxValue)) {
+                                String clmn = "workerID";
+                                loada3(search3.getText(), tbl, clmn);
+                            } else if ("CATEGORY".equals(BoxValue)) {
+                                String clmn = "categoryID";
+                                loada3(search3.getText(), tbl, clmn);
+                            } else if ("ADDITION DATE".equals(BoxValue)) {
+                                String clmn = "additionDate";
+                                loada3(search3.getText(), tbl, clmn);
+                            } else if ("DEFERRED DATE".equals(BoxValue)) {
+                                String clmn = "deferredDate";
+                                loada3(search3.getText(), tbl, clmn);
+                            } else if ("REASON".equals(BoxValue)) {
+                                String clmn = "reason";
+                                loada3(search3.getText(), tbl, clmn);
+                            } else if (" ".equals(BoxValue)) {
+                                
+                                try {
+                                    refresh("deferred assets");
+                                    // System.out.print("no empty search");
+                                } catch (SQLException ex) {
+                                    Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                        } else {
+                            if (search3.getText().isEmpty()) {
+                                try {
+                                    refresh("deferred assets");
+                                    // System.out.print("no empty search");
+                                } catch (SQLException ex) {
+                                    Logger.getLogger(WorkersController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                        }
+                    } catch (SQLException ex) {
+                        Logger.getLogger(assetSearch.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }
+                
+            });
+        } catch (SQLException ex) {
+            Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 

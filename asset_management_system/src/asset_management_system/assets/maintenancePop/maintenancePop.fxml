@@ -73,5 +73,6 @@
             <Font size="20.0" />
          </font>
       </Label>
+      <Button fx:id="printData" layoutX="746.0" layoutY="429.0" mnemonicParsing="false" onAction="#printStuff" prefHeight="32.0" prefWidth="150.0" style="-fx-font-weight: bold; -fx-background-color: #42dc5c;" text="PRINT" />
    </children>
 </AnchorPane>

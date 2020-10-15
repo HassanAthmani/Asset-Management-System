@@ -267,7 +267,7 @@ public class DashboardController implements Initializable {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         try {
             FileUtils.deleteDirectory(new File(".//json"));
-            FileUtils.deleteDirectory(new File(".//files"));
+            //FileUtils.deleteDirectory(new File(".//files"));
         } catch (IOException ex) {
             notify.flash(backToDashboard, "AN ERROR EXPERIENCED WHEN REMOVING SOME FILES");
         }

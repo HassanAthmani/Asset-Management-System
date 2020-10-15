@@ -12,20 +12,17 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
-import com.google.zxing.common.HybridBinarizer;
-import com.google.zxing.*;
 
 public class QR_Creator {
     
     public void QRGen(String id,String assetCode,String assetName) throws WriterException, IOException{
-        String QR_CODE_IMAGE_PATH = "./qr_images/MyQRCode.png";
+        //String QR_CODE_IMAGE_PATH = "./qr_images/MyQRCode.png";
+        File file1 = new File(".//qrCode");
+        file1.mkdir();
         
-        int height=350;
-        int width=350;
-        String filePath="Asset"+id+".png";
+        int height=100;
+        int width=100;
+        String filePath=".//qrCode//Asset"+id+".png";
         String forEncoding="Asset id="+id+" , Asset Code="+assetCode+" ,Asset Name="+assetName;
         
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
