@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,10 +27,12 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -133,14 +136,20 @@ public class DashboardController implements Initializable {
     @FXML
     private ImageView send;
 
+    @FXML
+    private Button reports;
+    
+    @FXML
+    private AnchorPane anchor;
+
     PreparedStatement ps;
 
     ArrayList<Integer> cell = new ArrayList<Integer>();
     ArrayList<String> name = new ArrayList<String>();
     List<String> A = new ArrayList<String>();
-    
-    notification notify=new notification();
-    
+
+    notification notify = new notification();
+
     ObservableList<PieChart.Data> piechartdata;
 
     mover movingWindow = new mover();
@@ -154,11 +163,11 @@ public class DashboardController implements Initializable {
         A.add("PRINTER");
         A.add("KITCHEN ITEM");
         A.add("MACHINERY ITEM");
-        
-        piechartdata=FXCollections.observableArrayList();
+
+        piechartdata = FXCollections.observableArrayList();
 
         for (int i = 0; i < A.size(); i++) {
-            
+
             try {
                 String dbName = "asset_management_system";
                 String userName = "root";
@@ -166,7 +175,7 @@ public class DashboardController implements Initializable {
                 Class.forName("com.mysql.jdbc.Driver");
                 connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, password);
 
-                ps = connection.prepareStatement("SELECT COUNT(*) FROM assets WHERE categoryID='"+A.get(i)+"'");
+                ps = connection.prepareStatement("SELECT COUNT(*) FROM assets WHERE categoryID='" + A.get(i) + "'");
                 ResultSet rs = ps.executeQuery();
 
                 while (rs.next()) {
@@ -429,6 +438,7 @@ public class DashboardController implements Initializable {
         newScene.setFill(Color.ALICEBLUE);
 
         newScene.getStylesheets().add("/asset_management_system/css/tabpane.css");
+        newScene.getStylesheets().add("/asset_management_system/css/back_button.css");
 
         //getting stage
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -461,10 +471,44 @@ public class DashboardController implements Initializable {
 
     }
 
+    @FXML
+    void printReports(ActionEvent event) throws IOException {
+        
+        GaussianBlur gaussianBlur = new GaussianBlur();
+         gaussianBlur.setRadius(10.5);
+        anchor.setEffect(gaussianBlur);
+        
+        //getting stage
+            Stage window = new Stage();
+            Parent sceneFxml = FXMLLoader.load(getClass().getResource("/asset_management_system/reports/reports.fxml"));
+            Scene newScene = new Scene(sceneFxml);
+
+            window.setScene(newScene);
+            newScene.setFill(Color.ALICEBLUE);
+            window.initModality(Modality.WINDOW_MODAL);
+            window.initOwner(((Node) event.getSource()).getScene().getWindow());
+            window.setResizable(false);
+            window.resizableProperty();
+            //window.initStyle(StageStyle.UNDECORATED);
+            
+             window.setOnCloseRequest(e -> {
+
+                anchor.setEffect(null);
+
+            });
+
+            //setting scene on stage
+            movingWindow.moving(sceneFxml, window);
+            window.setScene(newScene);
+            window.showAndWait();
+            window.centerOnScreen();
+        
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        
+
         styling();
         try {
             LoadDataFrmDB();
@@ -477,7 +521,7 @@ public class DashboardController implements Initializable {
         } catch (ParseException ex) {
             Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         catChart.setData(piechartdata);
 
     }

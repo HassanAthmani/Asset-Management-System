@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="900.0" prefWidth="1500.0" style="-fx-background-color: ALICEBLUE;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="asset_management_system.assets.AssetsController">
+<AnchorPane id="AnchorPane" fx:id="anchor" prefHeight="900.0" prefWidth="1500.0" style="-fx-background-color: ALICEBLUE;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="asset_management_system.assets.AssetsController">
    <children>
       <VBox fx:id="vbox" prefHeight="900.0" prefWidth="240.0" style="-fx-background-color: #28d474; -fx-padding: 10; -fx-spacing: 8;">
          <children>
@@ -79,7 +79,10 @@
                         <TextField fx:id="search" layoutX="346.0" layoutY="38.0" prefHeight="26.0" prefWidth="217.0" />
                         <ChoiceBox fx:id="choice" layoutX="594.0" layoutY="39.0" prefWidth="150.0" />
                         <Button fx:id="addAsset" layoutX="1035.0" layoutY="52.0" mnemonicParsing="false" onAction="#addNew" prefHeight="26.0" prefWidth="146.0" style="-fx-background-color: #42dc5c;" text="ADD ASSET" />
-                        <Button fx:id="printer" layoutX="25.0" layoutY="40.0" mnemonicParsing="false" onAction="#printData" prefHeight="26.0" prefWidth="67.0" style="-fx-background-color: #42dc5c;" text="PRINT" />
+                        <Button fx:id="printer" layoutX="25.0" layoutY="40.0" mnemonicParsing="false" onAction="#printData" prefHeight="26.0" prefWidth="67.0" style="-fx-background-color: #42dc5c;" text="PRINT">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font></Button>
                      </children>
                   </AnchorPane>
                </content>
@@ -129,7 +132,7 @@
                         </TableView>
                         <TextField fx:id="search2" layoutX="14.0" layoutY="34.0" prefHeight="26.0" prefWidth="216.0" />
                         <ChoiceBox fx:id="choice2" layoutX="274.0" layoutY="34.0" prefWidth="150.0" />
-                        <Button fx:id="printer2" layoutX="1150.0" layoutY="34.0" mnemonicParsing="false" onAction="#printData2" prefHeight="26.0" prefWidth="64.0" style="-fx-background-color: #42dc5c;" text="PRINT" />
+                        <Button fx:id="printer2" layoutX="1130.0" layoutY="34.0" mnemonicParsing="false" onAction="#printData2" prefHeight="26.0" prefWidth="84.0" style="-fx-background-color: #42dc5c;" text="PRINT" />
                      </children>
                   </AnchorPane>
                </content>

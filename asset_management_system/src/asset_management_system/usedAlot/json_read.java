@@ -38,6 +38,19 @@ public class json_read {
       
       return name;
    }
+    public String purpose() throws FileNotFoundException, IOException, ParseException{
+        
+        JSONParser parser = new JSONParser();
+        String name;
+      
+         Object obj = parser.parse(new FileReader(".//json//reportInfo.json"));
+         JSONObject jsonObject = (JSONObject)obj;
+         name = (String)jsonObject.get("reportInfo");
+         
+          
+      
+      return name;
+   }
     
     public String asset_id() throws FileNotFoundException, IOException, ParseException{
         

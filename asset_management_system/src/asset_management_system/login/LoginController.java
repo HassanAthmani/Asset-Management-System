@@ -119,8 +119,8 @@ public class LoginController implements Initializable {
 
                 try {
                     //String sql = "SELECT * FROM login WHERE username = ? and password = ?";
-                    String sql = "SELECT * FROM `asset_management_system`.`worker_details` WHERE (workerEmail LIKE '%" + emailEscape + "%') AND (pass_word='" + pass + "')";
-                    // String sql="SELECT * FROM `asset_management_system`.`worker_details` WHERE (workerEmail LIKE '%"+emailEscape+"%') AND (pass_word ='"+pass+"')";
+                    //String sql = "SELECT * FROM `asset_management_system`.`worker_details` WHERE (workerEmail LIKE '%" + emailEscape + "%') AND (pass_word='" + pass + "')";
+                     String sql="SELECT * FROM `asset_management_system`.`worker_details` WHERE (workerEmail LIKE '"+emailEscape+"') AND (pass_word ='"+pass+"')";
 
                     preparedStatement = connection.prepareStatement(sql);
                     // preparedStatement.setString(1, usrname );
@@ -132,7 +132,7 @@ public class LoginController implements Initializable {
                         //ACCESS NOT GRANTED
                         /*int response = JOptionPane.showConfirmDialog(
                                 null, "Please enter correct username and Password", "Login Failed!", JOptionPane.DEFAULT_OPTION);*/
-                        notify.flash(loginbtn, "Please enter correct username and Password");
+                        notify.flash(loginbtn, "Please enter correct email and Password");
 
                     } else {
 

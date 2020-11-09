@@ -75,6 +75,19 @@ public class special_char {
         
     }
     
+     public static boolean DateHasChar(String characters ){
+        
+       Pattern letter = Pattern.compile("[a-zA-z]");        
+        Pattern special = Pattern.compile ("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
+       
+          Matcher hasLetter = letter.matcher(characters);          
+           Matcher hasSpecial = special.matcher(characters);
+
+          return hasLetter.find() && hasSpecial.find();
+          //return (hasLetter.find()); 
+        
+    }
+    
    
     
     

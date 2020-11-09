@@ -56,7 +56,9 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.StageStyle;
 import org.apache.commons.io.FileUtils;
@@ -283,13 +285,20 @@ public class AssetsController implements Initializable {
 
     private double xOffset = 0;
     private double yOffset = 0;
+    
+     @FXML
+    private AnchorPane anchor;
 
     notification notify = new notification();
+    GaussianBlur gaussianBlur = new GaussianBlur();
+         
 
     @FXML
     void send_file(MouseEvent event) throws IOException {
         //you can use #onMousePressed or #orMouseClicked
         mover movingWindow = new mover();
+        /*gaussianBlur.setRadius(10.5);
+        anchor.setEffect(gaussianBlur);*/
 
         //getting stage
         Stage window = new Stage();
@@ -304,6 +313,7 @@ public class AssetsController implements Initializable {
         window.setResizable(false);
         window.resizableProperty();
         window.initStyle(StageStyle.UNDECORATED);
+        
 
         //setting scene on stage
         movingWindow.moving(sceneFxml, window);

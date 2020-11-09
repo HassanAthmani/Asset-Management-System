@@ -30,6 +30,26 @@ public class json_code {
             e.printStackTrace();
         }
     }
+    
+    public void reportInfo(String info) {
+        //Add reportInfo        
+        JSONObject id_info = new JSONObject();
+        id_info.put("reportInfo", info);
+
+        //Write JSON file
+        try (FileWriter file = new FileWriter(new File(".//json//reportInfo.json"))) {
+
+            file.write(id_info.toJSONString());
+            file.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    
+    
 
     public void json_profile(String id, String firstname, String lastname, String phoneno, String email, String nationalID, String dept, String location, String pas) {
         //Add worker id
