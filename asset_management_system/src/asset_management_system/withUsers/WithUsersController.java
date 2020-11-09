@@ -176,7 +176,7 @@ public class WithUsersController implements Initializable {
         FileChooser.ExtensionFilter extFilterPDF = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.PDF");
         fileChooser.getExtensionFilters().addAll(extFilterPDF);
         fileChooser.setTitle("PICK FILE ");
-        fileChooser.setInitialDirectory(new File("C:\\Bit_torrent"));
+        fileChooser.setInitialDirectory(new File("C:\\Users\\User\\Desktop\\Asset_Management_System\\files"));
 
         //Show open file dialog
         File file = fileChooser.showOpenDialog(window);

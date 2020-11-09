@@ -233,7 +233,7 @@ public class DashboardController implements Initializable {
         FileChooser.ExtensionFilter extFilterPDF = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.PDF");
         fileChooser.getExtensionFilters().addAll(extFilterPDF);
         fileChooser.setTitle("PICK FILE ");
-        fileChooser.setInitialDirectory(new File("C:\\Bit_torrent"));
+        fileChooser.setInitialDirectory(new File("C:\\Users\\User\\Desktop\\Asset_Management_System\\files"));
 
         //Show open file dialog
         File file = fileChooser.showOpenDialog(window);
@@ -418,6 +418,7 @@ public class DashboardController implements Initializable {
         Scene newScene = new Scene(sceneFxml);
         newScene.setFill(Color.ALICEBLUE);
         newScene.getStylesheets().add("/asset_management_system/css/tabpane.css");
+        newScene.getStylesheets().add("/asset_management_system/css/back_button.css");
 
         //getting stage
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -459,6 +460,7 @@ public class DashboardController implements Initializable {
         newScene.setFill(Color.ALICEBLUE);
 
         newScene.getStylesheets().add("/asset_management_system/css/tabpane.css");
+        newScene.getStylesheets().add("/asset_management_system/css/back_button.css");
 
         //getting stage
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -490,6 +492,7 @@ public class DashboardController implements Initializable {
             window.setResizable(false);
             window.resizableProperty();
             //window.initStyle(StageStyle.UNDECORATED);
+            newScene.getStylesheets().add("/asset_management_system/css/back_button.css");
             
              window.setOnCloseRequest(e -> {
 

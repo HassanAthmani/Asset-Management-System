@@ -8,7 +8,7 @@
 
 <AnchorPane id="AnchorPane" fx:id="anchor" prefHeight="237.0" prefWidth="645.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="asset_management_system.reports.reportCreator.ReportCreatorController">
    <children>
-      <Label layoutX="257.0" layoutY="14.0" prefHeight="30.0" prefWidth="210.0" text="GENERATE REPORT FOR " />
+      <Label fx:id="gen_lbl" alignment="CENTER" layoutX="154.0" layoutY="14.0" prefHeight="30.0" prefWidth="378.0" text="GENERATE REPORT FOR " textAlignment="CENTER" underline="true" />
       <DatePicker fx:id="fromDate" layoutX="97.0" layoutY="94.0" />
       <DatePicker fx:id="toDate" layoutX="396.0" layoutY="94.0" />
       <Label layoutX="29.0" layoutY="98.0" text="FROM" />
@@ -17,6 +17,6 @@
       <CheckBox fx:id="barCheck" layoutX="272.0" layoutY="142.0" mnemonicParsing="false" text="BAR CHART " />
       <CheckBox fx:id="pieCheck" layoutX="385.0" layoutY="142.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="109.0" text="PIE CHART" />
       <Button fx:id="printer" layoutX="275.0" layoutY="171.0" mnemonicParsing="false" onAction="#printData" prefHeight="38.0" prefWidth="95.0" style="-fx-background-color: #42dc5c;" text="PRINT" />
-      <Label fx:id="purpose" layoutX="145.0" layoutY="44.0" prefHeight="26.0" prefWidth="397.0" text="Label" />
+      <Label fx:id="purpose" alignment="CENTER" layoutX="132.0" layoutY="51.0" prefHeight="26.0" prefWidth="397.0" text="Label" textAlignment="CENTER" />
    </children>
 </AnchorPane>

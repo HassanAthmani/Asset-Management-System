@@ -20,6 +20,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -51,6 +52,9 @@ public class ReportsController implements Initializable {
 
     @FXML
     private AnchorPane anchor;
+    
+    @FXML
+    private Label report_lbl;
 
     notification notify = new notification();
     json_code cod = new json_code();
@@ -142,12 +146,22 @@ public class ReportsController implements Initializable {
         cod.reportInfo("totalAssets");
         reportGen();
     }
+    
+    public void styling(){
+        
+        String f = "-fx-font-family: 'Bebas Neue', cursive; -fx-font-size: 20; -fx-background-color: #42dc5c;";
+        total_assets.setStyle(f);
+        assigned_assets.setStyle(f);
+        deferred_assets.setStyle(f);
+        asset_in_maintenance.setStyle(f);
+        report_lbl.setStyle("-fx-font-family: 'Lobster', cursive; -fx-font-size: 30;");
+    }
 
     
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        styling();
     }
 
 }

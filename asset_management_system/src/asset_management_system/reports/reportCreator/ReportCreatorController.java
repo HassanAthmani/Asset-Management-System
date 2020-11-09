@@ -48,6 +48,9 @@ public class ReportCreatorController implements Initializable {
     @FXML
     private ImageView closeApp;
     
+    @FXML
+    private Label gen_lbl;
+    
     creator make=new creator();
 notification notify = new notification();
 
@@ -118,6 +121,8 @@ notification notify = new notification();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        gen_lbl.setStyle("-fx-font-family: 'Bebas Neue', cursive; -fx-font-size: 30;");
+        purpose.setStyle("-fx-font-family: 'Bebas Neue', cursive; -fx-font-size: 20;");
 
         json_read jsonReader = new json_read();
         try {
