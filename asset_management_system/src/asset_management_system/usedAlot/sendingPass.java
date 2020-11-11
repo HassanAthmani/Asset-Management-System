@@ -151,7 +151,8 @@ public class sendingPass {
         }
     }
 
-    public void recoverAcc(String recipientMail) throws SQLException {
+    public void recoverAcc(String recipientMail,Node node) throws SQLException {
+        notification nww = new notification();
 
         int min = 100001;
         int max = 9999999;
@@ -212,8 +213,10 @@ public class sendingPass {
             // Send message
             Transport.send(message);
             System.out.println("Sent message successfully....");
+            nww.flash(node, "YOUR NEW PASSWORD HAS BEEN SENT TO YOUR EMAIL.");
         } catch (MessagingException mex) {
             mex.printStackTrace();
+            nww.flash(node, "AN ERROR OCCURED WHEN TRYING TO SEND YOU AN EMAIL,CHECK NETWORK CONNECTION.");
         }
     }
 

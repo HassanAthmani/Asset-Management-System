@@ -1,14 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package asset_management_system.usedAlot;
 
-/**
- *
- * @author User
- */
+
 public class escapeChar {
     public static String addChar(String x,int p ) {
        
@@ -21,8 +14,7 @@ public class escapeChar {
     return new String(updatedArr);
     }
     
-    public static String escapeChar1(String u){
-        
+    public static String escapeChar1(String u){        
         
         ///SHOWS LOCATION OF THE SPECIAL CHARACTERS
          //String password = "b_---b+bjkjl;'l;a;admk'adl'aka;dkdm;ad;admk'adl'aka;dkmk'adl'aka;dkk'adl'aka;dk;admk'adl'aka;dk";

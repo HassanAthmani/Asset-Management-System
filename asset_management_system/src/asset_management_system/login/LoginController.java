@@ -70,6 +70,7 @@ public class LoginController implements Initializable {
     public void closeAppWindow(MouseEvent event) {
         //getting stage
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+         window.close();
         try {
             FileUtils.deleteDirectory(new File(".//json"));
             //FileUtils.deleteDirectory(new File(".//files"));
@@ -77,7 +78,7 @@ public class LoginController implements Initializable {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        window.close();
+       
     }
 
     @FXML

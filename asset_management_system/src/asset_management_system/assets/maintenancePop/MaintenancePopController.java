@@ -3,6 +3,7 @@ package asset_management_system.assets.maintenancePop;
 import asset_management_system.assets.all_assetsPop.All_assetsPopController;
 import asset_management_system.assets.assetPop.AssetPopController;
 import asset_management_system.usedAlot.QR_Creator;
+import asset_management_system.usedAlot.checkPosition;
 import asset_management_system.usedAlot.json_code;
 import asset_management_system.usedAlot.json_read;
 import asset_management_system.usedAlot.notification;
@@ -287,41 +288,53 @@ public class MaintenancePopController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-        mainLbl.setStyle("-fx-font-family: 'Lobster', cursive; -fx-font-size: 20; -fx-font-weight: bold;");
-
-        assetID.setEditable(false);
-        assetName.setEditable(false);
-        assetCode.setEditable(false);
-        assetDetails.setEditable(false);
-        workerName.setEditable(false);
-        workerID.setEditable(false);
-        category.setEditable(false);
-        additionDate.setEditable(false);
-        maintenanceDate.setEditable(false);
-
-        reason.clear();
-
-        QR_Creator maker = new QR_Creator();
-
         try {
-            json_read nw = new json_read();
-            nw.setTomaintenance(assetID, assetName, assetCode, assetDetails, workerName, workerID, category, additionDate, maintenanceDate);
-
-            maker.QRGen(assetID.getText(), assetCode.getText(), assetName.getText());
-            String path = ".//qrCode//Asset" + assetID.getText() + ".png";
-            Image imageObject;
-            imageObject = new Image(new FileInputStream(path));
-            // ImageView image = new ImageView(imageObject);  
-            qr_code.setImage(imageObject);
-
-        } catch (WriterException ex) {
+            checkPosition checkin=new checkPosition();
+            checkin.checkPosition(deferAsset);
+            checkin.checkPosition(returnToAssets);
+            
+            mainLbl.setStyle("-fx-font-family: 'Lobster', cursive; -fx-font-size: 20; -fx-font-weight: bold;");
+            
+            assetID.setEditable(false);
+            assetName.setEditable(false);
+            assetCode.setEditable(false);
+            assetDetails.setEditable(false);
+            workerName.setEditable(false);
+            workerID.setEditable(false);
+            category.setEditable(false);
+            additionDate.setEditable(false);
+            maintenanceDate.setEditable(false);
+            
+            reason.clear();
+            
+            QR_Creator maker = new QR_Creator();
+            
+            try {
+                json_read nw = new json_read();
+                nw.setTomaintenance(assetID, assetName, assetCode, assetDetails, workerName, workerID, category, additionDate, maintenanceDate);
+                
+                maker.QRGen(assetID.getText(), assetCode.getText(), assetName.getText());
+                String path = ".//qrCode//Asset" + assetID.getText() + ".png";
+                Image imageObject;
+                imageObject = new Image(new FileInputStream(path));
+                // ImageView image = new ImageView(imageObject);
+                qr_code.setImage(imageObject);
+                
+            } catch (WriterException ex) {
+                Logger.getLogger(MaintenancePopController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(MaintenancePopController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(MaintenancePopController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(MaintenancePopController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        } catch (SQLException ex) {
             Logger.getLogger(MaintenancePopController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(MaintenancePopController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
-            Logger.getLogger(MaintenancePopController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
             Logger.getLogger(MaintenancePopController.class.getName()).log(Level.SEVERE, null, ex);
         }
 

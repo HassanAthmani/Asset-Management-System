@@ -46,6 +46,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javax.swing.JOptionPane;
+import static jdk.nashorn.internal.objects.NativeString.toUpperCase;
 import org.apache.commons.io.FileUtils;
 import org.json.simple.parser.ParseException;
 
@@ -441,7 +442,7 @@ public class ProfileController implements Initializable {
         } else if ((new_pass.getText().isEmpty() && confirm_pass.getText().isEmpty()) && (!firstName_txtfield.getText().isEmpty() && !secondName_txtfield.getText().isEmpty() && !phoneNo_txtfield.getText().isEmpty() && !email_txtfield.getText().isEmpty() && !nationalID_txtfield.getText().isEmpty() && !department_txtfield.getText().isEmpty() && !location_txtfield.getText().isEmpty())) {
 
             //jsonGet.json_profile(current_pass.getText(), firstName_lbl.getText(),lastName_lbl.getText(),phoneNo_txtfield.getText(), email_txtfield.getText(),nationalID_txtfield.getText(), department_txtfield.getText(), location_txtfield.getText(),pas_text.getText());
-            addData.ProfileaddData(current_pass.getText(), firstName_txtfield.getText(), secondName_txtfield.getText(), phoneNo_txtfield.getText(), email_txtfield.getText(), nationalID_txtfield.getText(), department_txtfield.getText(), location_txtfield.getText(), password);
+            addData.ProfileaddData(current_pass.getText(),toUpperCase(firstName_txtfield.getText()), toUpperCase(secondName_txtfield.getText()), phoneNo_txtfield.getText(), email_txtfield.getText(), nationalID_txtfield.getText(), toUpperCase(department_txtfield.getText()), toUpperCase(location_txtfield.getText()), password);
 
             fill_data();
             editInfo.setVisible(true);
@@ -467,7 +468,7 @@ public class ProfileController implements Initializable {
 
         } else if ((!new_pass.getText().isEmpty() && !confirm_pass.getText().isEmpty()) && (Objects.equals(new_pass.getText(), confirm_pass.getText()) && (!firstName_txtfield.getText().isEmpty() && !secondName_txtfield.getText().isEmpty() && !phoneNo_txtfield.getText().isEmpty() && !email_txtfield.getText().isEmpty() && !nationalID_txtfield.getText().isEmpty() && !department_txtfield.getText().isEmpty() && !location_txtfield.getText().isEmpty()))) {
 
-            addData.ProfileaddData(current_pass.getText(), firstName_txtfield.getText(), secondName_txtfield.getText(), phoneNo_txtfield.getText(), email_txtfield.getText(), nationalID_txtfield.getText(), department_txtfield.getText(), location_txtfield.getText(), confirm_pass.getText());
+            addData.ProfileaddData(current_pass.getText(), toUpperCase(firstName_txtfield.getText()), toUpperCase(secondName_txtfield.getText()), phoneNo_txtfield.getText(), email_txtfield.getText(), nationalID_txtfield.getText(), toUpperCase(department_txtfield.getText()), toUpperCase(location_txtfield.getText()), confirm_pass.getText());
 
             fill_data();
             editInfo.setVisible(true);
@@ -489,6 +490,9 @@ public class ProfileController implements Initializable {
             nationalID_txtfield.setEditable(false);
             department_txtfield.setEditable(false);
             location_txtfield.setEditable(false);
+            new_pass.clear();
+            confirm_pass.clear();
+            
             
             notify.flash(saveInfo," PASSWORD AND PROFILE DATA HAS SUCCESSFULLY CHANGED ");
         }

@@ -2,6 +2,7 @@ package asset_management_system.withUsers.withUsers_pop;
 
 import asset_management_system.assets.all_assetsPop.All_assetsPopController;
 import asset_management_system.usedAlot.QR_Creator;
+import asset_management_system.usedAlot.checkPosition;
 import asset_management_system.usedAlot.json_code;
 import asset_management_system.usedAlot.json_read;
 import asset_management_system.usedAlot.notification;
@@ -400,47 +401,62 @@ public class WithUsers_popController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-        title.setStyle("-fx-font-family: 'Lobster', cursive; -fx-font-size: 36; -fx-font-weight: bold;");
-
-        // TODO
-        reasonLbl.setVisible(false);
-        reason.setVisible(false);
-        deferBtn.setVisible(false);
-
-        assetID.setEditable(false);
-        assetName.setEditable(false);
-        assetCode.setEditable(false);
-        workerTell.setEditable(false);
-        workerName.setEditable(false);
-        workerID.setEditable(false);
-        workerEmail.setEditable(false);
-        assigned_date.setEditable(false);
-        assignedBy.setEditable(false);
-        id.setEditable(false);
-
-        // title.setStyle("-fx-font-family: 'Oswald', sans-serif; -fx-font-size: 20;");
-        title.setStyle("-fx-font-family: 'Bebas Neue', cursive;");
-
-        json_read nw = new json_read();
         try {
-            nw.setToWithUser(id, workerID, workerName, workerTell, workerEmail, assetID, assetName, assetCode, assigned_date, assignedBy);
-
-            QR_Creator maker = new QR_Creator();
-            maker.QRGen(assetID.getText(), assetCode.getText(), assetName.getText());
-
-            String path = "Asset" + assetID.getText() + ".png";
-            Image imageObject = new Image(new FileInputStream(path));
-
-            qr_code.setImage(imageObject);
-
+            checkPosition checkin=new checkPosition();
+            
+            checkin.checkPosBox(deferCheck);
+            checkin.checkPosition(maintenance);
+            checkin.checkPosition(assetsBtn);
+            checkin.checkPosition(deferBtn);
+            
+            title.setStyle("-fx-font-family: 'Lobster', cursive; -fx-font-size: 36; -fx-font-weight: bold;");
+            
+            // TODO
+            reasonLbl.setVisible(false);
+            reason.setVisible(false);
+            deferBtn.setVisible(false);
+            
+            assetID.setEditable(false);
+            assetName.setEditable(false);
+            assetCode.setEditable(false);
+            workerTell.setEditable(false);
+            workerName.setEditable(false);
+            workerID.setEditable(false);
+            workerEmail.setEditable(false);
+            assigned_date.setEditable(false);
+            assignedBy.setEditable(false);
+            id.setEditable(false);
+            
+            // title.setStyle("-fx-font-family: 'Oswald', sans-serif; -fx-font-size: 20;");
+            title.setStyle("-fx-font-family: 'Bebas Neue', cursive;");
+            
+            json_read nw = new json_read();
+            try {
+                nw.setToWithUser(id, workerID, workerName, workerTell, workerEmail, assetID, assetName, assetCode, assigned_date, assignedBy);
+                
+                QR_Creator maker = new QR_Creator();
+                maker.QRGen(assetID.getText(), assetCode.getText(), assetName.getText());
+                
+                String path = ".//qrCode//Asset" + assetID.getText() + ".png";
+                Image imageObject = new Image(new FileInputStream(path));
+                
+                qr_code.setImage(imageObject);
+                
+            } catch (IOException ex) {
+                Logger.getLogger(WithUsers_popController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(WithUsers_popController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(WithUsers_popController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (WriterException ex) {
+                Logger.getLogger(WithUsers_popController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(WithUsers_popController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(WithUsers_popController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
-            Logger.getLogger(WithUsers_popController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(WithUsers_popController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (WriterException ex) {
             Logger.getLogger(WithUsers_popController.class.getName()).log(Level.SEVERE, null, ex);
         }
 

@@ -100,7 +100,7 @@ public class DBOps {
 
             
 
-            String sql = "INSERT INTO `asset_management_system`.`assets` (`assetID`, `assetName`, `assetCode`, `assetDetails`, `workerName`, `workerID`,`categoryID`,`additionDate`,`cost`) VALUES (NULL,'" + assetName + "'," + assetCode + ",'" + assetDetails + "','" + workerName + "','"+ workerID +"','"+category+"',"+" CURDATE()"+",'" + cost+ " ' );";
+            String sql = "INSERT INTO `asset_management_system`.`assets` (`assetID`, `assetName`, `assetCode`, `assetDetails`, `workerName`, `workerID`,`categoryID`,`additionDate`,`cost`) VALUES (NULL,'" + assetName + "','" + assetCode + "','" + assetDetails + "','" + workerName + "','"+ workerID +"','"+category+"',"+" CURDATE()"+",'" + cost+ " ' );";
 
             statement.executeUpdate(sql);   
             

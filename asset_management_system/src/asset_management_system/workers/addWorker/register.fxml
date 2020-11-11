@@ -50,7 +50,7 @@
             <Font name="System Bold" size="12.0" />
          </font></Label>
       <JFXTextField fx:id="location" layoutX="736.0" layoutY="259.0" promptText="location" />
-      <ImageView fx:id="closeApp" fitHeight="36.0" fitWidth="55.0" layoutX="852.0" layoutY="14.0" onMousePressed="#closeAppWindow" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="closeApp" fitHeight="36.0" fitWidth="55.0" layoutX="852.0" layoutY="14.0" onMousePressed="#closeAppWindow" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="file:/C:/Users/User/Documents/GitHub/Asset-Management-System/asset_management_system/src/asset_management_system/img/ic_close.imageset/ic_close_2x.png" />
          </image>

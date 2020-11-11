@@ -81,7 +81,8 @@ public class ForgottenPassController implements Initializable {
         }else
         {
             sendingPass nw=new sendingPass();
-           nw.recoverAcc(email.getText());
+           nw.recoverAcc(email.getText(),email);
+           email.clear();
         }       
        
 

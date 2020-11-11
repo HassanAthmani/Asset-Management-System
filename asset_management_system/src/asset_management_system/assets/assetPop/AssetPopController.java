@@ -2,6 +2,7 @@ package asset_management_system.assets.assetPop;
 
 import asset_management_system.assets.all_assetsPop.All_assetsPopController;
 import asset_management_system.usedAlot.QR_Creator;
+import asset_management_system.usedAlot.checkPosition;
 import asset_management_system.usedAlot.json_code;
 import asset_management_system.usedAlot.json_read;
 import asset_management_system.usedAlot.notification;
@@ -309,8 +310,8 @@ public class AssetPopController implements Initializable {
         assetName.setEditable(true);
         assetCode.setEditable(true);
         assetDetails.setEditable(true);
-        workerName.setEditable(true);
-        workerID.setEditable(true);
+        workerName.setEditable(false);
+        workerID.setEditable(false);
         category.setEditable(true);
         additionDate.setEditable(false);
         cost.setEditable(true);
@@ -584,49 +585,63 @@ public class AssetPopController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-        assetLbl.setStyle("-fx-font-family: 'Lobster', cursive; -fx-font-size: 20; -fx-font-weight: bold;");
-
-        defer.setVisible(false);
-        reason.setVisible(false);
-        save.setVisible(false);
-        cancel.setVisible(false);
-        assign.setVisible(false);
-        assignTo.setVisible(false);
-
-        assignLabel.setVisible(false);
-        assignID.setVisible(false);
-
-        json_read nw = new json_read();
         try {
-            nw.setToAllItems(assetID, assetName, assetCode, assetDetails, workerName, workerID, category, additionDate, cost);
-
-            assetID.setEditable(false);
-            assetName.setEditable(false);
-            assetCode.setEditable(false);
-            assetDetails.setEditable(false);
-            workerName.setEditable(false);
-            workerID.setEditable(false);
-            category.setEditable(false);
-            additionDate.setEditable(false);
-            cost.setEditable(false);
-
-            QR_Creator maker = new QR_Creator();
-            maker.QRGen(assetID.getText(), assetCode.getText(), assetName.getText());
-
-            String path = ".//qrCode//Asset" + assetID.getText() + ".png";
-            Image imageObject = new Image(new FileInputStream(path));
-
-            // ImageView image = new ImageView(imageObject);  
-            qr_code.setImage(imageObject);
-
+            checkPosition checkin=new checkPosition();
+            checkin.checkPosBox(assignCheck);
+            checkin.checkPosBox(deferCheck);
+            checkin.checkPosition(edit);
+             checkin.checkPosition(maintenance);
+            
+            assetLbl.setStyle("-fx-font-family: 'Lobster', cursive; -fx-font-size: 20; -fx-font-weight: bold;");
+            
+            defer.setVisible(false);
+            reason.setVisible(false);
+            save.setVisible(false);
+            cancel.setVisible(false);
+            assign.setVisible(false);
+            assignTo.setVisible(false);
+            
+            assignLabel.setVisible(false);
+            assignID.setVisible(false);
+            
+            json_read nw = new json_read();
+            try {
+                nw.setToAllItems(assetID, assetName, assetCode, assetDetails, workerName, workerID, category, additionDate, cost);
+                
+                assetID.setEditable(false);
+                assetName.setEditable(false);
+                assetCode.setEditable(false);
+                assetDetails.setEditable(false);
+                workerName.setEditable(false);
+                workerID.setEditable(false);
+                category.setEditable(false);
+                additionDate.setEditable(false);
+                cost.setEditable(false);
+                
+                QR_Creator maker = new QR_Creator();
+                maker.QRGen(assetID.getText(), assetCode.getText(), assetName.getText());
+                
+                String path = ".//qrCode//Asset" + assetID.getText() + ".png";
+                Image imageObject = new Image(new FileInputStream(path));
+                
+                // ImageView image = new ImageView(imageObject);
+                qr_code.setImage(imageObject);
+                
+            } catch (IOException ex) {
+                Logger.getLogger(AssetPopController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(AssetPopController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(AssetPopController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (WriterException ex) {
+                Logger.getLogger(AssetPopController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(AssetPopController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(AssetPopController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
-            Logger.getLogger(AssetPopController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(AssetPopController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (WriterException ex) {
             Logger.getLogger(AssetPopController.class.getName()).log(Level.SEVERE, null, ex);
         }
 

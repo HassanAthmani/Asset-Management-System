@@ -370,7 +370,7 @@ public class WorkersController implements Initializable {
         Parent root = fxmlLoader.load(getClass().getResource("/asset_management_system/workers/addWorker/register.fxml").openStream());
         Scene scene = new Scene(root);
         scene.setFill(Color.ALICEBLUE);
-        stage.initStyle(StageStyle.UNDECORATED);
+        //stage.initStyle(StageStyle.UNDECORATED);
 
         stage.setScene(scene);
 

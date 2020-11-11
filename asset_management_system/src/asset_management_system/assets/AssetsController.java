@@ -364,6 +364,13 @@ public class AssetsController implements Initializable {
         stage.initOwner(((Node) event.getSource()).getScene().getWindow());
         stage.setResizable(false);
         stage.resizableProperty();
+        stage.setOnCloseRequest(e -> {
+            try {
+                load();
+            } catch (SQLException ex) {
+                Logger.getLogger(AssetsController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
 
         root.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override

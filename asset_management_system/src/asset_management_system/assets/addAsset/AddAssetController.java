@@ -29,6 +29,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javax.swing.JOptionPane;
+import static jdk.nashorn.internal.objects.NativeString.toUpperCase;
 import org.json.simple.parser.ParseException;
 
 public class AddAssetController implements Initializable {
@@ -94,7 +95,7 @@ public class AddAssetController implements Initializable {
 
         } else if (!assetName.getText().isEmpty() || !assetCode.getText().isEmpty() || !assetDetails.getText().isEmpty() || !workerName.getText().isEmpty() || !workerID.getText().isEmpty() || !category.getValue().toString().isEmpty() || !cost.getText().isEmpty()) {
 
-            nw.addAsset(assetName.getText(), assetCode.getText(), assetDetails.getText(), workerName.getText(), workerID.getText(), category.getValue().toString(), cost.getText());
+            nw.addAsset(toUpperCase(assetName.getText()), assetCode.getText(),toUpperCase(assetDetails.getText()), workerName.getText(), workerID.getText(), category.getValue().toString(), cost.getText());
 
             json_read jsonReader = new json_read();
             String id = jsonReader.asset_id();
@@ -105,7 +106,7 @@ public class AddAssetController implements Initializable {
             // Image image=new Image(getClass().getResource("C:/Users/User/Documents/GitHub/Asset-Management-System/asset_management_system/qr_images/Asset"+id+".png"));
             //C:\Users\User\Documents\GitHub\Asset-Management-System\asset_management_system\qr_images
             /* InputStream inStream = getClass().getResourceAsStream("Asset"+id+".png");*/
-            String path = "Asset" + id + ".png";
+            String path = ".//qrCode//Asset" + id + ".png";
             Image imageObject = new Image(new FileInputStream(path));
             notification notify = new notification();
             notify.flash(addAsset, " ASSET HAS BEEN ADDED ");

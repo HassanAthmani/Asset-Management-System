@@ -282,7 +282,7 @@ public class checkDetails {
             connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, pass);
             //Execute query and store result in a resultset
             String srch=example.getText();
-            ResultSet rs = connection.createStatement().executeQuery("SELECT COUNT(*) FROM `asset_management_system`.`available_assets` WHERE "+column+" = '"+srch+"'");
+            ResultSet rs = connection.createStatement().executeQuery("SELECT COUNT(*) FROM `asset_management_system`.`assets` WHERE "+column+" = '"+srch+"'");
             int quan;
             int a=1;
                while(rs.next()){
