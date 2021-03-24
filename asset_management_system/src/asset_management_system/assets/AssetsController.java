@@ -1622,6 +1622,9 @@ public class AssetsController implements Initializable {
             data = FXCollections.observableArrayList();
             //Execute query and store result in a resultset
             ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM worker_details WHERE workerID= " + id);
+            
+            
+            
 
             while (rs.next()) {
 
@@ -1636,11 +1639,24 @@ public class AssetsController implements Initializable {
                 my_pdf_report.add(department);
                 my_pdf_report.add(space);
             }
+            
+           ResultSet totalCost = connection.createStatement().executeQuery("SELECT SUM(cost) FROM `asset_management_system`.`assets`");
+            
+            while (totalCost.next()){
+                Paragraph total = new Paragraph("TOTAL COST OF ASSETS: " + totalCost.getInt(1));
+                //my_pdf_report.add(space);
+                my_pdf_report.add(total);
+                my_pdf_report.add(space);
+            }
+            rs.close();
+            
+           
 
         } catch (ClassNotFoundException ex) {
 
             System.err.println("Error: " + ex);
         }
+       
 
         //com.itextpdf.text.Image image = com.itextpdf.text.Image.getInstance("MyQRCode.png");
         for (all_assets o : all_assets_tbl.getItems()) {

@@ -37,7 +37,7 @@ public class sendingPass {
     String password = "";
     public Connection connection;
     String senderMail = "johnruben150@gmail.com";
-    int pass = 106316008;
+    String pass = "106316008";
 
     public void position(String email, String position) {
         escapeChar escapee = new escapeChar();

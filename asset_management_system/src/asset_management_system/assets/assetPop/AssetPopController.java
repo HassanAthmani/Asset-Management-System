@@ -2,6 +2,7 @@ package asset_management_system.assets.assetPop;
 
 import asset_management_system.assets.all_assetsPop.All_assetsPopController;
 import asset_management_system.usedAlot.QR_Creator;
+import asset_management_system.usedAlot.checkDetails;
 import asset_management_system.usedAlot.checkPosition;
 import asset_management_system.usedAlot.json_code;
 import asset_management_system.usedAlot.json_read;
@@ -35,6 +36,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javax.swing.JOptionPane;
+import static jdk.nashorn.internal.objects.NativeString.toUpperCase;
 import org.json.simple.parser.ParseException;
 
 public class AssetPopController implements Initializable {
@@ -347,7 +349,7 @@ public class AssetPopController implements Initializable {
     }
 
     @FXML
-    void saveInfo(ActionEvent event) throws SQLException {
+    void saveInfo(ActionEvent event) throws SQLException, WriterException, IOException {
 
         if (assetID.getText().isEmpty() || assetName.getText().isEmpty() || assetCode.getText().isEmpty() || assetDetails.getText().isEmpty() || workerName.getText().isEmpty() || workerID.getText().isEmpty() || category.getText().isEmpty() || additionDate.getText().isEmpty() || cost.getText().isEmpty()) {
 
@@ -401,6 +403,13 @@ public class AssetPopController implements Initializable {
                 deferCheck.setVisible(true);
                 maintenance.setVisible(true);
                 assignCheck.setVisible(true);
+                
+                 QR_Creator maker = new QR_Creator();
+                maker.QRGen(assetID.getText(), assetCode.getText(), assetName.getText());
+                
+                String path = ".//qrCode//Asset" + assetID.getText() + ".png";
+                Image imageObject = new Image(new FileInputStream(path));
+                 qr_code.setImage(imageObject);
 
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(AssetPopController.class.getName()).log(Level.SEVERE, null, ex);
@@ -445,7 +454,7 @@ public class AssetPopController implements Initializable {
                 String cat = category.getText();
                 String additiondate = additionDate.getText();
 
-                String sql = "INSERT INTO `asset_management_system`.`deferred_asset` (`assetID`, `assetName`, `assetCode`, `assetDetails`, `workerName`, `workerID`,`categoryID`,`additionDate`,`deferredDate`,`reason`) VALUES (" + assetid + ",'" + assetname + "','" + assetcode + "','" + assetdetails + "','" + name + "'," + workerid + ",'" + cat + "','" + additiondate + "',CURDATE(),'" + reason.getText() + "');";
+                String sql = "INSERT INTO `asset_management_system`.`deferred_asset` (`assetID`, `assetName`, `assetCode`, `assetDetails`, `workerName`, `workerID`,`categoryID`,`additionDate`,`deferredDate`,`reason`) VALUES (" + assetid + ",'" + assetname + "','" + assetcode + "','" + assetdetails + "','" + name + "'," + workerid + ",'" + cat + "','" + additiondate + "',CURDATE(),'" + toUpperCase(reason.getText()) + "');";
 
                 statement.executeUpdate(sql);
 
@@ -481,9 +490,10 @@ public class AssetPopController implements Initializable {
                 System.out.println("Error: " + ex);
             }
 
-        } else if (reason.getText().isEmpty() && assetID.getText().isEmpty()) {
-            int response = JOptionPane.showConfirmDialog(
-                    null, "Please enter information in the field provided", "ERROR!", JOptionPane.DEFAULT_OPTION);
+        } else if (reason.getText().isEmpty() || assetID.getText().isEmpty()) {
+            notify.flash(defer, " NO FIELD SHOULD BE EMPTY");
+            /*int response = JOptionPane.showConfirmDialog(
+                    null, "Please enter information in the field provided", "ERROR!", JOptionPane.DEFAULT_OPTION);*/
 
         }
 
@@ -591,6 +601,8 @@ public class AssetPopController implements Initializable {
             checkin.checkPosBox(deferCheck);
             checkin.checkPosition(edit);
              checkin.checkPosition(maintenance);
+             checkDetails checker=new checkDetails();
+             checker.checkerid(assignTo, "workerID",assign);
             
             assetLbl.setStyle("-fx-font-family: 'Lobster', cursive; -fx-font-size: 20; -fx-font-weight: bold;");
             

@@ -1,6 +1,8 @@
 
 package asset_management_system.login.forgottenPass;
 
+import asset_management_system.usedAlot.checkDetails;
+import asset_management_system.usedAlot.emailValidation;
 import asset_management_system.usedAlot.notification;
 import asset_management_system.usedAlot.sendingPass;
 import com.jfoenix.controls.JFXButton;
@@ -14,8 +16,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
-import java.util.Properties;
-import java.util.concurrent.ThreadLocalRandom;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -26,13 +26,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.swing.JOptionPane;
 import org.apache.commons.io.FileUtils;
 
@@ -107,6 +100,12 @@ public class ForgottenPassController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        checkDetails checker=new checkDetails();
+       /* emailValidation mailV= new emailValidation();
+        mailV.emailVal(email, "workerEmail", sendPass);*/
+        checker.checkerMail(email,"workerEmail", sendPass);
+        
+        
         vbox.setStyle("-fx-background-color: #28d474;\n"
                 + "-fx-padding: 10;\n"
                 + "-fx-spacing:8;\n"
